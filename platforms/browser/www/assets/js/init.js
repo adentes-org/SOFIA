@@ -10,6 +10,7 @@ requirejs.config({
         lib: 'lib',
         cordova: '../cordova',
         jquery: 'lib/jquery/jquery.min',
+        pouchdb: 'lib/pouchdb/pouchdb.min'
         /*
          browser: 'platform/browser',
          android: 'platform/android',
@@ -26,9 +27,10 @@ requirejs.config({
     }
 });
 
-requirejs(['cordova', 'jquery'], function (cordova, $) {
-//requirejs(['jquery'], function ($) {
-    requirejs(['platform/' + cordova.platformId + '/init'], function () {
-        requirejs(['app/index']);
+requirejs(['cordova', 'jquery', 'pouchdb'], function (cordova, $) {
+    requirejs(['app/sophia.template', 'app/sophia.config'], function () {
+        requirejs(['platform/' + cordova.platformId + '/init'], function () {
+            requirejs(['app/sophia.app']);
+        });
     });
 });

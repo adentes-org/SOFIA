@@ -45,4 +45,11 @@ body.loading .app {
     /* offset horizontal: half of image width and text area width */
   }
 }
+.app-loading h1 {
+  font-size: 42px !important;
+  margin: 0 !important;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: normal;
+}
 /*# sourceMappingURL=loading.css.map */

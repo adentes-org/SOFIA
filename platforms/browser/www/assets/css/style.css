@@ -2,6 +2,38 @@
     Created on : 26 oct. 2015, 03:29:30
     Author     : sapk
 */
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../lib/material-design-icons/MaterialIcons-Regular.eot);
+  /* For IE6-8 */
+  src: local('Material Icons'), local('MaterialIcons-Regular'), url(../lib/material-design-icons/MaterialIcons-Regular.woff2) format('woff2'), url(../lib/material-design-icons/MaterialIcons-Regular.woff) format('woff'), url(../lib/material-design-icons/MaterialIcons-Regular.ttf) format('truetype');
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   /* make transparent link selection, adjust last value opacity 0 to 1.0 */
@@ -27,15 +59,6 @@ body .app {
   padding: 0px;
   width: 100%;
   opacity: 1;
-}
-h1 {
-  font-size: 24px;
-  font-weight: normal;
-  margin: 0px;
-  overflow: visible;
-  padding: 0px;
-  text-align: center;
-  text-transform: uppercase;
 }
 body.loading {
   background-color: #E4E4E4;
@@ -83,5 +106,12 @@ body.loading .app {
     /* offset vertical: half of image height */
     /* offset horizontal: half of image width and text area width */
   }
+}
+.app-loading h1 {
+  font-size: 42px !important;
+  margin: 0 !important;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: normal;
 }
 /*# sourceMappingURL=style.css.map */

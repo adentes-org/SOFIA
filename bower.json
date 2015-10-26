@@ -16,13 +16,17 @@
     "dependencies": {
         "jquery": "latest",
         "requirejs": "latest",
-        "material-design-lite": "latest"
+        "pouchdb": "latest",
+        "material-design-lite": "latest",
+        "material-design-icons": "latest"
     },
     "install": {
         "path": "www/assets/lib",
         "sources": {
             "jquery": "bower_components/jquery/dist/**",
-            "requirejs" : "bower_components/requirejs/require.js"
+            "pouchdb": "bower_components/pouchdb/dist/**",
+            "requirejs" : "bower_components/requirejs/require.js",
+            "material-design-icons" : "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.*"
         }
     },
     "private": true

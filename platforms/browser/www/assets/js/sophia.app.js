@@ -1,5 +1,6 @@
+var S = S || {};
 
-var app = {
+S.app = {
     // Application Constructor
     initialize: function () {
         this.bindEvents();
@@ -11,15 +12,17 @@ var app = {
     bindEvents: function () {
         //We use requirejs so everything is ready whenwe are here
         //document.addEventListener('deviceready', this.onDeviceReady, false);
-        window.setTimeout(app.onDeviceReady, 1000);
+        window.setTimeout(S.app.onDeviceReady, 1000);
     },
     removeLoader: function () {
         $('body>.app-loading').remove();
     },
     onDeviceReady: function () {
+        $("body>.app").append(S.template.base());
+        componentHandler.upgradeDom();
         $("body").removeClass("loading");
-        window.setTimeout(app.removeLoader, 1000);
+        window.setTimeout(S.app.removeLoader, 1000);
     }
 };
 
-app.initialize();
+S.app.initialize();
