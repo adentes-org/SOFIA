@@ -9,7 +9,7 @@ requirejs.config({
         app: 'js',
         lib: 'lib',
         cordova: '../cordova',
-        jquery: 'lib/jquery/jquery',
+        jquery: 'lib/jquery/jquery.min',
         /*
          browser: 'platform/browser',
          android: 'platform/android',

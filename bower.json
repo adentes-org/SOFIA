@@ -1,0 +1,28 @@
+{
+    "name": "SOFIA",
+    "description": "",
+    "version": "0.1",
+    "authors": [
+        {
+            "name": "Antoine GIRARD",
+            "email": "antoine.girard@sapk.fr",
+            "homepage": "https://sapk.fr"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/adentes-org/SOFIA.git"
+    },
+    "dependencies": {
+        "jquery": "latest",
+        "requirejs": "latest"
+    },
+    "install": {
+        "path": "www/assets/lib",
+        "sources": {
+            "jquery": "bower_components/jquery/dist/*.*",
+            "requirejs" : "bower_components/requirejs/require.js"
+        }
+    },
+    "private": true
+}
