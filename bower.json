@@ -15,12 +15,13 @@
     },
     "dependencies": {
         "jquery": "latest",
-        "requirejs": "latest"
+        "requirejs": "latest",
+        "material-design-lite": "latest"
     },
     "install": {
         "path": "www/assets/lib",
         "sources": {
-            "jquery": "bower_components/jquery/dist/*.*",
+            "jquery": "bower_components/jquery/dist/**",
             "requirejs" : "bower_components/requirejs/require.js"
         }
     },

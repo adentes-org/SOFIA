@@ -2,8 +2,6 @@
 var app = {
     // Application Constructor
     initialize: function () {
-        console.log($);
-        console.log(cordova);
         this.bindEvents();
     },
     // Bind Event Listeners
@@ -13,13 +11,14 @@ var app = {
     bindEvents: function () {
         //We use requirejs so everything is ready whenwe are here
         //document.addEventListener('deviceready', this.onDeviceReady, false);
+        window.setTimeout(app.onDeviceReady, 1000);
     },
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
+    removeLoader: function () {
+        $('body>.app-loading').remove();
+    },
     onDeviceReady: function () {
-        //app.receivedEvent('deviceready');
+        $("body").removeClass("loading");
+        window.setTimeout(app.removeLoader, 1000);
     }
 };
 

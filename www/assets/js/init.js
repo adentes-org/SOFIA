@@ -28,5 +28,7 @@ requirejs.config({
 
 requirejs(['cordova', 'jquery'], function (cordova, $) {
 //requirejs(['jquery'], function ($) {
-    requirejs(['platform/' + cordova.platformId + '/init', 'app/index']);
+    requirejs(['platform/' + cordova.platformId + '/init'], function () {
+        requirejs(['app/index']);
+    });
 });
