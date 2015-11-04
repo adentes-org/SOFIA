@@ -3,6 +3,7 @@
  */
 /* global requirejs */
 //TODO pass to minimized vresion of libs
+
 requirejs.config({
     baseUrl: 'assets',
     paths: {
@@ -26,7 +27,6 @@ requirejs.config({
         }
     }
 });
-
 requirejs(['cordova', 'jquery', 'pouchdb'], function (cordova, $) {
     requirejs(['app/sophia.template', 'app/sophia.config'], function () {
         requirejs(['platform/' + cordova.platformId + '/init'], function () {
