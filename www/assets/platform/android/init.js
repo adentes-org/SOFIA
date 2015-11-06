@@ -6,8 +6,14 @@ $("head").append('<link rel="stylesheet" type="text/css" href="assets/lib/materi
 
 
 requirejs(['lib/material-design-lite/material.min', 'platform/android/template'], function () {
-    S.config.platform = {
+    S.platform = {
         isLoaded: true,
-        id: "android"
+        id: "android",
+        events: {
+            afterDeviceReady: function () {
+                componentHandler.upgradeDom(); //Application de la lib material-design 
+            }
+        }
     };
+
 });

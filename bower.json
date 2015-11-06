@@ -17,6 +17,8 @@
         "jquery": "latest",
         "requirejs": "latest",
         "pouchdb": "latest",
+        "vue": "latest",
+        "vue-router": "latest",
         "material-design-lite": "latest",
         "material-design-icons": "latest"
     },
@@ -25,6 +27,8 @@
         "sources": {
             "jquery": "bower_components/jquery/dist/**",
             "pouchdb": "bower_components/pouchdb/dist/**",
+            "vue": "bower_components/vue/dist/**",
+            "vue-router": "bower_components/vue-router/dist/**",
             "requirejs" : "bower_components/requirejs/require.js",
             "material-design-icons" : "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.*"
         }

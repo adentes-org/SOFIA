@@ -19,10 +19,25 @@ S.app = {
     },
     onDeviceReady: function () {
         $("body>.app").append(S.template.base());
-        componentHandler.upgradeDom();
+        S.vue.init();
+        //Vue = require('vue');
+        /*
+        new Vue({
+            el: '#indox',
+            data: {
+                fiches: [
+                    {id: 1},
+                    {id: 2},
+                    {id: 3},
+                ]
+            }
+        });
+        */
+        if(typeof S.platform.events.afterDeviceReady == "function"){
+            S.platform.events.afterDeviceReady();
+        }
         $("body").removeClass("loading");
         window.setTimeout(S.app.removeLoader, 1000);
     }
 };
 
-S.app.initialize();

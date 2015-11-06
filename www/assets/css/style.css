@@ -60,6 +60,19 @@ body .app {
   width: 100%;
   opacity: 1;
 }
+button.quick-add {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+}
+#menu #menu-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#menu a.mdl-navigation__link.v-link-active {
+  background: #ccc;
+}
 body.loading {
   background-color: #E4E4E4;
   background-image: linear-gradient(top, #A7A7A7 0%, #E4E4E4 51%);

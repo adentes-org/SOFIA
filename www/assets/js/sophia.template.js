@@ -8,7 +8,12 @@ S.template = {
     buttons : {
         quickAdd : function (){}
     },
+    pages : {
+        inbox : function (){},
+        configuration : function (){
+            return "Default configuration template"
+        }
+    },
     header : function (){},
     menu : function (){},
-    inbox : function (){}
 };
