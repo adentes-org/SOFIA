@@ -44,7 +44,7 @@ S.data = {
                 fiches_html: function () {
                     var fiches_html = [];
                     for (id in this.fiches) {
-                        fiches_html.push(S.template.card(this.fiches[id].title));
+                        fiches_html.push(S.template.fiche(this.fiches[id]));
                     }
                     return fiches_html;
                 }

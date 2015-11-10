@@ -20,9 +20,13 @@ S.template.header = function () {
             ' ';
 };
 
+S.template.fiche = function (fiche) {
+    var content = "TODO" 
+    return S.template.card(fiche.firstname + " " + fiche.lastname,content);
+}
 S.template.card = function (title,content,media,actions) {
     //TODO ôptimize generation
-    return '<section class="section--center mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing mdl-shadow--2dp"> \n\
+    return '<section class="section--center mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-shadow--2dp"> \n\
                 <div class="mdl-card"> \n\
                     <div class="mdl-card__title"> \n\
                         <h4>' + title + '</h4>\n\
