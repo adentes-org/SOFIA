@@ -15,7 +15,8 @@ S.vue = {
         for (var i in S.template.pages) {
             S.vue.el.pages[i] = Vue.extend({
                 template: S.template.page_wrapper(i, S.template.pages[i]),
-                data: S.data.pages[i] || null
+                data: S.data.pages[i] && S.data.pages[i].data || null,
+                computed: S.data.pages[i] && S.data.pages[i].computed || null
             });
             S.vue.map["/" + i] = {name: S.tool.capitalizeFirstLetter(i), component: S.vue.el.pages[i]};
         }
@@ -35,6 +36,8 @@ S.vue = {
         })
         
         S.vue.router.start(S.vue.el.App, '.app');
+        
+        //TODO fix why the menu vue clear the v-link
         $("#menu a.mdl-navigation__link").each(function (id, el) {
             $(el).attr('v-link', $(el).attr('link'));
         });

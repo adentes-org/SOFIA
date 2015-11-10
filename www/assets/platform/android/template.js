@@ -20,6 +20,19 @@ S.template.header = function () {
             ' ';
 };
 
+S.template.card = function (title,content,media,actions) {
+    //TODO ôptimize generation
+    return '<section class="section--center mdl-cell mdl-cell--12-col mdl-grid mdl-grid--no-spacing mdl-shadow--2dp"> \n\
+                <div class="mdl-card"> \n\
+                    <div class="mdl-card__title"> \n\
+                        <h4>' + title + '</h4>\n\
+                    </div> \n\
+                    <!-- <div class="mdl-card__media">...</div> -->\n\
+                    <div class="mdl-card__supporting-text">'+content+'</div> \n\
+                    <!-- <div class="mdl-card__actions"> ... </div> -->\n\
+                </div>\n\
+            </section>';
+}
 S.template.menu = function () {
     return '<div class="mdl-layout__drawer" id="menu">' +
             '<span class="mdl-layout-title" id="menu-title">Sophia - {{current}}</span>' +
@@ -36,11 +49,11 @@ S.template.page_wrapper = function (id, page) {
 };
 
 S.template.pages.inbox = function () {
-    return '<ul>\n\
-                <li v-for="fiche in fiches">\n\
-                     {{ fiche.id }}\n\
-                </li>\n\
-            </ul>';
+    return '<div class="mdl-grid">\n\
+                <template v-for="fiche in fiches_html">\n\
+                     {{{ fiche }}}\n\
+                </template>\n\
+            </div>';
 };
 
 S.template.buttons.quickAdd = function () {
