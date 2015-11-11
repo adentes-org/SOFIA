@@ -1,3 +1,4 @@
+'use strict';
 var S = S || {};
 
 S.app = {

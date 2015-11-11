@@ -1,5 +1,5 @@
+'use strict';
 var S = S || {};
-
 
 S.tool = {
     capitalizeFirstLetter: function (string) {

@@ -1,3 +1,4 @@
+'use strict';
 /* global S */
 
 //var S = S || {}; //Keep it that way to throw a error if loaded to soon;
