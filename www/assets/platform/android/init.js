@@ -2,6 +2,8 @@
 console.log("Init android platform");
 
 $("head").append('<link rel="stylesheet" type="text/css" href="assets/lib/material-design-lite/material.min.css">');
+//$("head").append('<link rel="stylesheet" type="text/css" href="assets/css/platform/android.css">');
+
 //$("head").append('<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">');
 //$("body").append('<script src="assets/lib/material-design-lite/material.min.js"></script>');
 
