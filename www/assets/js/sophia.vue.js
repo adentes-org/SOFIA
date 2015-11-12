@@ -60,12 +60,15 @@ S.vue = {
         S.vue.router.map(S.vue.map);
         S.vue.router.afterEach(function (transition) {
             console.log('Successfully navigated to: ' + transition.to.path, transition.to.path.slice(1));
-            /* Not usefull any more
-             if (S.tool.isMenuEntry(transition.to.path)) { // On active l'entrée dans le menu si c'est une entrée dans le menu (qui commence pas par _)
-             S.vue.el.menu.$set('current', S.vue.map[transition.to.path].name);
-             console.log(S.vue.map[transition.to.path].name, S.vue.el.menu);
-             }
-             */
+            //* Use in the header of the menu
+            if (S.tool.isMenuEntry(transition.to.path)) { // On change le titre dans le menu si c'est une entrée dans le menu (qui commence pas par _)
+                var current = S.vue.map[transition.to.path].name;
+                S.vue.el.menu.$set('current', current);
+                $("head>title").text("SOFIA" + ((current && current != "") ? " - " + current : ""));
+                //TODO afficher le nom de l'utilisteur dans le cas de fiche
+                //console.log(S.vue.map[transition.to.path].name, S.vue.el.menu);
+            }
+            //*/
         });
         // Redirect certain routes to other routes
         S.vue.router.redirect({
@@ -81,9 +84,10 @@ S.vue = {
     },
     init_menu: function () {
         //TODO choose if not use custom <menu> component
+        //TODO link the title of the menu to the title of the page
         S.vue.el.menu = new Vue({
             el: '#menu',
-            data: { /*current: "Inbox",*/ links: S.vue.map},
+            data: {current: "Inbox", links: S.vue.map},
             methods: {
                 isMenuEntry: S.tool.isMenuEntry
             }

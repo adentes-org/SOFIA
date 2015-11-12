@@ -52,3 +52,7 @@ IOS/www/
 #Do not include platform code but keep platform config
 platforms/*
 !platforms/platforms.json
+
+
+#Netbeans
+nbproject/
