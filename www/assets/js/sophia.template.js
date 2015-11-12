@@ -2,18 +2,21 @@
 var S = S || {};
 
 S.template = {
-    base : function (){
-        return "Platform not supported !"
+    base: function () {
+        return "Platform not supported !";
     },
-    buttons : {
-        quickAdd : function (){}
+    buttons: {
+        quickAdd: function () {}
     },
-    pages : {
-        inbox : function (){},
-        configuration : function (){
-            return "Default configuration template"
+    pages: {
+        inbox: function () {},
+        configuration: function () {
+            return "Default configuration template";
+        },
+        "fiche/:fiche_id": function () {
+            return "{{ fiche | json }}";
         }
     },
-    header : function (){},
-    menu : function (){},
+    header: function () {},
+    menu: function () {}
 };
