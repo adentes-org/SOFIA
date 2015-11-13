@@ -4,6 +4,9 @@ var S = S || {};
 S.data = {
     pages: {
         "fiche/:fiche_id": {
+            options: {
+                displaySearchbox: false
+            },
             data: function () {
 
             },

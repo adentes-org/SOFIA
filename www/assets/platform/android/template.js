@@ -2,8 +2,9 @@
 //var S = S || {}; //Keep it that way to throw a error if loaded to soon;
 S.template.header = '<header class="mdl-layout__header">\n\
                         <div class="mdl-layout__header-row">\n\
+\n\                         <h2>{{ options.title }}</h2>\n\
                             <div class="mdl-layout-spacer"></div>\n\
-                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">\n\
+                                <div v-show="options.displaySearchbox" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">\n\
                                     <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">\n\
                                         <i class="material-icons">search</i>\n\
                                     </label>\n\
@@ -47,9 +48,10 @@ S.template.header = '<header class="mdl-layout__header">\n\
         '<div class="mdl-layout__drawer" id="menu">\n\
             <span class="mdl-layout-title" id="menu-title">Sophia - {{current}}</span>\n\
             <nav class="mdl-navigation">\n\
-                <template v-for="link in links | filterBy isMenuEntry">\n\
-                    <a class="mdl-navigation__link" link="{path : \'{{link.url}}\'}" >{{ link.name }}</a>\n\
-                </template>\n\
+                <template v-for="link in links | filterBy isMenuEntry">\n' + 
+                    '<a class="mdl-navigation__link"  href="#!{{link.url}}" link="{path : \'{{link.url}}\'}" >{{ link.name }}</a>\n'+
+                //    '<a class="mdl-navigation__link" href="#!{{link.url}}" >{{ link.name }}</a>\n'+
+                '</template>\n\
             </nav>\n\
         </div>';
         S.template.page_wrapper = function (id, page) {
@@ -68,7 +70,7 @@ S.template.header = '<header class="mdl-layout__header">\n\
                                     </button>';
         S.template.base = function () {
         return '<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">' +
-                "\n" + S.template.header +
+                "\n"  + '<app-header v-bind:options="headerOptions" v-bind:searchbox.sync="searchbox"></app-header>' +
                 "\n" + S.template.menu +
                 "\n" + '<main class="mdl-layout__content">' + '<router-view  v-bind:searchbox="searchbox"></router-view>' + '</main>' +
                 "\n" + S.template.buttons.quickAdd +
