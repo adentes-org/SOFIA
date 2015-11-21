@@ -9,6 +9,9 @@
     "installed_plugins": {
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "org.adentes.sofia"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "org.adentes.sofia"
         }
     },
     "dependent_plugins": {}

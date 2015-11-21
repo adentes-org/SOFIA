@@ -1,43 +1,63 @@
 {
-    "name": "sofia",
-    "description": "",
-    "version": "0.1.0",
-    "private": true,
-    "authors": [
-        {
-            "name": "Antoine GIRARD",
-            "email": "antoine.girard@sapk.fr",
-            "homepage": "https://sapk.fr"
-        }
+  "name": "sofia",
+  "description": "",
+  "version": "0.1.0",
+  "private": true,
+  "authors": [
+    {
+      "name": "Antoine GIRARD",
+      "email": "antoine.girard@sapk.fr",
+      "homepage": "https://sapk.fr"
+    }
+  ],
+  "scripts": {
+    "clean": "cordova clean android",
+    "build": "cordova build",
+    "get-bower": "bower-installer",
+    "compile-less": "npm run compile-app-less && npm run compile-platform-browser-less && npm run compile-platform-android-less",
+    "compile-app-less": "lessc --source-map --source-map-rootpath=../less --source-map-url=style.css.map --clean-css=advanced www/assets/less/style.less www/assets/css/style.css",
+    "compile-platform-android-less": "lessc --source-map --source-map-url=style.css.map --clean-css=advanced www/assets/platform/android/style.less www/assets/platform/android/style.css",
+    "compile-platform-browser-less": "lessc --source-map --source-map-url=style.css.map --clean-css=advanced www/assets/platform/browser/style.less www/assets/platform/browser/style.css",
+    "compile-platform-ios-less": "lessc --source-map --source-map-url=style.css.map --clean-css=advanced www/assets/platform/ios/style.less www/assets/platform/ios/style.css",
+    "start-browser": "cordova run browser",
+    "start-android": "cordova start android",
+    "add-cordova-platform": "cordova platform add browser && cordova platform add android",
+    "postinstall": "npm run get-bower && npm run compile-less && npm run add-cordova-platform",
+    "preversion": "npm run get-bower && npm run compile-les",
+    "prestart": "npm run compile-less",
+    "start": "npm run start-browser",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gogs.sapk.fr/adentes/sofia.git"
+  },
+  "devDependencies": {
+    "bower-installer": ">=1.2.0",
+    "cordova": ">=5.4.0",
+    "del": "^2.1.0",
+    "gulp": "^3.9.0",
+    "gulp-cordova": "^1.1.0",
+    "gulp-less-sourcemap": "^1.4.2",
+    "gulp-minify-css": "^1.2.1",
+    "less": ">=2.5.0",
+    "less-plugin-autoprefix": ">=1.5.0",
+    "less-plugin-clean-css": ">=1.5.0"
+  },
+  "cordova": [
+    [
+      "platform",
+      "add",
+      "ios",
+      "android",
+      "browser"
     ],
-    "scripts": {
-        "clean": "cordova clean android",
-        "build": "cordova build",
-        "get-bower": "bower-installer",
-        "compile-less": "npm run compile-app-less && npm run compile-platform-browser-less && npm run compile-platform-android-less", 
-        "compile-app-less": "lessc --source-map --source-map-rootpath=../less --source-map-url=style.css.map --clean-css=advanced www/assets/less/style.less www/assets/css/style.css", 
-        "compile-platform-android-less": "lessc --source-map --source-map-url=style.css.map --clean-css=advanced www/assets/platform/android/style.less www/assets/platform/android/style.css", 
-        "compile-platform-browser-less": "lessc --source-map --source-map-url=style.css.map --clean-css=advanced www/assets/platform/browser/style.less www/assets/platform/browser/style.css",
-        "start-browser": "cordova run browser", 
-        "start-android": "cordova start android",
-        "add-cordova-platform": "cordova platform add browser && cordova platform add android",  
-        
-        "postinstall": "npm run get-bower && npm run compile-less && npm run add-cordova-platform",
-        "preversion": "npm run get-bower && npm run compile-les",
-        "prestart": "npm run compile-less", 
-        "start": "npm run start-browser",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://gogs.sapk.fr/adentes/sofia.git"
-    },
-    "devDependencies": {
-        "cordova": ">=5.4.0",
-        "bower-installer": ">=1.2.0",
-        "less": ">=2.5.0",
-        "less-plugin-clean-css": ">=1.5.0",
-        "less-plugin-autoprefix": ">=1.5.0"
-    },
-    "license": "MIT"
+    [
+      "plugin",
+      "add",
+      "cordova-plugin-whitelist",
+      "cordova-plugin-dialogs"
+    ]
+  ],
+  "license": "MIT"
 }
