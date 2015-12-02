@@ -21,9 +21,8 @@
     "compile-platform-ios-less": "lessc --source-map --source-map-url=style.css.map --clean-css=advanced www/assets/platform/ios/style.less www/assets/platform/ios/style.css",
     "start-browser": "cordova run browser",
     "start-android": "cordova start android",
-    "add-cordova-platform": "cordova platform add browser && cordova platform add android",
-    "postinstall": "npm run get-bower && npm run compile-less && npm run add-cordova-platform",
-    "preversion": "npm run get-bower && npm run compile-les",
+    "postinstall": "npm run get-bower && gulp cordova:init clean less",
+    "preversion": "npm run get-bower && npm run compile-less",
     "prestart": "npm run compile-less",
     "start": "npm run start-browser",
     "test": "echo \"Error: no test specified\" && exit 1"
