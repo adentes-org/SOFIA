@@ -1,3 +1,10 @@
+/* Fix http://phonegap-tips.com/articles/essential-phonegap-css-webkit-tap-highlight-color.html */
+.mdl-button {
+    -webkit-tap-highlight-color:rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    -webkit-tap-highlight-color:transparent;
+}
+
+
 a.fiche.patient{
     text-decoration: none;
     .mdl-card{
