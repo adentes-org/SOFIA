@@ -1,6 +1,6 @@
 {
   "name": "sofia",
-  "description": "",
+  "description": "Suivi Opérationnel des Fiches d'Intervention par Applicatif",
   "version": "0.1.0",
   "private": true,
   "authors": [
@@ -21,8 +21,7 @@
     "compile-platform-ios-less": "lessc --source-map --source-map-url=style.css.map --clean-css=advanced www/assets/platform/ios/style.less www/assets/platform/ios/style.css",
     "start-browser": "cordova run browser",
     "start-android": "cordova start android",
-    "add-cordova-platform": "gulp cordova:init",
-    "postinstall": "npm run get-bower && npm run compile-less && npm run add-cordova-platform",
+    "postinstall": "npm run get-bower && gulp cordova:init clean less",
     "preversion": "npm run get-bower && npm run compile-less",
     "prestart": "npm run compile-less",
     "start": "npm run start-browser",
@@ -30,19 +29,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gogs.sapk.fr/adentes/sofia.git"
+    "url": "https://github.com/adentes-org/SOFIA.git"
   },
   "devDependencies": {
-    "bower-installer": ">=1.2.0",
-    "cordova": ">=5.4.0",
+    "bower-installer": "^1.2.0",
+    "cordova": "^5.4.1",
     "del": "^2.1.0",
     "gulp": "^3.9.0",
     "gulp-cordova": "^1.1.0",
     "gulp-less-sourcemap": "^1.4.2",
     "gulp-minify-css": "^1.2.1",
-    "less": ">=2.5.0",
-    "less-plugin-autoprefix": ">=1.5.0",
-    "less-plugin-clean-css": ">=1.5.0"
+    "less": "^2.5.3",
+    "less-plugin-autoprefix": "^1.5.1",
+    "less-plugin-clean-css": "^1.5.1"
   },
   "cordova": [
     [

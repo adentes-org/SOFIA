@@ -1,0 +1,26 @@
+language: android
+android:
+  components:
+  - platform-tools
+  # KitKat https://source.android.com/source/build-numbers.html
+  - build-tools-19
+  - android-19 
+  
+sudo: false
+cache:
+  directories:
+    - node_modules 
+      
+before_install:
+# Setup npm and dep
+#  - sudo apt-get install nodejs npm
+  - nvm install 5.1 && nvm alias default 5.1 && nvm use 5.1
+  - npm install -g npm gulp
+  - npm install --dev
+  
+before_script:
+# - gulp cordova:init clean less # Done in npm postinstall
+ - gulp clean less
+  
+script: 
+  - gulp cordova:build

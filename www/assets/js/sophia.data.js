@@ -17,7 +17,7 @@ S.data = {
 
 
                     for (var f in d.fiches) {
-                        if (d.fiches[f].id == this.$route.params.fiche_id) {
+                        if (d.fiches[f].id === this.$route.params.fiche_id) {
                             return d.fiches[f];
                         }
                     }

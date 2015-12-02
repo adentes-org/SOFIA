@@ -77,7 +77,7 @@ S.vue = {
             console.log(current);
             if (S.tool.isMenuEntry(transition.to.path)) { // On change le titre dans le menu si c'est une entrée dans le menu (qui commence pas par _)
                 S.vue.el.menu.$set('current', current.name);
-                $("head>title").text("SOFIA" + ((current.name && current.name != "") ? " - " + current.name : ""));
+                $("head>title").text("SOFIA" + ((current.name && current.name !== "") ? " - " + current.name : ""));
                 //TODO use a for each to redefine each custom options
                 //TODO afficher le nom de l'utilisteur dans le cas de fiche
                 //console.log(S.vue.map[transition.to.path].name, S.vue.el.menu);
@@ -85,7 +85,7 @@ S.vue = {
             //*
             if (current.options) {
                 //console.log(current.options, current.options.displaySearchbox);
-                S.vue.router.app.$data.headerOptions.displaySearchbox = (typeof current.options.displaySearchbox == "boolean") ? current.options.displaySearchbox : true;
+                S.vue.router.app.$data.headerOptions.displaySearchbox = (typeof current.options.displaySearchbox === "boolean") ? current.options.displaySearchbox : true;
             }
             //*/
         });
