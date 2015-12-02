@@ -19,7 +19,8 @@ before_install:
   - npm install --dev
   
 before_script:
-  - gulp cordova:init clean less
+# - gulp cordova:init clean less # Done in npm postinstall
+ - gulp clean less
   
 script: 
   - gulp cordova:build
