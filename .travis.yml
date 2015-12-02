@@ -1,0 +1,22 @@
+language: java
+
+before_install:
+# Inspired from https://github.com/floydpink/Mantis-CI/blob/master/.travis.yml
+# Set up android build environment
+  - sudo apt-get update -qq
+  - if [ `uname -m` = x86_64 ]; then sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch; fi
+  - wget http://dl.google.com/android/android-sdk_r21.0.1-linux.tgz
+  - tar xzf android-sdk_r21.0.1-linux.tgz
+  - export ANDROID_HOME=$PWD/android-sdk-linux
+  - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+  - android list sdk
+  - android update sdk --filter platform-tools,android-14,android-16,android-17,extra-android-support --no-ui --force
+# Setup npm and dep
+  - sudo apt-get install nodejs npm
+  - npm install --dev
+  
+before_script:
+  - gulp cordova:init clean less
+  
+script: 
+  - gulp cordova:build
