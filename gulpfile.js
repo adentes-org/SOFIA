@@ -22,9 +22,11 @@ gulp.task('clean', function() {
   //return 
   del([folders.css+'/*.css',folders.css+'/*.css.map']);
   for (var i in platformList) {
-    var p = platformList[i];
-    del([folders.platform + p +'/style.css',folders.platform + p +'/style.css.map'])
-  }
+	  if(platformList.hasOwnProperty(i)){
+        var p = platformList[i];
+        del([folders.platform + p +'/style.css',folders.platform + p +'/style.css.map'])
+    }
+}
   //TODO clear also platform build related
 });
 

@@ -34,7 +34,7 @@ S.app = {
             }
         });
         */
-        if(typeof S.platform.events.afterDeviceReady == "function"){
+        if(typeof S.platform.events.afterDeviceReady === "function"){
             S.platform.events.afterDeviceReady();
         }
         $("body").removeClass("loading");
