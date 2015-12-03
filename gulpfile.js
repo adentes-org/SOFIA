@@ -37,13 +37,13 @@ gulp.task('clean', function() {
 gulp.task('less', function () {
 
     gulp.src(folders.less + '*.less')
-      .pipe(less({ plugins: [autoprefix,cleancss] }))
+      .pipe(less({ plugins: [autoprefix] }))
       .pipe(gulp.dest(folders.css));
     //TODO maybe migrate to a reserved folder in platform
     for (var i in platformList) {
         var p = platformList[i];
         gulp.src(folders.platform + p +'/*.less')
-              .pipe(less({ plugins: [autoprefix,cleancss] }))
+              .pipe(less({ plugins: [autoprefix] }))
               .pipe(gulp.dest(folders.platform + p));
     }
 });
