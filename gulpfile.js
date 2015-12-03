@@ -4,6 +4,7 @@ var gulp = require('gulp');
 //Dep
 var del = require('del');
 var less = require('gulp-less');
+var sourcemaps = require('gulp-sourcemaps');
 var cordova = require('gulp-cordova');
 
 //Less Plugins
@@ -37,13 +38,17 @@ gulp.task('clean', function() {
 gulp.task('less', function () {
 
     gulp.src(folders.less + '*.less')
+      .pipe(sourcemaps.init())
       .pipe(less({ plugins: [autoprefix,cleancss] }))
+      .pipe(sourcemaps.write())
       .pipe(gulp.dest(folders.css));
     //TODO maybe migrate to a reserved folder in platform
     for (var i in platformList) {
         var p = platformList[i];
         gulp.src(folders.platform + p +'/*.less')
+      	      .pipe(sourcemaps.init())
               .pipe(less({ plugins: [autoprefix,cleancss] }))
+              .pipe(sourcemaps.write())
               .pipe(gulp.dest(folders.platform + p));
     }
 });
