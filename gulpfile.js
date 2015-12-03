@@ -3,10 +3,15 @@ var gulp = require('gulp');
 
 //Dep
 var del = require('del');
-var less = require('gulp-less-sourcemap');
-var minifyCSS = require('gulp-minify-css');
+var less = require('gulp-less');
+var sourcemaps = require('gulp-sourcemaps');
 var cordova = require('gulp-cordova');
 
+//Less Plugins
+var LessPluginCleanCSS = require('less-plugin-clean-css'),
+    LessPluginAutoPrefix = require('less-plugin-autoprefix'),
+    cleancss = new LessPluginCleanCSS({ advanced: true }),
+    autoprefix= new LessPluginAutoPrefix({browsers: ['> 5%','last 2 versions','Android > 18', 'last 5 ChromeAndroid versions', 'iOS > 3']});
 
 var folders = {
     root : "./www/",
@@ -31,17 +36,19 @@ gulp.task('clean', function() {
 });
 
 gulp.task('less', function () {
-    //TODO add .map generation
+
     gulp.src(folders.less + '*.less')
-      .pipe(less())
-      .pipe(minifyCSS())
+      .pipe(sourcemaps.init())
+      .pipe(less({ plugins: [autoprefix,cleancss] }))
+      .pipe(sourcemaps.write("./maps"))
       .pipe(gulp.dest(folders.css));
     //TODO maybe migrate to a reserved folder in platform
     for (var i in platformList) {
         var p = platformList[i];
         gulp.src(folders.platform + p +'/*.less')
-              .pipe(less())
-              .pipe(minifyCSS())
+      	      .pipe(sourcemaps.init())
+              .pipe(less({ plugins: [autoprefix,cleancss] }))
+              .pipe(sourcemaps.write("./maps"))
               .pipe(gulp.dest(folders.platform + p));
     }
 });
@@ -68,6 +75,7 @@ gulp.task('watch', function() {
   //gulp.watch(dest + 'img/**/*', ['images']);
 });
 
+gulp.task('build', ['clean','less', 'cordova:build']);
 gulp.task('default', ['clean','less', 'watch']);
 
 
