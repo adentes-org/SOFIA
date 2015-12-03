@@ -4,9 +4,14 @@
 
 Suivi Opérationnel des Fiches d'Intervention par Applicatif
 
+#### Pour insaller les dépendances
+```
+npm install
+```
+
 #### Pour compiler pour toutes les plate-formes
 ```
-gulp cordova:init clean less cordova:build
+gulp build
 ```
 
 #### En mode développement
