@@ -34,6 +34,10 @@ gulp.task('less', function () {
     //TODO add .map generation
     gulp.src(folders.less + '*.less')
       .pipe(less())
+      .pipe(autoprefixer({
+         browsers: ['> 5%','last 2 versions','Android > 18', 'last 5 ChromeAndroid versions', 'iOS > 3'],
+         cascade: false
+       }))
       .pipe(minifyCSS())
       .pipe(gulp.dest(folders.css));
     //TODO maybe migrate to a reserved folder in platform
