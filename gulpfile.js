@@ -40,7 +40,7 @@ gulp.task('less', function () {
     gulp.src(folders.less + '*.less')
       .pipe(sourcemaps.init())
       .pipe(less({ plugins: [autoprefix,cleancss] }))
-      .pipe(sourcemaps.write())
+      .pipe(sourcemaps.write("./maps"))
       .pipe(gulp.dest(folders.css));
     //TODO maybe migrate to a reserved folder in platform
     for (var i in platformList) {
@@ -48,7 +48,7 @@ gulp.task('less', function () {
         gulp.src(folders.platform + p +'/*.less')
       	      .pipe(sourcemaps.init())
               .pipe(less({ plugins: [autoprefix,cleancss] }))
-              .pipe(sourcemaps.write())
+              .pipe(sourcemaps.write("./maps"))
               .pipe(gulp.dest(folders.platform + p));
     }
 });
