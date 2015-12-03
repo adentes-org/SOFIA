@@ -1,6 +1,7 @@
 body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -ms-text-size-adjust: none;                 /* prevent ms from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
     font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
     font-size:12px;
@@ -32,7 +33,7 @@ body {
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-    a.v-link-active{
+    .v-link-active{
         background: #ccc;
     }
 }
