@@ -4,9 +4,11 @@ var gulp = require('gulp');
 //Dep
 var del = require('del');
 var less = require('gulp-less-sourcemap');
+var lessPluginAutoPrefix = require('less-plugin-autoprefix');
 var minifyCSS = require('gulp-minify-css');
 var cordova = require('gulp-cordova');
-var autoprefixer = require('gulp-autoprefixer');
+
+var autoprefix= new lessPluginAutoPrefix({browsers: ['> 5%','last 2 versions','Android > 18', 'last 5 ChromeAndroid versions', 'iOS > 3']});
 
 var folders = {
     root : "./www/",
@@ -33,22 +35,18 @@ gulp.task('clean', function() {
 gulp.task('less', function () {
     //TODO add .map generation
     gulp.src(folders.less + '*.less')
-      .pipe(less())
-      .pipe(autoprefixer({
-         browsers: ['> 5%','last 2 versions','Android > 18', 'last 5 ChromeAndroid versions', 'iOS > 3'],
-         cascade: false
-       }))
+      .pipe(less({
+		plugins: [autoprefix]
+	}))
       .pipe(minifyCSS())
       .pipe(gulp.dest(folders.css));
     //TODO maybe migrate to a reserved folder in platform
     for (var i in platformList) {
         var p = platformList[i];
         gulp.src(folders.platform + p +'/*.less')
-              .pipe(less())
-	      .pipe(autoprefixer({
-            	browsers: ['> 5%','last 2 versions','Android > 18', 'last 5 ChromeAndroid versions', 'iOS > 3'],
-                cascade: false
-              }))
+              .pipe(less({
+		    plugins: [autoprefix]
+		}))
               .pipe(minifyCSS())
               .pipe(gulp.dest(folders.platform + p));
     }
