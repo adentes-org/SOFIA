@@ -6,7 +6,7 @@ var del = require('del');
 var less = require('gulp-less-sourcemap');
 var minifyCSS = require('gulp-minify-css');
 var cordova = require('gulp-cordova');
-
+var autoprefixer = require('gulp-autoprefixer');
 
 var folders = {
     root : "./www/",
@@ -41,6 +41,10 @@ gulp.task('less', function () {
         var p = platformList[i];
         gulp.src(folders.platform + p +'/*.less')
               .pipe(less())
+	      .pipe(autoprefixer({
+            	browsers: ['> 5%','last 2 versions','Android > 18', 'last 5 ChromeAndroid versions', 'iOS > 3'],
+                cascade: false
+              }))
               .pipe(minifyCSS())
               .pipe(gulp.dest(folders.platform + p));
     }
