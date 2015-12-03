@@ -68,6 +68,7 @@ gulp.task('watch', function() {
   //gulp.watch(dest + 'img/**/*', ['images']);
 });
 
+gulp.task('build', ['clean','less', 'cordova:build']);
 gulp.task('default', ['clean','less', 'watch']);
 
 
