@@ -25,12 +25,12 @@ folders.platform = folders.assets+"platform/";
 var platformList = ["android","browser","ios"]; //TODO generate from folder
 gulp.task('clean', function() {
   //return 
-  del([folders.css+'/*.css',folders.css+'/*.css.map']);
+  del([folders.css+'/*.css',folders.css+'/maps/*.css.map']);
   for (var i in platformList) {
-	  if(platformList.hasOwnProperty(i)){
-        var p = platformList[i];
-        del([folders.platform + p +'/style.css',folders.platform + p +'/style.css.map'])
-    }
+  	if(platformList.hasOwnProperty(i)){
+        	var p = platformList[i];
+        	del([folders.platform + p +'/style.css',folders.platform + p +'/maps/style.css.map'])
+    	}
 }
   //TODO clear also platform build related
 });
@@ -44,12 +44,14 @@ gulp.task('less', function () {
       .pipe(gulp.dest(folders.css));
     //TODO maybe migrate to a reserved folder in platform
     for (var i in platformList) {
-        var p = platformList[i];
-        gulp.src(folders.platform + p +'/*.less')
-      	      .pipe(sourcemaps.init())
-              .pipe(less({ plugins: [autoprefix,cleancss] }))
-              .pipe(sourcemaps.write("./maps"))
-              .pipe(gulp.dest(folders.platform + p));
+  	if(platformList.hasOwnProperty(i)){
+	        var p = platformList[i];
+	        gulp.src(folders.platform + p +'/*.less')
+	      	      .pipe(sourcemaps.init())
+	              .pipe(less({ plugins: [autoprefix,cleancss] }))
+	              .pipe(sourcemaps.write("./maps"))
+	              .pipe(gulp.dest(folders.platform + p));
+  	}
     }
 });
 
