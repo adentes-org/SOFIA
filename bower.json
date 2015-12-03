@@ -17,6 +17,7 @@
         "jquery": "latest",
         "requirejs": "latest",
         "pouchdb": "latest",
+        "pouchdb-authentication": "latest",
         "vue": "latest",
         "vue-router": "latest",
         "material-design-lite": "latest",
@@ -27,6 +28,7 @@
         "sources": {
             "jquery": "bower_components/jquery/dist/**",
             "pouchdb": "bower_components/pouchdb/dist/**",
+            "pouchdb-authentication": "bower_components/pouchdb-authentication/dist/**",
             "vue": "bower_components/vue/dist/**",
             "vue-router": "bower_components/vue-router/dist/**",
             "requirejs" : "bower_components/requirejs/require.js",
