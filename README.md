@@ -4,7 +4,7 @@
 
 Suivi Opérationnel des Fiches d'Intervention par Applicatif
 
-#### Pour insaller les dépendances
+#### Pour installer les dépendances
 ```
 npm install
 ```
