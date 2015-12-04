@@ -34,7 +34,7 @@ requirejs(['cordova', 'jquery', 'vue', 'vue-router', 'pouchdb', 'app/sophia.poly
     window.Vue = Vue; //Force Vue to DOM
     window.VueRouter = VueRouter; //Force VueRouter to DOM
     requirejs(['app/sophia.tool', 'app/sophia.template', 'app/sophia.config'], function () {
-        $("head").append('<link rel="stylesheet" type="text/css" href="assets/platform/' + cordova.platformId + '/style.css">');
+        $("head").append('<link rel="stylesheet" type="text/css" href="assets/platform/' + cordova.platformId + '/css/style.css">');
         requirejs(['platform/' + cordova.platformId + '/init'], function () {
             requirejs(['app/sophia.vue', 'app/sophia.data', 'app/sophia.app'], function () {
                 S.app.initialize();

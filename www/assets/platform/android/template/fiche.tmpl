@@ -1,0 +1,14 @@
+<section class="section--center mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-shadow--2dp"> 
+    <a class="fiche patient" href="#!/fiche/{{f.id}}">
+        <div class="mdl-card" > 
+            <div class="mdl-card__title"> 
+                <h4>{{ f.patient.firstname }} {{ f.patient.lastname }}</h4>
+            </div> 
+            <div class="mdl-card__supporting-text">
+                <span class="gender">{{f.patient.gender}}</span> <span class="birthdate">{{f.patient.birthdate}}</span> \
+                <br>
+                <span>{{f.pathologys | json}}<span>
+            </div> 
+        </div>
+    </a>
+</section>
