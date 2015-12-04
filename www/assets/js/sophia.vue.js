@@ -45,13 +45,15 @@ S.vue = {
     },
     parse_template: function () {
         for (var i in S.template.pages) {
-            S.vue.el.pages[i] = Vue.extend({
-                props: ['searchbox'],
-                template: S.template.page_wrapper(i, S.template.pages[i]),
-                data: (S.data.pages[i]) ? S.data.pages[i].data || null : null, //We load data if set
-                computed: S.data.pages[i] && S.data.pages[i].computed || null //We load computed part if set 
-            });
-            S.vue.map["/" + i] = {url: "/" + i, name: S.tool.capitalizeFirstLetter(i), component: S.vue.el.pages[i], options: (S.data.pages[i] && S.data.pages[i].options || {})};
+            if(S.template.pages.hasOwnProperty(i)){
+                S.vue.el.pages[i] = Vue.extend({
+                    props: ['searchbox'],
+                    template: S.template.page_wrapper(i, S.template.pages[i]),
+                    data: (S.data.pages[i]) ? S.data.pages[i].data || null : null, //We load data if set
+                    computed: S.data.pages[i] && S.data.pages[i].computed || null //We load computed part if set 
+                });
+                S.vue.map["/" + i] = {url: "/" + i, name: S.tool.capitalizeFirstLetter(i), component: S.vue.el.pages[i], options: (S.data.pages[i] && S.data.pages[i].options || {})};
+            }
         }
         //console.log(S.vue.map);
     },
