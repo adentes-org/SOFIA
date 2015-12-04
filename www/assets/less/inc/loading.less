@@ -27,9 +27,10 @@ body.loading {
     top:50%;
     height:50px;                   /* text area height */
     width:225px;                   /* text area width */
+    //box-sizing: border-box;
     text-align:center;
-    padding:120px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
-    margin:-100px 0px 0px -100px;  /* offset vertical: half of image height and text area height */
+    padding:120px 0 0 0;     /* image height is 200px (bottom 20px are overlapped with text) */
+    margin:-200px 0 0 -100px;  /* offset vertical: half of image height and text area height */
     /* offset horizontal: half of text area width */
     z-index: 1000;
 
@@ -44,8 +45,8 @@ body.loading {
     transition: opacity .5s ease-in-out;
 
     h1 {
-        font-size: 42px !important;
-        margin: 0 !important;
+        font-size: 42px;
+        margin: 0;
         text-align:center;
         text-transform:uppercase;
         font-weight: normal;
