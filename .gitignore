@@ -56,3 +56,9 @@ platforms/*
 
 #Netbeans
 nbproject/
+
+
+bower_components/
+node_modules/
+plugins/
+

@@ -6,16 +6,12 @@ S.template = {
         return "Platform not supported !";
     },
     buttons: {
-        quickAdd: function () {}
+        quickAdd: ""
     },
     pages: {
-        inbox: function () {},
-        configuration: function () {
-            return "Default configuration template";
-        },
-        "fiche/:fiche_id": function () {
-            return "{{ fiche | json }}";
-        }
+        inbox: "",
+        configuration: "Default configuration template",
+        "fiche/:fiche_id":  "{{ fiche | json }}"
     },
     header: function () {},
     menu: function () {}

@@ -1,0 +1,5 @@
+<div class="mdl-grid">
+        <template v-for="fiche in fiches  | filterBy searchbox" >
+            <fiche v-bind:f="fiche"></fiche>
+        </template>
+</div>
