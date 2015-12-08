@@ -32,7 +32,7 @@ gulp.task('clean', function () {
     for (var i in platformList) {
         if(platformList.hasOwnProperty(i)){
         	var p = platformList[i];
-        	del([folders.platform + p +'/css/*.css',folders.platform + p +'/css/maps/style.css.map'])
+        	del([folders.platform + p +'/css/*.css',folders.platform + p +'/css/maps/*.css.map'])
     	}
 }
   //TODO clear also platform build related
