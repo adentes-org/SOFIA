@@ -43,7 +43,7 @@ gulp.task('less', function () {
     gulp.src(folders.less + '*.less')
       .pipe(sourcemaps.init())
       .pipe(less({ plugins: [autoprefix] }))
-      .pipe(gulp.dest(folders.css));
+      .pipe(gulp.dest(folders.css))
       .pipe(uglify()).pipe(rename({ extname: '.min.css' }))
       .pipe(sourcemaps.write("./maps"))
       .pipe(gulp.dest(folders.css));
@@ -54,7 +54,7 @@ gulp.task('less', function () {
                 gulp.src(folders.platform + p +'/css/*.less')
                       .pipe(sourcemaps.init())
                       .pipe(less({ plugins: [autoprefix] }))
-                      .pipe(gulp.dest(folders.platform + p + '/css/'));
+                      .pipe(gulp.dest(folders.platform + p + '/css/'))
                       .pipe(uglify()).pipe(rename({ extname: '.min.css' }))
                       .pipe(sourcemaps.write("./maps"))
                       .pipe(gulp.dest(folders.platform + p + '/css/'));
