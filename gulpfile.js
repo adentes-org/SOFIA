@@ -14,6 +14,7 @@ var LessPluginCleanCSS = require('less-plugin-clean-css'),
     /* cleancss = new LessPluginCleanCSS({ advanced: true }), */
     autoprefix = new LessPluginAutoPrefix({browsers: ['> 0.01%', 'last 3 versions', 'Android > 18', 'last 5 ChromeAndroid versions', 'iOS > 3']});
 var uglify = require('gulp-uglify');
+var rename = require("gulp-rename");
 
 var folders = {
     root : "./www/"
