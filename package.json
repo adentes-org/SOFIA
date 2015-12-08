@@ -40,7 +40,8 @@
     "gulp-less": "~3.0.5",
     "less-plugin-autoprefix": "~1.5.1",
     "less-plugin-clean-css": "~1.5.1",
-    "gulp-sourcemaps": "~1.6.0"
+    "gulp-sourcemaps": "~1.6.0",
+    "gulp-uglify" : "~1.5.1"
   },
   "cordova": [
     [
