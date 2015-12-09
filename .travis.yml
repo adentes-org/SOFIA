@@ -31,7 +31,7 @@ script:
 
 after_success: 
   - cp platforms/android/build/outputs/apk/android-release-unsigned.apk platforms/android/build/outputs/apk/android-release-signed.apk
-  - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore sophia-release-key.keystore platforms/android/build/outputs/apk/android-release-signed.apk SOPHIA 
+  - jarsigner -verbose -sigalg SHA1withRSA -storepass $STOREPASS -keypass $KEYPASS -digestalg SHA1 -keystore sophia-release-key.keystore platforms/android/build/outputs/apk/android-release-signed.apk SOPHIA 
   - zipalign -v 4 platforms/android/build/outputs/apk/android-release-signed.apk platforms/android/build/outputs/apk/android-release-signed-aligned.apk
   - md5sum platforms/android/build/outputs/apk/*.apk
   - sha512sum platforms/android/build/outputs/apk/*.apk
