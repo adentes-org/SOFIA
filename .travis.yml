@@ -5,6 +5,8 @@ android:
   # KitKat https://source.android.com/source/build-numbers.html
   - build-tools-19
   - android-19 
+  - build-tools-22
+  - android-22
   
 sudo: false
 cache:
