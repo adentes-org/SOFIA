@@ -9,7 +9,7 @@ S.tool.loadStatic({
         menu : "menu.tmpl",
         pages : {
             home : "pages/home.tmpl",
-            login : "pages/login.tmpl"
+            _login : "pages/login.tmpl"
         },
         buttons : {
             quickAdd : "buttons/quickAdd.tmpl"

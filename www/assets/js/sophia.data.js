@@ -25,7 +25,14 @@ S.data = {
                 }
             }
         },
-        inbox: {
+        "_login" : {
+            options : {
+                displayQuickAddButton : false,
+                displayHeader : false,
+                displayMenu : false,
+            }
+        },
+        home: {
             data: function () {   ///TODO don't use a function but a object that is updated. But d'ont know how
                 //TODO not use fake data and direct acces to local db
                 return {

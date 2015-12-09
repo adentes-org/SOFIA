@@ -25,3 +25,22 @@ a.fiche.patient .mdl-card .mdl-card__title h4 {
 a.fiche.patient .mdl-card .birthdate {
   float: right;
 }
+#_login #logo,
+#_login .mdl-card {
+  width: 340px;
+  margin-bottom: 30px;
+  margin-right: auto;
+  margin-left: auto;
+}
+#_login #logo > h2,
+#_login #logo > h3,
+#_login .mdl-card__actions > a {
+  float: right;
+}
+#_login #logo > h3 {
+  margin-top: -52px;
+  font-size: 150%;
+}
+#_login #logo > img {
+  margin-left: -20px;
+}

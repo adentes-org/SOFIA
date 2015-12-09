@@ -10,7 +10,7 @@ S.template = {
     },
     pages: {
         home: "",
-        login: "",
+        _login: "",
         configuration: "Default configuration template",
         "fiche/:fiche_id":  "{{ fiche | json }}"
     },
