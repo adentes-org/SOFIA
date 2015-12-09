@@ -28,6 +28,8 @@ after_success:
   SOPHIA
 - export PATH=$(find /usr/local/android-sdk/ -name zipalign -type f| head -1 | sed -e 's/\/zipalign//g'):$PATH
 - zipalign -v 4 platforms/android/build/outputs/apk/android-release-signed.apk platforms/android/build/outputs/apk/android-release-signed-aligned.apk
+- jarsigner -verify -verbose -certs platforms/android/build/outputs/apk/android-release-signed.apk
+- jarsigner -verify -verbose -certs platforms/android/build/outputs/apk/android-release-signed-aligned.apk
 - md5sum platforms/android/build/outputs/apk/*.apk
 - sha512sum platforms/android/build/outputs/apk/*.apk
 deploy:
