@@ -3,35 +3,37 @@ android:
   components:
   - platform-tools
   - build-tools
-  # KitKat https://source.android.com/source/build-numbers.html
-  - android-19 
-  # Par défaut dans cordova
+  - android-19
   - android-22
-  
 sudo: false
 cache:
   directories:
-    - node_modules 
-    - bower_components
-      
+  - node_modules
+  - bower_components
 before_install:
-# Setup npm and dep
-#  - sudo apt-get install nodejs npm
-  - nvm install 5.1 && nvm alias default 5.1 && nvm use 5.1
-  - npm install -g npm gulp cordova
-  - npm install 
-  
+- openssl aes-256-cbc -K $encrypted_34df3519aae9_key -iv $encrypted_34df3519aae9_iv
+  -in sophia-release-key.keystore.enc -out sophia-release-key.keystore -d
+- nvm install 5.1 && nvm alias default 5.1 && nvm use 5.1
+- npm install -g npm gulp cordova
+- npm install
 before_script:
-# - gulp cordova:init clean less # Done in npm postinstall
- - gulp clean less
-  
-script: 
-  - gulp cordova:build
-  - cordova build android --release
-
-after_success: 
-  - cp platforms/android/build/outputs/apk/android-release-unsigned.apk platforms/android/build/outputs/apk/android-release-signed.apk
-  - jarsigner -verbose -sigalg SHA1withRSA -storepass $STOREPASS -keypass $KEYPASS -digestalg SHA1 -keystore sophia-release-key.keystore platforms/android/build/outputs/apk/android-release-signed.apk SOPHIA 
-  - zipalign -v 4 platforms/android/build/outputs/apk/android-release-signed.apk platforms/android/build/outputs/apk/android-release-signed-aligned.apk
-  - md5sum platforms/android/build/outputs/apk/*.apk
-  - sha512sum platforms/android/build/outputs/apk/*.apk
+- gulp clean less
+script:
+- gulp cordova:build
+- cordova build android --release
+after_success:
+- cp platforms/android/build/outputs/apk/android-release-unsigned.apk platforms/android/build/outputs/apk/android-release-signed.apk
+- jarsigner -verbose -sigalg SHA1withRSA -storepass $STOREPASS -keypass $KEYPASS -digestalg
+  SHA1 -keystore sophia-release-key.keystore platforms/android/build/outputs/apk/android-release-signed.apk
+  SOPHIA
+- zipalign -v 4 platforms/android/build/outputs/apk/android-release-signed.apk platforms/android/build/outputs/apk/android-release-signed-aligned.apk
+- md5sum platforms/android/build/outputs/apk/*.apk
+- sha512sum platforms/android/build/outputs/apk/*.apk
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: REgeIaHbBjMektIqH+sdlmdqtz9KCn5wUcPtamMvquwFUn676VtBqTwYAPUsrq46FojKM1t3unXjSdp1rwslijX0Q9NTZW0FOnkbfmUB4PwveSTFcr1oBd0h+APfYnSiw62RHW6+JjGrK0jNQLQAA35PTows4FKW8mIyzzDWFT+LklHoQ4NP3NNp2hqXmMbcsVkQtEdHhN2a+Kh3zFEnCzDeoQN7BqhJmHIeKR23cK0I9P4wAyJjPkvcFtb32D93TyN3ysBS6l4LNeYI5aAGdf5KKJez66Hipo3L3A03BTsIfMxSlPrhmw3REWje9xFxDUCvyH4E7WxjMo1oICJQ+N6VEUTHSb0OMMByTxz+3gxf9slydR5d23Uy4c6XFGBB6DLwa97cRgs7wM/k0XgfK7lwQg+20fs4IoesGp+6TqpfR9M4IgYjX2XEg2A5bF62dKJjVWWeCAQtWqRlgStKNpUSI27s786mHRQZdlPf2rJ8uyd5zUbhjJ2wCRJX08nVff4TGKDJJvLjvu+/nni4NjGrft1sxgBQIe29zPlJ7CTh29qRLNTbis/Uodi76YaQQV352/R9sowRIkKFGH34grvXgtiKbTPuvkhcN4XfUu7Dm+QCoS5C5u0etHUIo3hqRhq0po1HmIqkT7c6QGERKVFbpT5OwynYjzHYKmmrECc=
+  file: platforms/android/build/outputs/apk/android-release-signed-aligned.apk
+  on:
+    repo: adentes-org/SOFIA
