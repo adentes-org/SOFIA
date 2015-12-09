@@ -9,7 +9,8 @@ S.template = {
         quickAdd: ""
     },
     pages: {
-        inbox: "",
+        home: "",
+        _login: "",
         configuration: "Default configuration template",
         "fiche/:fiche_id":  "{{ fiche | json }}"
     },

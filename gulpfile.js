@@ -13,6 +13,9 @@ var LessPluginCleanCSS = require('less-plugin-clean-css'),
     LessPluginAutoPrefix = require('less-plugin-autoprefix'),
     cleancss = new LessPluginCleanCSS({ advanced: true }),
     autoprefix = new LessPluginAutoPrefix({browsers: ['> 0.01%', 'last 3 versions', 'Android > 18', 'last 5 ChromeAndroid versions', 'iOS > 3']});
+//var uglify = require('gulp-uglify');
+//var minifyCss = require('gulp-minify-css');
+//var rename = require("gulp-rename");
 
 var folders = {
     root : "./www/"
@@ -31,7 +34,7 @@ gulp.task('clean', function () {
     for (var i in platformList) {
         if(platformList.hasOwnProperty(i)){
         	var p = platformList[i];
-        	del([folders.platform + p +'/css/style.css',folders.platform + p +'/css/maps/style.css.map'])
+        	del([folders.platform + p +'/css/*.css',folders.platform + p +'/css/maps/*.css.map'])
     	}
 }
   //TODO clear also platform build related
@@ -44,7 +47,7 @@ gulp.task('less', function () {
       .pipe(less({ plugins: [autoprefix,cleancss] }))
       .pipe(sourcemaps.write("./maps"))
       .pipe(gulp.dest(folders.css));
-    //TODO maybe migrate to a reserved folder in platform
+
     for (var i in platformList) {
         if(platformList.hasOwnProperty(i)){
                 var p = platformList[i];
@@ -52,9 +55,15 @@ gulp.task('less', function () {
                       .pipe(sourcemaps.init())
                       .pipe(less({ plugins: [autoprefix,cleancss] }))
                       .pipe(sourcemaps.write("./maps"))
-                      .pipe(gulp.dest(folders.platform + p + '/css/'));
+                      .pipe(gulp.dest(folders.platform + p + '/css/'));  
+                      /*                      
+                      .pipe(gulp.dest(folders.platform + p + '/css/'))
+                      .pipe(minifyCss())
+                      .pipe(rename({ extname: '.min.css' }))
+                      */
         }
     }
+    
 });
 
 gulp.task('cordova:init', function() {

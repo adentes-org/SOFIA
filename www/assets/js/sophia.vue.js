@@ -65,13 +65,29 @@ S.vue = {
                     searchbox: "",
                     headerOptions: {
                         "title": "",
+                        "display": true,
                         "displaySearchbox": true
+                    },
+                    quickAddButtonOptions: {
+                        "display": true
+                    },
+                    MenuOptions: {
+                        "display": true
                     }
                 }
             }
         });
         S.vue.router = new VueRouter();
         S.vue.router.map(S.vue.map);
+        S.vue.router.beforeEach(function (transition) {
+          if (transition.to.path !== '/_login' && !S.user._current.isLogged()) { //TODO check for credential in database
+            //transition.abort()
+            //S.router.replace("/_login");
+            transition.redirect("/_login")
+          } else {
+            transition.next()
+          }
+        })
         S.vue.router.afterEach(function (transition) {
             console.log('Successfully navigated to: ' + transition.to.path, transition.to.path.slice(1));
             //* Use in the header of the menu
@@ -88,12 +104,19 @@ S.vue = {
             if (current.options) {
                 //console.log(current.options, current.options.displaySearchbox);
                 S.vue.router.app.$data.headerOptions.displaySearchbox = (typeof current.options.displaySearchbox === "boolean") ? current.options.displaySearchbox : true;
+                S.vue.router.app.$data.headerOptions.display = (typeof current.options.displayHeader === "boolean") ? current.options.displayHeader : true;
+                S.vue.router.app.$data.quickAddButtonOptions.display = (typeof current.options.displayQuickAddButton === "boolean") ? current.options.displayQuickAddButton : true;
+            
+                S.vue.router.app.$data.MenuOptions.display = (typeof current.options.displayMenu === "boolean") ? current.options.displayMenu : true;
+                
             }
             //*/
         });
-        // Redirect certain routes to other routes
+        // Redirect certain routes to other routes (by default hom and if not logged redirect to login)
         S.vue.router.redirect({
-            '/': '/inbox'
+            '/': '/home',
+            // redirect any not-found route to home
+            '*': '/home'
         })
 
         S.vue.router.start(S.vue.el.App, '.app');
@@ -108,7 +131,7 @@ S.vue = {
         //TODO link the title of the menu to the title of the page
         S.vue.el.menu = new Vue({
             el: '#menu',
-            data: {current: "Inbox", links: S.vue.map},
+            data: {current: "Login", links: S.vue.map},
             methods: {
                 isMenuEntry: S.tool.isMenuEntry
             }

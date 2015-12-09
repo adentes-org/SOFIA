@@ -28,6 +28,7 @@ S.tool = {
       };
     },
     loadStatic: function (paths, then, fallback) {
+        //TODO use Promise http://www.html5rocks.com/en/tutorials/es6/promises/ https://github.com/jakearchibald/es6-promise#readme
         //TODO maybe evaluate this posibility http://vuejs.org/guide/application.html
         var data = {},
             fileToLoad = 0;
