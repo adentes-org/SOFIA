@@ -23,7 +23,7 @@ script:
 - cordova build android --release
 after_success:
 - cp platforms/android/build/outputs/apk/android-release-unsigned.apk platforms/android/build/outputs/apk/android-release-signed.apk
-- jarsigner -verbose -sigalg SHA1withRSA -storepass $STOREPASS -keypass $KEYPASS -digestalg
+- jarsigner -verbose -sigalg SHA1withRSA -storepass "$STOREPASS" -keypass "$KEYPASS" -digestalg
   SHA1 -keystore sophia-release-key.keystore platforms/android/build/outputs/apk/android-release-signed.apk
   SOPHIA
 - export PATH=$(find /usr/local/android-sdk/ -name zipalign -type f| head -1 | sed -e 's/\/zipalign//g'):$PATH
