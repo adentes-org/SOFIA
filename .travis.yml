@@ -30,5 +30,8 @@ script:
   - cordova build android --release
 
 after_success: 
-  - md5sum platforms/android/build/outputs/apk/android-release-unsigned.apk
-  - sha512sum platforms/android/build/outputs/apk/android-release-unsigned.apk
+  - cp platforms/android/build/outputs/apk/android-release-unsigned.apk platforms/android/build/outputs/apk/android-release-signed.apk
+  - jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore sophia-release-key.keystore platforms/android/build/outputs/apk/android-release-signed.apk SOPHIA 
+  - zipalign -v 4 platforms/android/build/outputs/apk/android-release-signed.apk platforms/android/build/outputs/apk/android-release-signed-aligned.apk
+  - md5sum platforms/android/build/outputs/apk/*.apk
+  - sha512sum platforms/android/build/outputs/apk/*.apk
