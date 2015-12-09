@@ -26,6 +26,7 @@ after_success:
 - jarsigner -verbose -sigalg SHA1withRSA -storepass $STOREPASS -keypass $KEYPASS -digestalg
   SHA1 -keystore sophia-release-key.keystore platforms/android/build/outputs/apk/android-release-signed.apk
   SOPHIA
+- export PATH=$(find /usr/local/android-sdk/ -name zipalign -type f| head -1 | sed -e 's/\/zipalign//g'):$PATH
 - zipalign -v 4 platforms/android/build/outputs/apk/android-release-signed.apk platforms/android/build/outputs/apk/android-release-signed-aligned.apk
 - md5sum platforms/android/build/outputs/apk/*.apk
 - sha512sum platforms/android/build/outputs/apk/*.apk
