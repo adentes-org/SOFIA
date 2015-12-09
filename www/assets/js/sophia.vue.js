@@ -93,7 +93,7 @@ S.vue = {
         });
         // Redirect certain routes to other routes
         S.vue.router.redirect({
-            '/': '/inbox'
+            '/': '/login'
         })
 
         S.vue.router.start(S.vue.el.App, '.app');
@@ -108,7 +108,7 @@ S.vue = {
         //TODO link the title of the menu to the title of the page
         S.vue.el.menu = new Vue({
             el: '#menu',
-            data: {current: "Inbox", links: S.vue.map},
+            data: {current: "Login", links: S.vue.map},
             methods: {
                 isMenuEntry: S.tool.isMenuEntry
             }

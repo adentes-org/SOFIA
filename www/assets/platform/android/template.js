@@ -8,7 +8,8 @@ S.tool.loadStatic({
         fiche : "fiche.tmpl",
         menu : "menu.tmpl",
         pages : {
-            inbox : "pages/inbox.tmpl"
+            home : "pages/home.tmpl",
+            login : "pages/login.tmpl"
         },
         buttons : {
             quickAdd : "buttons/quickAdd.tmpl"
