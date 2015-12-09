@@ -2,10 +2,10 @@ language: android
 android:
   components:
   - platform-tools
+  - build-tools
   # KitKat https://source.android.com/source/build-numbers.html
-  - build-tools-19
   - android-19 
-  - build-tools-22
+  # Par défaut dans cordova
   - android-22
   
 sudo: false
@@ -28,3 +28,7 @@ before_script:
 script: 
   - gulp cordova:build
   - cordova build android --release
+
+after_success: 
+  - md5sum platforms/android/build/outputs/apk/android-release-unsigned.apk
+  - sha512sum platforms/android/build/outputs/apk/android-release-unsigned.apk
