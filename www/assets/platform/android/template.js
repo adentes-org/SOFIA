@@ -15,7 +15,7 @@ S.tool.loadStatic({
             quickAdd : "buttons/quickAdd.tmpl"
         }
     }
-},function(data){
+}).then(function(data){
     S.template = $.extend(true, S.template, data);  
     S.template.page_wrapper = function (id, page) {
         return '<div class="page-content" id="' + id + '">' + ((typeof page === "function")?page():page)   + '</div>';
@@ -28,10 +28,12 @@ S.tool.loadStatic({
                 "\n" + S.template.buttons.quickAdd +
                 '</div>';
     };
-    S.template._isLoaded = true;
     //console.log(S.template);
     //TODO return requirejs
-})
+}).done(function(){
+    S.template._isLoaded = true;
+    //TODO 
+});
 /*
 S.template.header = '';
 S.template.fiche = '';
