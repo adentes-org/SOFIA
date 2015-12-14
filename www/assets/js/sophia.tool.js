@@ -27,6 +27,37 @@ S.tool = {
         }, delay);
       };
     },
+    loadStatic: function (paths) {
+        //return new Promise(function (fulfill, reject){
+            paths.base = paths.base || ""; // Use a empty string if not existing
+            var data = {}; //TODO determine if let is sufficient
+            let pool = [];
+            $.each(paths.files, function(id,path){
+                if(typeof path === "string"){
+                    // Load static
+                    pool.push($.get(paths.base+"/"+path).then(function(content){
+                        data[id] = content;
+                    })); //TODO manage reject.
+                } else if(typeof path === "object"){
+                    // Chain load static
+                    // TODO use a  more recursive structure and use a local path.base
+                    pool.push(S.tool.loadStatic({
+                        base : paths.base,
+                        files : path
+                    }).then(function(d){
+                        data[id] = d; //TODO check if not better to use extend
+                    }));; //TODO manage reject
+                } else {
+                    console.log("Incompatible type : " + id + " -> " + (typeof path)); //TODO use a Promise.reject() ?
+                }
+            };
+            return Promise.all(pool).then(function(){
+                console.log(data);
+                return Promise.resolve(data);
+            });
+        //});
+    }
+    /*
     loadStatic: function (paths, then, fallback) {
         //TODO use Promise http://www.html5rocks.com/en/tutorials/es6/promises/ https://github.com/jakearchibald/es6-promise#readme
         //TODO maybe evaluate this posibility http://vuejs.org/guide/application.html
@@ -70,4 +101,5 @@ S.tool = {
             }
         });        
     }
+    */
 };
