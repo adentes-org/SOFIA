@@ -50,7 +50,7 @@ S.tool = {
                 } else {
                     console.log("Incompatible type : " + id + " -> " + (typeof path)); //TODO use a Promise.reject() ?
                 }
-            };
+            });
             return Promise.all(pool).then(function(){
                 console.log(data);
                 return Promise.resolve(data);

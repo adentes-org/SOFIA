@@ -13,7 +13,8 @@ requirejs.config({
         jquery: 'lib/jquery/jquery.min',
         pouchdb: 'lib/pouchdb/pouchdb.min',
         vue: 'lib/vue/vue.min',
-        "vue-router": 'lib/vue-router/vue-router.min'
+        "vue-router": 'lib/vue-router/vue-router.min',
+        promise: 'lib/requirejs-promise/requirejs-promise'
                 /*
                  browser: 'platform/browser',
                  android: 'platform/android',

@@ -10,7 +10,7 @@ $("head").append('<link rel="stylesheet" type="text/css" href="assets/lib/materi
 //$("body").append('<script src="assets/lib/material-design-lite/material.min.js"></script>');
 
 
-requirejs(['lib/material-design-lite/material.min', 'platform/android/template'], function () {
+requirejs(['lib/material-design-lite/material.min', 'promise!platform/android/template'], function () {
     S.platform = {
         isLoaded: true,
         id: "android",

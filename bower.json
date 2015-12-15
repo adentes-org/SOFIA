@@ -21,7 +21,8 @@
         "vue": "latest",
         "vue-router": "latest",
         "material-design-lite": "latest",
-        "material-design-icons": "latest"
+        "material-design-icons": "latest",
+        "requirejs-promise": "latest"
     },
     "install": {
         "path": "www/assets/lib",
@@ -32,7 +33,8 @@
             "vue": "bower_components/vue/dist/**",
             "vue-router": "bower_components/vue-router/dist/**",
             "requirejs" : "bower_components/requirejs/require.js",
-            "material-design-icons" : "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.*"
+            "material-design-icons" : "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.*",
+            "requirejs-promise" : "bower_components/requirejs-promise/requirejs-promise.js"
         }
     },
     "private": true
