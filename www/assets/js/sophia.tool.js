@@ -1,4 +1,5 @@
 'use strict';
+
 var S = S || {};
 
 S.tool = {
@@ -27,25 +28,53 @@ S.tool = {
         }, delay);
       };
     },
+    /*
+    get: function(path){
+        //Use a of File api to access file avec cordova-plugin-file
+        var deferred = new $.Deferred(); //TODO migrate to strandard promise
+    	window.resolveLocalFileSystemURL(cordova.file.applicationDirectory  + "www/" + path, gotFile, deferred.reject);
+        function gotFile(fileEntry) {
+            fileEntry.file(function(file) {
+                var reader = new FileReader();
+                reader.onloadend = function(e) {
+                    console.log("Data : "+this.result);
+                    deferred.resolve(this.result);
+                }
+                reader.readAsText(file);
+            });
+        }
+        return deferred.promise();
+    },
+    */
     loadStatic: function (paths) {
         //return new Promise(function (fulfill, reject){
             paths.base = paths.base || ""; // Use a empty string if not existing
             var data = {}; //TODO determine if let is sufficient
-            let pool = [];
+            var pool = [];
             $.each(paths.files, function(id,path){
                 if(typeof path === "string"){
                     // Load static
-                    pool.push($.get(paths.base+"/"+path).then(function(content){
+                    console.log("get("+paths.base+path+")");
+                    pool.push($.get(paths.base+path).then(function(content){ //Not working on Android
+                    //pool.push(S.tool.get(paths.base+path).then(function(content){
                         data[id] = content;
+                    }, function(error){
+                        console.log("Error getting : "+ JSON.stringify(error));  
                     })); //TODO manage reject.
                 } else if(typeof path === "object"){
                     // Chain load static
                     // TODO use a  more recursive structure and use a local path.base
+                    console.log("chain("+JSON.stringify({
+                        base : paths.base,
+                        files : path
+                    })+")");
                     pool.push(S.tool.loadStatic({
                         base : paths.base,
                         files : path
                     }).then(function(d){
                         data[id] = d; //TODO check if not better to use extend
+                    }, function(error){
+                        console.log("Error chaining : "+ JSON.stringify(error));  
                     }));; //TODO manage reject
                 } else {
                     console.log("Incompatible type : " + id + " -> " + (typeof path)); //TODO use a Promise.reject() ?
