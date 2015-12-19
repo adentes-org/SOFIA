@@ -9,6 +9,12 @@ Suivi Opérationnel des Fiches d'Intervention par Applicatif
 npm install
 ```
 
+Pour iOS, sur OSX:
+```
+npm install -g ios-sim
+npm install -g ios-deploy
+```
+
 #### Pour compiler pour toutes les plate-formes
 ```
 gulp build
