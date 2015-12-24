@@ -12,7 +12,6 @@ S.vue = {
         S.vue.parse_template();
         S.vue.init_menu();
         S.vue.init_router();
-
     },
     declare_compoment: function () {
         //TODO maybe declare them directly in the App contructor ?
@@ -50,7 +49,8 @@ S.vue = {
                     props: ['searchbox'],
                     template: S.template.page_wrapper(i, S.template.pages[i]),
                     data: (S.data.pages[i]) ? S.data.pages[i].data || null : null, //We load data if set
-                    computed: S.data.pages[i] && S.data.pages[i].computed || null //We load computed part if set 
+                    computed: S.data.pages[i] && S.data.pages[i].computed || null, //We load computed part if set
+                    methods: S.data.pages[i] && S.data.pages[i].methods || null //We load methods part if set
                 });
                 S.vue.map["/" + i] = {url: "/" + i, name: S.tool.capitalizeFirstLetter(i), component: S.vue.el.pages[i], options: (S.data.pages[i] && S.data.pages[i].options || {})};
             }
@@ -106,9 +106,9 @@ S.vue = {
                 S.vue.router.app.$data.headerOptions.displaySearchbox = (typeof current.options.displaySearchbox === "boolean") ? current.options.displaySearchbox : true;
                 S.vue.router.app.$data.headerOptions.display = (typeof current.options.displayHeader === "boolean") ? current.options.displayHeader : true;
                 S.vue.router.app.$data.quickAddButtonOptions.display = (typeof current.options.displayQuickAddButton === "boolean") ? current.options.displayQuickAddButton : true;
-            
+
                 S.vue.router.app.$data.MenuOptions.display = (typeof current.options.displayMenu === "boolean") ? current.options.displayMenu : true;
-                
+
             }
             //*/
         });
