@@ -30,6 +30,27 @@ S.data = {
                 displayQuickAddButton : false,
                 displayHeader : false,
                 displayMenu : false,
+            },
+            data: function() {
+                //TODO clean only for testing purpose
+                return {
+                  username : "User11",
+                  userpass : "3WWWWE"
+                };
+            },
+            methods: {
+              login: function (event) {
+                //TODO check format of user and pass
+                //TODO determine if not use lazy attribute to use less ressouces
+                S.user.login(this.username, this.userpass).then(function(user){
+                    console.log(user);
+                    S.vue.router.go("/");
+                })
+                /*.catch(function(error){
+                    //TODO handle errors
+                });
+                */
+              }
             }
         },
         home: {
@@ -47,7 +68,7 @@ S.data = {
                                 gender: "Homme"
                             },
                             pathologys: ["Coupure"],
-                            events: [] //Entrée, sortie, changements 
+                            events: [] //Entrée, sortie, changements
                         },
                         {
                             id: 22,
@@ -59,7 +80,7 @@ S.data = {
                                 gender: "Homme"
                             },
                             pathologys: ["Coma", "Vomissement"],
-                            events: [] //Entrée, sortie, changements 
+                            events: [] //Entrée, sortie, changements
                         },
                         {
                             id: 3,
@@ -71,7 +92,7 @@ S.data = {
                                 gender: "Femme"
                             },
                             pathologys: ["Inconnue"],
-                            events: [] //Entrée, sortie, changements 
+                            events: [] //Entrée, sortie, changements
                         }
                     ]
                 };

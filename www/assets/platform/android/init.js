@@ -1,6 +1,7 @@
 /* global componentHandler, S */
 'use strict';
 
+//Vue.config.silent = true
 console.log("Init android platform");
 
 $("head").append('<link rel="stylesheet" type="text/css" href="assets/lib/material-design-lite/material.min.css">');
@@ -16,7 +17,7 @@ requirejs(['lib/material-design-lite/material.min', 'promise!platform/android/te
         id: "android",
         events: {
             afterDeviceReady: function () {
-                window.setTimeout(componentHandler.upgradeDom, 250); //Application de la lib material-design 
+                window.setTimeout(componentHandler.upgradeDom, 250); //Application de la lib material-design
             }
         }
     };

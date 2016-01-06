@@ -1,25 +1,25 @@
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-color--grey-100">
-  <main class="mdl-layout__content">
+  <main class="mdl-layout__content" id="login-form">
     <div id="logo">
       <img src="assets/img/logo.png">
       <h2>SOFIA</h2>
-      <h3>Croix-Rouge Francaise</h3>
+      <h3>Croix-Rouge fran&ccedil;aise</h3>
     </div>
     <div class="mdl-card mdl-shadow--2dp">
       <div class="mdl-card__supporting-text">
-      	<form action="#">
+      	<form action="#" v-on:submit.prevent="login">
 					<div class="mdl-textfield mdl-js-textfield">
-						<input class="mdl-textfield__input" type="text" id="username" />
+						<input class="mdl-textfield__input" type="text" id="username" v-model="username" />
 						<label class="mdl-textfield__label" for="username">Username</label>
 					</div>
 					<div class="mdl-textfield mdl-js-textfield">
-						<input class="mdl-textfield__input" type="password" id="userpassword" />
-						<label class="mdl-textfield__label" for="userpassword">Password</label>
+						<input class="mdl-textfield__input" type="password" id="userpass" v-model="userpass" />
+						<label class="mdl-textfield__label" for="userpass">Password</label>
 					</div>
+          <div class="mdl-card__actions mdl-card--border">
+            <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--colored" value="Login" />
+          </div>
 				</form>
-      </div>
-      <div class="mdl-card__actions mdl-card--border">
-        <a class="mdl-button mdl-js-button mdl-button--colored">Login</a>
       </div>
     </div>
   </main>
