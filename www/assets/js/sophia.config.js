@@ -3,6 +3,7 @@ var S = S || {};
 
 S.config = {
   db : {
-    url : "http://carapuce.sapk.fr:5985"
+    url : "http://carapuce.sapk.fr:5985",
+    name : "sophia-fiches"
   }
 };
