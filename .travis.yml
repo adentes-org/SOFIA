@@ -15,7 +15,7 @@ before_install:
   -in sophia-release-key.keystore.enc -out sophia-release-key.keystore -d
 - nvm install 5.1 && nvm alias default 5.1 && nvm use 5.1
 - npm install -g npm gulp cordova snyk
-- snyk auth $SNYK_KEY
+- snyk auth $SNYK_KEY || echo "Some librarie(s) need fix"
 before_script:
 - npm install
 - snyk test
