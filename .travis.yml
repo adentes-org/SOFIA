@@ -14,9 +14,11 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_34df3519aae9_key -iv $encrypted_34df3519aae9_iv
   -in sophia-release-key.keystore.enc -out sophia-release-key.keystore -d
 - nvm install 5.1 && nvm alias default 5.1 && nvm use 5.1
-- npm install -g npm gulp cordova
-- npm install
+- npm install -g npm gulp cordova snyk
+- snyk auth $SNYK_KEY
 before_script:
+- npm install
+- snyk test || echo "Some librarie(s) need fix"
 - gulp clean less
 script:
 - gulp cordova:build

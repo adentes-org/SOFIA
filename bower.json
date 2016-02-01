@@ -17,7 +17,7 @@
         "jquery": "latest",
         "requirejs": "latest",
         "pouchdb": "latest",
-        "pouchdb-authentication": "latest",
+        "pouchdb-authentication": "sapk/pouchdb-authentication",
         "vue": "latest",
         "vue-router": "latest",
         "material-design-lite": "latest",
