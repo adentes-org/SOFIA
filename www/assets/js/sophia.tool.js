@@ -54,34 +54,36 @@ S.tool = {
             $.each(paths.files, function(id,path){
                 if(typeof path === "string"){
                     // Load static
-                    console.log("get("+paths.base+path+")");
+                    //console.log("get("+paths.base+path+")");
                     pool.push($.get(paths.base+path).then(function(content){ //Not working on Android
                     //pool.push(S.tool.get(paths.base+path).then(function(content){
                         data[id] = content;
                     }, function(error){
-                        console.log("Error getting : "+ JSON.stringify(error));  
+                        console.log("Error getting : "+ JSON.stringify(error));
                     })); //TODO manage reject.
                 } else if(typeof path === "object"){
                     // Chain load static
                     // TODO use a  more recursive structure and use a local path.base
+                    /*
                     console.log("chain("+JSON.stringify({
                         base : paths.base,
                         files : path
                     })+")");
+                    */
                     pool.push(S.tool.loadStatic({
                         base : paths.base,
                         files : path
                     }).then(function(d){
                         data[id] = d; //TODO check if not better to use extend
                     }, function(error){
-                        console.log("Error chaining : "+ JSON.stringify(error));  
+                        console.log("Error chaining : "+ JSON.stringify(error));
                     }));; //TODO manage reject
                 } else {
                     console.log("Incompatible type : " + id + " -> " + (typeof path)); //TODO use a Promise.reject() ?
                 }
             });
             return Promise.all(pool).then(function(){
-                console.log(data);
+                //console.log(data);
                 return Promise.resolve(data);
             });
         //});
@@ -104,9 +106,9 @@ S.tool = {
             //console.log("File resting to load : "+fileToLoad);
         });
         $(data).on("fileLoaded",S.tool.debounce(callbackLauncher, 100));
-        
+
         paths.base = paths.base || ""; // Use a empty string if not existing
-        
+
         $.each(paths.files, function(id,path){
             //console.log(id,path,typeof path )
             fileToLoad++;
@@ -128,7 +130,7 @@ S.tool = {
             }else {
                 fallback("Incompatible type : " + id + " -> " + (typeof path));
             }
-        });        
+        });
     }
     */
 };

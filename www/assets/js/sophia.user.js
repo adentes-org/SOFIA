@@ -4,7 +4,7 @@ var S = S || {};
 S.user = {
     _current : {
         isLogged : function(){
-            return (typeof S.user._current.name != "undefined" && S.user._current.name != null ) ;
+            return (typeof S.user._current.name != "undefined" && (S.user._current.name != null || S.user._current.roles[0] === "_admin" ) ) ;
             //TODO rellogin if not based on registred value
             /*
             //TODO don't use jquery promise ?
@@ -44,10 +44,10 @@ S.user = {
           */
         }else{
           //We are logged in ?
-          console.log(response);
+          //console.log(response);
           if(response.ok) {
             $.extend(S.user._current, response);
-            console.log(S.user._current);
+            //console.log(S.user._current);
             deferred.resolve(response);
           }
         }
