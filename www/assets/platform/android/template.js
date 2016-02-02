@@ -11,6 +11,7 @@ define(['jquery'], function($) {
             menu : "menu.tmpl",
             pages : {
                 home : "pages/home.tmpl",
+                add  : "pages/add.tmpl",
                 _login : "pages/login.tmpl"
             },
             buttons : {
@@ -18,7 +19,7 @@ define(['jquery'], function($) {
             }
         }
     }).then(function(data){
-        S.template = $.extend(true, S.template, data);  
+        S.template = $.extend(true, S.template, data);
         S.template.page_wrapper = function (id, page) {
             return '<div class="page-content" id="' + id + '">' + ((typeof page === "function")?page():page)   + '</div>';
         };
@@ -35,7 +36,7 @@ define(['jquery'], function($) {
     }).then(function(){
         S.template._isLoaded = true;
         deferred.resolve(S.template);
-        //TODO 
+        //TODO
     });
     //TODO reject case;
     return deferred.promise();

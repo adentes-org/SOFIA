@@ -38,7 +38,7 @@ S.db.fiches = {
       }
       $.each(result.rows, function( index, value ) {
         if(value.doc.owner_id === S.user._current.name)
-          ret.fiches[index] = value.doc;
+          ret.fiches[ret.fiches.length] = value.doc;
       });
       //console.log(ret);
       deferred.resolve(ret);
@@ -63,11 +63,11 @@ S.db.fiches = {
             my_fiches: []
         }
         $.each(result.rows, function( index, value ) {
-          ret.fiches[index] = value.doc;
+          ret.fiches[ret.fiches.length] = value.doc;
           if(value.doc.owner_id === S.user._current.name)
-            ret.my_fiches[index] = value.doc;
+            ret.my_fiches[ret.my_fiches.length] = value.doc;
         });
-        //console.log(ret);
+        console.log(ret);
         deferred.resolve(ret);
       }).catch(function (err) {
         // handle err
@@ -92,7 +92,7 @@ S.db.fiches = {
           fiches: []
       }
       $.each(result.rows, function( index, value ) {
-        ret.fiches[index] = value.doc;
+        ret.fiches[ret.fiches.length] = value.doc;
       });
       deferred.resolve(ret);
     }).catch(function (err) {
@@ -103,7 +103,20 @@ S.db.fiches = {
 
     return deferred.promise();
 
-  }
+  },
   //TODO use startkey for get all the team fiches?
+
+  //TODO maybe use the count of the team
+  getCount : function (){
+    var deferred = new $.Deferred()
+    S.db.info().then(function (result) {
+      // handle result
+      deferred.resolve(result.doc_count);
+    }).catch(function (err) {
+      console.log(err);
+      deferred.reject(err);
+    });
+    return deferred.promise();
+  }
 }
 console.log(S.db);

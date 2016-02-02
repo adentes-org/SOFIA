@@ -1,0 +1,30 @@
+<div class="mdl-grid">
+    <form action="#" id="add_form" v-on:submit.prevent="add">
+      <div class="mdl-cell mdl-cell--8-col mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="lastname" v-model="patient.lastname" />
+        <label class="mdl-textfield__label" for="lastname">Nom</label>
+      </div>
+      <div class="mdl-cell mdl-cell--8-col mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="text" id="firstname" v-model="patient.firstname" />
+        <label class="mdl-textfield__label" for="firstname">Prénom</label>
+      </div>
+      <div class="mdl-cell mdl-cell--8-col">
+        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+          <input type="radio" id="option-1" class="mdl-radio__button" name="gender" v-model="patient.gender" value="Homme">
+          <span class="mdl-radio__label">Homme</span>
+        </label>
+        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+          <input type="radio" id="option-2" class="mdl-radio__button" name="gender" v-model="patient.gender" value="Femme">
+          <span class="mdl-radio__label">Femme</span>
+        </label>
+      </div>
+      <div class="mdl-cell mdl-cell--8-col mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" type="date" id="birthdate" v-model="patient.birthdate" />
+        <label class="mdl-textfield__label" for="birthdate">Birthdate</label>
+        <span class="mdl-textfield__error">Beuillez saisir une date valide</span>
+      </div>
+      <div class="mdl-cell mdl-cell--8-col">
+        <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--colored" value="Valider" />
+      </div>
+    </form>
+</div>
