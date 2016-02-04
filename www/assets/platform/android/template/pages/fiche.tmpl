@@ -7,9 +7,10 @@
   <div class="mdl-cell" style="width:33%;">
     <h3>{{fiche.uid}}</h3>
   </div>
-  <div class="mdl-cell" style="width:100%;">Equipe resp. : {{fiche.owner_id}}</div>
+  <div class="mdl-cell" style="width:100%;">Equipe resp. : {{fiche.owner_id}} <span v-if="fiche.owner_id == user.name">(Vous)</span></div>
 </div>
-
+<button v-on:click="give" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">Envoyer</button>
+<button v-on:click="take" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id != user.name">Prendre</button>
 <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
   <div class="mdl-tabs__tab-bar">
       <a onclick="$('.mdl-tabs__panel').hide();$('#affections-panel').show();$('.mdl-tabs__tab').attr('style',' ');$(this).attr('style','border-bottom:1px solid #333')" class="mdl-tabs__tab" style="border-bottom:1px solid #333" >Affections</a>

@@ -17,7 +17,7 @@ S.db.fiches = {
     var deferred = new $.Deferred()
     S.db.get(id).then(function (doc) {
       console.log(doc);
-      deferred.resolve({fiche:doc});
+      deferred.resolve(doc);
     }).catch(function (err) {
       // handle err
       console.log(err);

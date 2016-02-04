@@ -9,9 +9,29 @@ S.data = {
             },
             route: {
                 data: function (transition) {
-                      return S.db.fiches.getByID(this.$route.params.fiche_id);
-                      //TODO catch
+
+                    var deferred = new $.Deferred()
+                    S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
+                      console.log(doc);
+                      deferred.resolve({fiche:doc,user:S.user._current});
+                    })
+
+                    return deferred.promise();
                 }
+            },
+            methods: {
+              take: function (event) {
+                 var ask=confirm("Etes-vous sûr ?");
+                 if(ask){
+                     console.log(this._data.fiche);
+                     this._data.fiche.owner_id = S.user._current.name
+                     S.db.put(this._data.fiche);
+                 }
+              },
+              give: function (event) {
+                alert('Giving some love!')
+                //TODO
+              }
             }
         },
         add : {
