@@ -1,0 +1,38 @@
+<div class="mdl-grid mdl-grid--no-spacing" style="background-color:#f44336;    border-bottom: 1px solid #666;">
+  <div class="mdl-cell" style="width:66%;">
+    <h4>{{fiche.patient.firstname}} {{fiche.patient.lastname}}</h4>
+    <p>Née le : {{fiche.patient.birthdate}}</p>
+    <p>{{fiche.patient.gender}}</p>
+  </div>
+  <div class="mdl-cell" style="width:33%;">
+    <h3>{{fiche.uid}}</h3>
+  </div>
+  <div class="mdl-cell" style="width:100%;">Equipe resp. : {{fiche.owner_id}}</div>
+</div>
+
+<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+  <div class="mdl-tabs__tab-bar">
+      <a onclick="$('.mdl-tabs__panel').hide();$('#affections-panel').show();$('.mdl-tabs__tab').attr('style',' ');$(this).attr('style','border-bottom:1px solid #333')" class="mdl-tabs__tab" style="border-bottom:1px solid #333" >Affections</a>
+      <a onclick="$('.mdl-tabs__panel').hide();$('#history-panel').show();$('.mdl-tabs__tab').attr('style',' ');$(this).attr('style','border-bottom:1px solid #333')" class="mdl-tabs__tab">Historique</a>
+  </div>
+
+  <div class="mdl-tabs__panel" id="affections-panel">
+    <ul>
+      <li>Eddard</li>
+      <li>Catelyn</li>
+      <li>Robb</li>
+      <li>Sansa</li>
+      <li>Brandon</li>
+      <li>Arya</li>
+      <li>Rickon</li>
+    </ul>
+  </div>
+  <div class="mdl-tabs__panel" id="history-panel" style="display:none;">
+    <ul>
+      <li>Tywin</li>
+      <li>Cersei</li>
+      <li>Jamie</li>
+      <li>Tyrion</li>
+    </ul>
+  </div>
+</div>
