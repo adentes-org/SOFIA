@@ -13,26 +13,62 @@ S.data = {
                     var deferred = new $.Deferred()
                     S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
                       console.log(doc);
-                      deferred.resolve({fiche:doc,user:S.user._current});
+                      deferred.resolve({
+                        fiche:doc,
+                        user:S.user._current,
+                        config : {
+                          pathologys : [
+                          "Inconscient",
+                          "Arret Cardio Respiratoire",
+                          "Petit soin",
+                          "Hémorragie",
+                          "Difficulté respiratoire",
+                          "Malaise",
+                          "Traumatologie",
+                          "Consultation médicale",
+                        ]
+                      }
+                    });
                     })
 
                     return deferred.promise();
                 }
             },
             methods: {
+              showAddPathologyModal: function (event) {
+                  var dialog = document.querySelector('dialog');
+                  if (! dialog.showModal) {
+                        dialogPolyfill.registerDialog(dialog);
+                  }
+                  dialog.showModal();
+              },
               addPathology: function (event) {
                 //TODO use list
-              var path = prompt("Saisir une affection :", "Coupure");
+                var dialog = document.querySelector('dialog');
+                if (! dialog.close) {
+                    dialogPolyfill.registerDialog(dialog);
+                }
+                dialog.close();
+                var path = $(event.srcElement).text();
+                var ask=confirm("Etes-vous sûr d'ajouter "+path+" ?");
+                if(ask){
+                    console.log(this._data.fiche);
+                    this._data.fiche.pathologys.push(path);
+                    S.db.put(this._data.fiche);
+                }
 
-              if (path != null) {
-                //TODO check exitance of team
-                 var ask=confirm("Etes-vous sûr d'ajouter "+path+" ?");
-                 if(ask){
-                     console.log(this._data.fiche);
-                     this._data.fiche.pathologys.push(path);
-                     S.db.put(this._data.fiche);
-                 }
-              }
+                /*
+                var path = prompt("Saisir une affection :", "Coupure");
+
+                if (path != null) {
+                  //TODO check exitance of team
+                   var ask=confirm("Etes-vous sûr d'ajouter "+path+" ?");
+                   if(ask){
+                       console.log(this._data.fiche);
+                       this._data.fiche.pathologys.push(path);
+                       S.db.put(this._data.fiche);
+                   }
+                }*/
                },
               reopen: function (event) {
                  var ask=confirm("Etes-vous sûr ?");

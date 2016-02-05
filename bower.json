@@ -22,6 +22,7 @@
         "vue-router": "latest",
         "material-design-lite": "latest",
         "material-design-icons": "latest",
+        "dialog-polyfill": "latest",
         "requirejs-promise": "latest"
     },
     "install": {
