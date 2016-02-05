@@ -16,8 +16,13 @@ requirejs(['lib/material-design-lite/material.min', 'promise!platform/android/te
         isLoaded: true,
         id: "android",
         events: {
+          /*
             afterDeviceReady: function () {
-                window.setTimeout(componentHandler.upgradeDom, 250); //Application de la lib material-design
+                window.setTimeout(componentHandler.upgradeDom, 500); //Application de la lib material-design
+            },
+          */
+            afterPageLoad: function () {
+                window.setTimeout(componentHandler.upgradeDom, 300); //Application de la lib material-design
             }
         }
     };

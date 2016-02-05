@@ -111,6 +111,10 @@ S.vue = {
                 S.vue.router.app.$data.MenuOptions.display = (typeof current.options.displayMenu === "boolean") ? current.options.displayMenu : true;
 
             }
+
+            if(typeof S.platform.events.afterPageLoad === "function"){
+                S.platform.events.afterPageLoad();
+            }
             //*/
         });
         // Redirect certain routes to other routes (by default hom and if not logged redirect to login)
