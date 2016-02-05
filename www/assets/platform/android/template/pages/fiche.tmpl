@@ -1,39 +1,42 @@
-<div class="mdl-grid mdl-grid--no-spacing" style="background-color:#f44336;    border-bottom: 1px solid #666;">
-  <div class="mdl-cell" style="width:66%;">
-    <h4>{{fiche.patient.firstname}} {{fiche.patient.lastname}}</h4>
-    <p>Née le : {{fiche.patient.birthdate}}</p>
-    <p>{{fiche.patient.gender}}</p>
-  </div>
-  <div class="mdl-cell" style="width:33%;">
-    <h3>{{fiche.uid}}</h3>
-  </div>
-  <div class="mdl-cell" style="width:100%;">Equipe resp. : {{fiche.owner_id}} <span v-if="fiche.owner_id == user.name">(Vous)</span></div>
-</div>
-<button v-on:click="give" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">Envoyer</button>
-<button v-on:click="take" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id != user.name">Prendre</button>
-<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-  <div class="mdl-tabs__tab-bar">
-      <a onclick="$('.mdl-tabs__panel').hide();$('#affections-panel').show();$('.mdl-tabs__tab').attr('style',' ');$(this).attr('style','border-bottom:1px solid #333')" class="mdl-tabs__tab" style="border-bottom:1px solid #333" >Affections</a>
-      <a onclick="$('.mdl-tabs__panel').hide();$('#history-panel').show();$('.mdl-tabs__tab').attr('style',' ');$(this).attr('style','border-bottom:1px solid #333')" class="mdl-tabs__tab">Historique</a>
+<div class="fiche-view">
+  <div class="mdl-grid mdl-grid--no-spacing" style="background-color:#f44336;    border-bottom: 1px solid #666;">
+    <div class="mdl-cell" style="width:66%;">
+      <h4>{{fiche.patient.firstname}} {{fiche.patient.lastname}}</h4>
+      <p>Née le : {{fiche.patient.birthdate}}</p>
+      <p>{{fiche.patient.gender}}</p>
+    </div>
+    <div class="mdl-cell" style="width:33%;">
+      <h3>{{fiche.uid}}</h3>
+    </div>
+    <div class="mdl-cell" style="width:100%;">Equipe resp. : {{fiche.owner_id}} <span v-if="fiche.owner_id == user.name">(Vous)</span></div>
   </div>
 
-  <div class="mdl-tabs__panel" id="affections-panel">
-    <ul>
-      <li>Eddard</li>
-      <li>Catelyn</li>
-      <li>Robb</li>
-      <li>Sansa</li>
-      <li>Brandon</li>
-      <li>Arya</li>
-      <li>Rickon</li>
-    </ul>
-  </div>
-  <div class="mdl-tabs__panel" id="history-panel" style="display:none;">
-    <ul>
-      <li>Tywin</li>
-      <li>Cersei</li>
-      <li>Jamie</li>
-      <li>Tyrion</li>
-    </ul>
+  <button v-on:click="give" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">Envoyer</button>
+  <button v-on:click="take" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>Prendre</button>
+
+  <button v-on:click="reopen" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.closed == true">Ré-Ouvrir</button>
+  <button v-on:click="close" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>Fermer</button>
+
+  <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+    <div class="mdl-tabs__tab-bar">
+        <a onclick="$('.mdl-tabs__panel').hide();$('#affections-panel').show();$('.mdl-tabs__tab').attr('style',' ');$(this).attr('style','border-bottom:1px solid #333')" class="mdl-tabs__tab" style="border-bottom:1px solid #333" >Affections</a>
+        <a onclick="$('.mdl-tabs__panel').hide();$('#history-panel').show();$('.mdl-tabs__tab').attr('style',' ');$(this).attr('style','border-bottom:1px solid #333')" class="mdl-tabs__tab">Historique</a>
+    </div>
+
+    <div class="mdl-tabs__panel" id="affections-panel">
+      <ul class="mdl-list">
+        <li class="mdl-list__item add-button">
+          <span v-on:click="addPathology" class="mdl-list__item-primary-content">Ajouter +</span>
+        </li>
+        <li v-for="path in fiche.pathologys"  class="mdl-list__item">
+          <span class="mdl-list__item-primary-content">{{ path }}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="mdl-tabs__panel" id="history-panel" style="display:none;">
+      <ul class="mdl-list">
+        <!-- TODO -->
+      </ul>
+    </div>
   </div>
 </div>

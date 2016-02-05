@@ -33,6 +33,7 @@ S.user = {
       S.db.login(user, pass, function (err, response) {
         if (err) {
           console.log(err);
+          alert(err.message);
           deferred.reject(err);
           /*
           if (err.name === 'unauthorized') {
@@ -47,6 +48,7 @@ S.user = {
           //console.log(response);
           if(response.ok) {
             $.extend(S.user._current, response);
+            //S.db_users.login(user, pass); //We also log the acces to the user db
             //console.log(S.user._current);
             deferred.resolve(response);
           }

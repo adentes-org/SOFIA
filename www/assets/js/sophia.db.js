@@ -7,11 +7,34 @@ var req_limit = 1000000;
 PouchDB.debug.enable('*');
 
 S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name.replace(/^\/+/, '')
+//S.config.db._user_url = S.config.db.url.replace(/\/+$/, '')+"/"+"_users"
 
 //TODO use a local that replcaite to S.config.db._full_url for offline function
 S.db = new PouchDB(S.config.db._full_url, {skipSetup: true});
+//S.db_users = new PouchDB(S.config.db._user_url, {skipSetup: true});
 
+/*
+S.db.users = {
+  getAll : function() {
+    //TODO not working
+    var deferred = new $.Deferred()
+    S.db_users.allDocs({keys: ["name"]}).then(function (result) {
+      console.log(result);
+      var ret = [];
+      $.each(result.rows, function( index, value ) {
+        //ret[ret.length] = value.doc.name;
+      });
+      deferred.resolve(ret);
+    }).catch(function (err) {
+      // handle err
+      console.log(err);
+      deferred.reject(err);
+    });
 
+    return deferred.promise();
+  },
+};
+*/
 S.db.fiches = {
   getByID : function(id) {
     var deferred = new $.Deferred()

@@ -20,6 +20,37 @@ S.data = {
                 }
             },
             methods: {
+              addPathology: function (event) {
+                //TODO use list
+              var path = prompt("Saisir une affection :", "Coupure");
+
+              if (path != null) {
+                //TODO check exitance of team
+                 var ask=confirm("Etes-vous sûr d'ajouter "+path+" ?");
+                 if(ask){
+                     console.log(this._data.fiche);
+                     this._data.fiche.pathologys.push(path);
+                     S.db.put(this._data.fiche);
+                 }
+              }
+               },
+              reopen: function (event) {
+                 var ask=confirm("Etes-vous sûr ?");
+                 if(ask){
+                     console.log(this._data.fiche);
+                     this._data.fiche.closed = false;
+                     S.db.put(this._data.fiche);
+                 }
+               },
+              close: function (event) {
+                 var ask=confirm("Etes-vous sûr ?");
+                 //TODO ask for closing information
+                 if(ask){
+                     console.log(this._data.fiche);
+                     this._data.fiche.closed = true;
+                     S.db.put(this._data.fiche);
+                 }
+               },
               take: function (event) {
                  var ask=confirm("Etes-vous sûr ?");
                  if(ask){
@@ -29,8 +60,22 @@ S.data = {
                  }
               },
               give: function (event) {
-                alert('Giving some love!')
-                //TODO
+                /*
+                S.db.users.getAll().then(function(userlist){
+                  console.log(userlist);
+                });
+                */
+                var team = prompt("Saisir une équipe :", "UserX");
+
+                if (team != null) {
+                  //TODO check exitance of team
+                   var ask=confirm("Etes-vous sûr de tranferer à "+team+" ?");
+                   if(ask){
+                       console.log(this._data.fiche);
+                       this._data.fiche.owner_id = team;
+                       S.db.put(this._data.fiche);
+                   }
+                }
               }
             }
         },
@@ -73,6 +118,7 @@ S.data = {
                              "uid": this._data.uid,
                              "owner_id": this._data.owner_id,
                              "patient": this._data.patient,
+                             "closed" : false,
                              "pathologys": [],
                              "events": []
                       }

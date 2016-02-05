@@ -7,13 +7,35 @@
         bottom:32px;
         right:32px;
     }
-    &.owning-button{
-      float: right;
-      margin: -20px 10px;
-      background-color: #009688 !important;
-    }
 }
 
+.fiche-view{
+  .mdl-button {
+      &.owning-button{
+        float: right;
+        margin: -24px 10px;
+        background-color: #009688 !important;
+      }
+      &.closing-button{
+        float: right;
+        margin: -24px 120px;
+        background-color: #888 !important;
+      }
+  }
+  .mdl-list{
+    width: 100%;
+    margin-top: 0;
+    padding-top: 0;
+    .add-button{
+      background: #EEE;
+      font-weight: bold;
+    }
+    .mdl-list__item{
+      border-bottom: 1px solid #EEE;
+      text-align: center;
+    }
+  }
+}
 
 
 a.fiche.patient{
