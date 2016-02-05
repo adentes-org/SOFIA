@@ -5,6 +5,7 @@ S.data = {
     pages: {
         "fiche/:fiche_id": {
             options: {
+                displayQuickAddButton : false,
                 displaySearchbox: false
             },
             route: {
