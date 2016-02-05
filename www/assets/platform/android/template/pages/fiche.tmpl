@@ -1,11 +1,11 @@
 <div class="fiche-view">
-  <div class="mdl-grid mdl-grid--no-spacing" style="background-color:#f44336;    border-bottom: 1px solid #666;">
-    <div class="mdl-cell" style="width:66%;">
+  <div class="info mdl-grid mdl-grid--no-spacing">
+    <div class="mdl-cell" style="width:60%;">
       <h4>{{fiche.patient.firstname}} {{fiche.patient.lastname}}</h4>
       <p>Née le : {{fiche.patient.birthdate}}</p>
       <p>{{fiche.patient.gender}}</p>
     </div>
-    <div class="mdl-cell" style="width:33%;">
+    <div class="mdl-cell" style="width:40%;">
       <h3>{{fiche.uid}}</h3>
     </div>
     <div class="mdl-cell" style="width:100%;">Equipe resp. : {{fiche.owner_id}} <span v-if="fiche.owner_id == user.name">(Vous)</span></div>
@@ -33,9 +33,11 @@
         </li>
       </ul>
     </div>
-    <div class="mdl-tabs__panel" id="history-panel" style="display:none;">
+    <div class="mdl-tabs__panel" id="history-panel">
       <ul class="mdl-list">
-        <!-- TODO -->
+      <li v-for="h in history"  class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">{{ h }}</span>
+      </li>
       </ul>
     </div>
   </div>

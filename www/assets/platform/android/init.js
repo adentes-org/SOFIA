@@ -24,7 +24,7 @@ requirejs(['lib/material-design-lite/material.min','lib/dialog-polyfill/dialog-p
             },
           */
             afterPageLoad: function () {
-                window.setTimeout(componentHandler.upgradeDom, 300); //Application de la lib material-design
+                window.setTimeout(componentHandler.upgradeDom, 150); //Application de la lib material-design
             }
         }
     };

@@ -9,26 +9,44 @@ S.data = {
             },
             route: {
                 data: function (transition) {
-
+                    var ret;
                     var deferred = new $.Deferred()
                     S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
                       console.log(doc);
-                      deferred.resolve({
+                      ret = {
                         fiche:doc,
                         user:S.user._current,
+                        history: [], //TODO (Will be build after because not at first and require data)
                         config : {
                           pathologys : [
-                          "Inconscient",
-                          "Arret Cardio Respiratoire",
-                          "Petit soin",
-                          "Hémorragie",
-                          "Difficulté respiratoire",
-                          "Malaise",
-                          "Traumatologie",
-                          "Consultation médicale",
-                        ]
-                      }
-                    });
+                            "Inconscient",
+                            "Arret Cardio Respiratoire",
+                            "Petit soin",
+                            "Hémorragie",
+                            "Difficulté respiratoire",
+                            "Malaise",
+                            "Traumatologie",
+                            "Consultation médicale",
+                          ]
+                        }
+                      };
+                      deferred.resolve(ret);
+
+                      console.log("Fetching change for fiche in background ... ",ret.fiche, this)
+                      S.db.changes({
+                        since: 0,
+                        include_docs: true,
+                        style: 'all_docs', limit: 100,
+                        doc_ids: [ret.fiche._id]
+                      }).then(function (changes) {
+                        console.log(changes)
+                        ret.history.push("Done ("+changes.results.length+"/"+changes.last_seq+")");
+                        console.log(ret);
+                      }).catch(function (err) {
+                        console.log(err);
+                      });
+
+
                     })
 
                     return deferred.promise();
