@@ -1,7 +1,7 @@
 <div class="mdl-grid">
   <template v-if="searchbox.length === 0 ">
         <template v-for="fiche in my_fiches" >
-            <fiche v-bind:f="fiche"></fiche>
+            <fiche v-bind:f="fiche" v-if="fiche.closed != true" ></fiche>
         </template>
   </template>
     <template v-if="searchbox.length > 1 ">

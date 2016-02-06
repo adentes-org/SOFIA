@@ -60,9 +60,16 @@
 
 a.fiche.patient{
     text-decoration: none;
+    &[data-closed="true"]{
+       .mdl-card{
+      }
+    }
     .mdl-card{
         min-height: 0px;
         width: 100%;
+        &.close{
+          background: #DDD;
+        }
         .mdl-card__title {
             padding-bottom: 0;
             h4{
