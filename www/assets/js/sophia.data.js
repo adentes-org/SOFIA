@@ -28,11 +28,24 @@ S.data = {
                             "Malaise",
                             "Traumatologie",
                             "Consultation médicale",
+                          ],
+                          origins : [
+                              "Spontané",
+                              "Brancardé",
+                              "VPSP",
+                              "Avec témoin",
+                              "Avec sécurité",
                           ]
                         }
                       };
                       deferred.resolve(ret);
-
+                      if(!ret.fiche.origin || ret.fiche.origin == ""){ // L'ogine n'est pas saisie on force la saisie
+                          var dialog = document.querySelector("#add-origin-dialog");
+                          if (! dialog.showModal) {
+                                dialogPolyfill.registerDialog(dialog);
+                          }
+                          dialog.showModal();
+                      }
                       console.log("Fetching change for fiche in background ... ",ret.fiche, this)
                       S.db.changes({
                         since: 0,
@@ -54,16 +67,29 @@ S.data = {
                 }
             },
             methods: {
+              addOrigin: function (event) {
+                var dialog = document.querySelector("#add-origin-dialog");
+                if (! dialog.close) {
+                    dialogPolyfill.registerDialog(dialog);
+                }
+                dialog.close();
+                var origin = $(event.srcElement).text();
+                var ask=confirm("Etes-vous sûr de selectionner "+origin+" ?");
+                if(ask){
+                    console.log(this._data.fiche);
+                    this._data.fiche.origin = origin;
+                    S.db.put(this._data.fiche);
+                }
+              },
               showAddPathologyModal: function (event) {
-                  var dialog = document.querySelector('dialog');
+                  var dialog = document.querySelector("#add-path-dialog");
                   if (! dialog.showModal) {
                         dialogPolyfill.registerDialog(dialog);
                   }
                   dialog.showModal();
               },
               addPathology: function (event) {
-                //TODO use list
-                var dialog = document.querySelector('dialog');
+                var dialog = document.querySelector("#add-path-dialog");
                 if (! dialog.close) {
                     dialogPolyfill.registerDialog(dialog);
                 }
@@ -174,6 +200,7 @@ S.data = {
                              "owner_id": this._data.owner_id,
                              "patient": this._data.patient,
                              "closed" : false,
+                             "origin" : "",
                              "pathologys": [],
                              "events": []
                       }
