@@ -47,11 +47,7 @@ S.data = {
                       };
                       deferred.resolve(ret);
                       if(!ret.fiche.origin || ret.fiche.origin == ""){ // L'ogine n'est pas saisie on force la saisie
-                          var dialog = document.querySelector("#add-origin-dialog");
-                          if (! dialog.showModal) {
-                                dialogPolyfill.registerDialog(dialog);
-                          }
-                          dialog.showModal();
+                          S.tool.getDialog("#add-origin-dialog").showModal();
                       }
                       console.log("Fetching change for fiche in background ... ",ret.fiche, this)
                       S.db.changes({
@@ -75,12 +71,8 @@ S.data = {
             },
             methods: {
               addOrigin: function (event) {
-                var dialog = document.querySelector("#add-origin-dialog");
-                if (! dialog.close) {
-                    dialogPolyfill.registerDialog(dialog);
-                }
-                dialog.close();
                 var origin = $(event.srcElement).text();
+                S.tool.getDialog("#add-origin-dialog").close();
                 var ask=confirm("Etes-vous sûr de selectionner "+origin+" ?");
                 if(ask){
                     console.log(this._data.fiche);
@@ -89,38 +81,17 @@ S.data = {
                 }
               },
               showAddPathologyModal: function (event) {
-                  var dialog = document.querySelector("#add-path-dialog");
-                  if (! dialog.showModal) {
-                        dialogPolyfill.registerDialog(dialog);
-                  }
-                  dialog.showModal();
+                  S.tool.getDialog("#add-path-dialog").showModal();
               },
               addPathology: function (event) {
-                var dialog = document.querySelector("#add-path-dialog");
-                if (! dialog.close) {
-                    dialogPolyfill.registerDialog(dialog);
-                }
-                dialog.close();
                 var path = $(event.srcElement).text();
+                S.tool.getDialog("#add-path-dialog").close();
                 var ask=confirm("Etes-vous sûr d'ajouter "+path+" ?");
                 if(ask){
                     console.log(this._data.fiche);
                     this._data.fiche.pathologys.push(path);
                     S.db.put(this._data.fiche);
                 }
-
-                /*
-                var path = prompt("Saisir une affection :", "Coupure");
-
-                if (path != null) {
-                  //TODO check exitance of team
-                   var ask=confirm("Etes-vous sûr d'ajouter "+path+" ?");
-                   if(ask){
-                       console.log(this._data.fiche);
-                       this._data.fiche.pathologys.push(path);
-                       S.db.put(this._data.fiche);
-                   }
-                }*/
                },
               reopen: function (event) {
                  var ask=confirm("Etes-vous sûr ?");
@@ -132,13 +103,7 @@ S.data = {
                  }
                },
               submitClose: function (event) {
-                var dialog = document.querySelector("#close-fiche-dialog");
-                if (! dialog.close) {
-                    dialogPolyfill.registerDialog(dialog);
-                }
-                dialog.close();
-
-                console.log(this._data.fiche,$("#close-fiche-dialog form").serializeArray());
+                S.tool.getDialog("#close-fiche-dialog").close();
                 this._data.fiche.closed = true;
                 var close_context = {};
                 $.each($("#close-fiche-dialog form").serializeArray(), function(id,value){
@@ -149,21 +114,8 @@ S.data = {
                 S.db.put(this._data.fiche);
               },
               close: function (event) {
-                var dialog = document.querySelector("#close-fiche-dialog");
-                if (! dialog.showModal) {
-                      dialogPolyfill.registerDialog(dialog);
-                }
-                dialog.showModal();
-/*
-                 var ask=confirm("Etes-vous sûr ?");
-                 //TODO ask for closing information
-                 if(ask){
-                     console.log(this._data.fiche);
-                     this._data.fiche.closed = true;
-                     S.db.put(this._data.fiche);
-                 }
-*/
-               },
+                  S.tool.getDialog("#close-fiche-dialog").showModal();
+              },
               take: function (event) {
                  var ask=confirm("Etes-vous sûr ?");
                  if(ask){

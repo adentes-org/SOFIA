@@ -3,6 +3,13 @@
 var S = S || {};
 
 S.tool = {
+    getDialog: function (queryId) {
+      var dialog = document.querySelector(queryId);
+      if (!dialog.showModal || !dialog.close) {
+            dialogPolyfill.registerDialog(dialog);
+      }
+      return dialog;
+    },
     capitalizeFirstLetter: function (string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     },
