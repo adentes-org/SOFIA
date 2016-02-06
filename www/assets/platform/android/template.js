@@ -41,23 +41,5 @@ define(['jquery'], function($) {
     });
     //TODO reject case;
     return deferred.promise();
-    /*
-    S.template.header = '';
-    S.template.fiche = '';
-    S.template.menu = '';
-    S.template.page_wrapper = function (id, page) {
-        return '<div class="page-content" id="' + id + '">' + page() + '</div>';
-    };
-    S.template.pages.inbox =  '';
-    //S.template.pages["fiche/:fiche_id"] = function () {return 'TODO';};
-    S.template.buttons.quickAdd = '';
-    S.template.base = function () {
-        return '<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">' +
-                "\n"  + '<app-header v-bind:options="headerOptions" v-bind:searchbox.sync="searchbox"></app-header>' +
-                "\n" + S.template.menu +
-                "\n" + '<main class="mdl-layout__content">' + '<router-view  v-bind:searchbox="searchbox"></router-view>' + '</main>' +
-                "\n" + S.template.buttons.quickAdd +
-                '</div>';
-    };
-    */
+
 });

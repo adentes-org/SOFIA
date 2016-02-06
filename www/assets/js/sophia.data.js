@@ -9,7 +9,7 @@ S.data = {
                 displaySearchbox: false
             },
             route: {
-                data: function (transition) {
+                data: function () {
                     var ret;
                     var deferred = new $.Deferred()
                     S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
@@ -46,7 +46,7 @@ S.data = {
                         }
                       };
                       deferred.resolve(ret);
-                      if(!ret.fiche.origin || ret.fiche.origin == ""){ // L'ogine n'est pas saisie on force la saisie
+                      if(!ret.fiche.origin || ret.fiche.origin === ""){ // L'ogine n'est pas saisie on force la saisie
                           S.tool.getDialog("#add-origin-dialog").showModal();
                       }
                       console.log("Fetching change for fiche in background ... ",ret.fiche, this)
@@ -80,10 +80,10 @@ S.data = {
                     S.db.put(this._data.fiche);
                 }
               },
-              showAddPathologyModal: function (event) {
+              showAddPathologyModal: function () {
                   S.tool.getDialog("#add-path-dialog").showModal();
               },
-              closeAddPathologyModal: function (event) {
+              closeAddPathologyModal: function () {
                   S.tool.getDialog("#add-path-dialog").close();
               },
               addPathology: function (event) {
@@ -96,7 +96,7 @@ S.data = {
                     S.db.put(this._data.fiche);
                 }
                },
-              reopen: function (event) {
+              reopen: function () {
                  var ask=confirm("Etes-vous sûr ?");
                  if(ask){
                      console.log(this._data.fiche);
@@ -105,10 +105,10 @@ S.data = {
                      S.db.put(this._data.fiche);
                  }
                },
-              closeCloseModal: function (event) {
+              closeCloseModal: function () {
                    S.tool.getDialog("#close-fiche-dialog").close();
               },
-              submitClose: function (event) {
+              submitClose: function () {
                 S.tool.getDialog("#close-fiche-dialog").close();
                 this._data.fiche.closed = true;
                 var close_context = {};
@@ -119,10 +119,10 @@ S.data = {
 
                 S.db.put(this._data.fiche);
               },
-              close: function (event) {
+              close: function () {
                   S.tool.getDialog("#close-fiche-dialog").showModal();
               },
-              take: function (event) {
+              take: function () {
                  var ask=confirm("Etes-vous sûr ?");
                  if(ask){
                      console.log(this._data.fiche);
@@ -130,7 +130,7 @@ S.data = {
                      S.db.put(this._data.fiche);
                  }
               },
-              give: function (event) {
+              give: function () {
                 /*
                 S.db.users.getAll().then(function(userlist){
                   console.log(userlist);
@@ -156,7 +156,7 @@ S.data = {
                     displaySearchbox: false
                 },
                 route: {
-                      data: function (transition) {
+                      data: function () {
                           var deferred = new $.Deferred()
                           var ret = {
                                  "uid": S.user._current.name+"-",
@@ -179,7 +179,7 @@ S.data = {
                     }
                 },
                 methods: {
-                  add: function (event) {
+                  add: function () {
                     console.log(this._data);
                     //TODO don't make direct call
 
@@ -220,7 +220,7 @@ S.data = {
                 };
             },
             methods: {
-              login: function (event) {
+              login: function () {
                 //TODO check format of user and pass
                 //TODO determine if not use lazy attribute to use less ressouces
                 S.user.login(this.username, this.userpass).then(function(user){
@@ -236,7 +236,7 @@ S.data = {
         },
         home: {
             route: {
-              data: function (transition) {
+              data: function () {
                   return S.db.fiches.getAllWithMine()
                   //TODO catch
               }
