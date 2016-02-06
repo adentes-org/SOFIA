@@ -20,10 +20,22 @@
 
   <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
     <div class="mdl-tabs__tab-bar">
+      <template v-if="fiche.closed == true">
+        <a href="#closed-panel" class="mdl-tabs__tab is-active" >Fermé</a>
+        <a href="#affections-panel" class="mdl-tabs__tab" >Affections</a>
+        <a href="#history-panel" class="mdl-tabs__tab" >Historique</a>
+      </template>
+      <template v-else>
         <a href="#affections-panel" class="mdl-tabs__tab is-active" >Affections</a>
         <a href="#history-panel" class="mdl-tabs__tab" >Historique</a>
+      </template>
     </div>
 
+    <template v-if="fiche.closed == true">
+      <div class="mdl-tabs__panel is-active" id="closed-panel">
+          <h5> Fiche fermée ! </h5>
+      </div>
+    </template>
     <div class="mdl-tabs__panel is-active" id="affections-panel">
       <ul class="mdl-list">
         <li class="mdl-list__item add-button">
@@ -43,6 +55,25 @@
     </div>
   </div>
 
+  <dialog id="close-fiche-dialog" class="mdl-dialog">
+        <h4 class="mdl-dialog__title">Merci de saisir ces informations</h4>
+        <div class="mdl-dialog__content">
+          <form  action="#" v-on:submit.prevent="submitClose">
+            <div class="mdl-textfield mdl-js-textfield">
+              <select name="output">
+                <option v-for="output in config.outputs" >{{ output }}</option>
+              </select>
+            </div>
+            <br>
+            <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="seen-by-doctor">
+              <input type="checkbox" id="seen-by-doctor" name="seen-by-doctor" class="mdl-checkbox__input">
+              <span class="mdl-checkbox__label">Vu par médecin</span>
+            </label>
+            <br>
+            <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--colored" value="Valider" />
+          </form>
+        </div>
+  </dialog>
   <dialog id="add-origin-dialog" class="mdl-dialog">
       <h4 class="mdl-dialog__title">Ajouter l'origine de la fiche</h4>
       <div class="mdl-dialog__content">

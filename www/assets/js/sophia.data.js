@@ -35,6 +35,13 @@ S.data = {
                               "VPSP",
                               "Avec témoin",
                               "Avec sécurité",
+                          ],
+                          outputs : [
+                              "Laissé sur place",
+                              "Simple",
+                              "Surveillance et sortie simple",
+                              "Evacuation Sapeurs-Pompiers",
+                              "Evacuation",
                           ]
                         }
                       };
@@ -120,10 +127,34 @@ S.data = {
                  if(ask){
                      console.log(this._data.fiche);
                      this._data.fiche.closed = false;
+                     this._data.fiche.close_context = {};
                      S.db.put(this._data.fiche);
                  }
                },
+              submitClose: function (event) {
+                var dialog = document.querySelector("#close-fiche-dialog");
+                if (! dialog.close) {
+                    dialogPolyfill.registerDialog(dialog);
+                }
+                dialog.close();
+
+                console.log(this._data.fiche,$("#close-fiche-dialog form").serializeArray());
+                this._data.fiche.closed = true;
+                var close_context = {};
+                $.each($("#close-fiche-dialog form").serializeArray(), function(id,value){
+                  close_context[value.name] = value.value;
+                });
+                this._data.fiche.close_context = close_context;
+
+                S.db.put(this._data.fiche);
+              },
               close: function (event) {
+                var dialog = document.querySelector("#close-fiche-dialog");
+                if (! dialog.showModal) {
+                      dialogPolyfill.registerDialog(dialog);
+                }
+                dialog.showModal();
+/*
                  var ask=confirm("Etes-vous sûr ?");
                  //TODO ask for closing information
                  if(ask){
@@ -131,6 +162,7 @@ S.data = {
                      this._data.fiche.closed = true;
                      S.db.put(this._data.fiche);
                  }
+*/
                },
               take: function (event) {
                  var ask=confirm("Etes-vous sûr ?");
@@ -200,6 +232,7 @@ S.data = {
                              "owner_id": this._data.owner_id,
                              "patient": this._data.patient,
                              "closed" : false,
+                             "close_context" : {},
                              "origin" : "",
                              "pathologys": [],
                              "events": []
