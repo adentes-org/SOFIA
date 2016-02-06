@@ -70,9 +70,12 @@
               <span class="mdl-checkbox__label">Vu par médecin</span>
             </label>
             <br>
-            <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--colored" value="Valider" />
-          </form>
         </div>
+        <div class="mdl-dialog__actions">
+            <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Valider" />
+            <button v-on:click="closeCloseModal" type="button" class="mdl-button close">Annuler</button>
+        </div>
+      </form>
   </dialog>
   <dialog id="add-origin-dialog" class="mdl-dialog">
       <h4 class="mdl-dialog__title">Ajouter l'origine de la fiche</h4>
@@ -93,5 +96,8 @@
         </li>
       </ul>
     </div>
+        <div class="mdl-dialog__actions">
+          <button v-on:click="closeAddPathologyModal" type="button" class="mdl-button close">Annuler</button>
+        </div>
   </dialog>
 </div>

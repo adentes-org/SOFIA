@@ -83,6 +83,9 @@ S.data = {
               showAddPathologyModal: function (event) {
                   S.tool.getDialog("#add-path-dialog").showModal();
               },
+              closeAddPathologyModal: function (event) {
+                  S.tool.getDialog("#add-path-dialog").close();
+              },
               addPathology: function (event) {
                 var path = $(event.srcElement).text();
                 S.tool.getDialog("#add-path-dialog").close();
@@ -102,6 +105,9 @@ S.data = {
                      S.db.put(this._data.fiche);
                  }
                },
+              closeCloseModal: function (event) {
+                   S.tool.getDialog("#close-fiche-dialog").close();
+              },
               submitClose: function (event) {
                 S.tool.getDialog("#close-fiche-dialog").close();
                 this._data.fiche.closed = true;
