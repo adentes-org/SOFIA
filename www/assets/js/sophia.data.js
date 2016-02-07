@@ -196,8 +196,11 @@ S.data = {
                              "events": []
                       }
                     ).then(function (response) {
-                      S.vue.router.go("/");
+                      //S.vue.router.go("/");
+                      S.vue.router.go("/fiche/"+response.id);
                       console.log(response);
+                      //TODO check for response.ok = true;
+                      //response.id = 882c054fdbf6bbfcc1e429087500823c
                     }).catch(function (err) {
                       console.log(err);
                     });
