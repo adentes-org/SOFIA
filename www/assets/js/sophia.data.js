@@ -273,7 +273,8 @@ S.data = {
         },
         home: {
             options : {
-                title: "Mes fiches", //TODO edit dynamicly this when searching
+                title: "Mes fiches", 
+                titleInSearch: "Recherche"
             },
             route: {
               data: function () {
