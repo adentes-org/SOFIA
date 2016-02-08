@@ -240,6 +240,8 @@ S.data = {
         configuration: {
             options : {
                 title: "Configuration",
+                displayQuickAddButton : false,
+                displaySearchbox: false
             },
             route: {
               data: function () {
@@ -265,6 +267,8 @@ S.data = {
         memo: {
             options : {
                 title: "Mémo",
+                displayQuickAddButton : false,
+                displaySearchbox: false
             },
         },
         home: {
