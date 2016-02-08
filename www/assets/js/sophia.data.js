@@ -172,7 +172,9 @@ S.data = {
                             ret.uid += (count+1);
                             console.log(ret);
                             deferred.resolve(ret);
+                            S.vue.router.app.$children[0].$data.options.title = ret.uid;
                           });
+
                           return deferred.promise();
                     }
                 },

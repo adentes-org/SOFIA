@@ -126,10 +126,10 @@ S.db.users = {
 */
 S.db.fiches = {
   post : function(obj) {
-    S.db.localDB.post(obj);
+    return S.db.localDB.post(obj);
   },
   put : function(obj) {
-    S.db.localDB.put(obj);
+    return S.db.localDB.put(obj);
   },
   getByID : function(id) {
     var deferred = new $.Deferred()
