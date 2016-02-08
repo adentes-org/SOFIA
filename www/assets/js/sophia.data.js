@@ -5,6 +5,7 @@ S.data = {
     pages: {
         "fiche/:fiche_id": {
             options: {
+                title: "Fiche",
                 displayQuickAddButton : false,
                 displaySearchbox: false
             },
@@ -14,6 +15,7 @@ S.data = {
                     var deferred = new $.Deferred()
                     S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
                       console.log(doc);
+                      S.vue.router.app.$children[0].$data.options.title = doc.patient.firstname +" "+ doc.patient.lastname;
                       ret = {
                         fiche:doc,
                         user:S.user._current,
@@ -147,6 +149,7 @@ S.data = {
         },
         add : {
                 options: {
+                    title: "Ajout",
                     displayQuickAddButton : false,
                     displaySearchbox: false
                 },
@@ -233,6 +236,9 @@ S.data = {
             }
         },
         home: {
+            options : {
+                title: "Mes fiches", //TODO edit dynamicly this when searching
+            },
             route: {
               data: function () {
                   return S.db.fiches.getAllWithMine()

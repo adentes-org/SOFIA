@@ -106,6 +106,8 @@ S.vue = {
                 //console.log(current.options, current.options.displaySearchbox);
                 S.vue.router.app.$data.headerOptions.displaySearchbox = (typeof current.options.displaySearchbox === "boolean") ? current.options.displaySearchbox : true;
                 S.vue.router.app.$data.headerOptions.display = (typeof current.options.displayHeader === "boolean") ? current.options.displayHeader : true;
+                S.vue.router.app.$data.headerOptions.title = (typeof current.options.title === "string") ? current.options.title : "";
+
                 S.vue.router.app.$data.quickAddButtonOptions.display = (typeof current.options.displayQuickAddButton === "boolean") ? current.options.displayQuickAddButton : true;
 
                 S.vue.router.app.$data.MenuOptions.display = (typeof current.options.displayMenu === "boolean") ? current.options.displayMenu : true;

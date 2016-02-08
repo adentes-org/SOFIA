@@ -1,15 +1,14 @@
 <div class="fiche-view">
   <div class="info mdl-grid mdl-grid--no-spacing">
-    <div class="mdl-cell" style="width:60%;">
-      <h4>{{fiche.patient.firstname}} {{fiche.patient.lastname}}</h4>
+    <div class="mdl-cell" style="width:60%; padding: 10px 20px;">
       <p>Née le : {{fiche.patient.birthdate}}</p>
-      <p>{{fiche.patient.gender}}</p>
+      <p>Sexe : {{fiche.patient.gender}}</p>
+      <p>Origine : {{fiche.origin}}</p>
+      <p>Equipe resp. : {{fiche.owner_id}} <span v-if="fiche.owner_id == user.name">(Vous)</span></p>
     </div>
     <div class="mdl-cell" style="width:40%;">
       <h3>{{fiche.uid}}</h3>
     </div>
-    <div class="mdl-cell" style="width:60%;">Equipe resp. : {{fiche.owner_id}} <span v-if="fiche.owner_id == user.name">(Vous)</span></div>
-    <div class="mdl-cell" style="width:40%;">Origine : {{fiche.origin}}</div>
   </div>
 
   <button v-on:click="give" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">Envoyer</button>
