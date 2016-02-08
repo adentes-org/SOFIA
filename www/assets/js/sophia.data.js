@@ -90,7 +90,7 @@ S.data = {
                 if(ask){
                     console.log(this._data.fiche);
                     this._data.fiche.pathologys.push(path);
-                    S.db.put(this._data.fiche);
+                    S.db.fiches.put(this._data.fiche);
                 }
                },
               reopen: function () {
@@ -99,7 +99,7 @@ S.data = {
                      console.log(this._data.fiche);
                      this._data.fiche.closed = false;
                      this._data.fiche.close_context = {};
-                     S.db.put(this._data.fiche);
+                     S.db.fiches.put(this._data.fiche);
                  }
                },
               closeCloseModal: function () {
