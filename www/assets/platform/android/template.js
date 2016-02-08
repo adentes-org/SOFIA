@@ -9,6 +9,7 @@ define(['jquery'], function($) {
             header : "header.tmpl",
             fiche : "fiche.tmpl",
             menu : "menu.tmpl",
+            toast : "toast.tmpl",
             pages : {
                 home : "pages/home.tmpl",
                 add  : "pages/add.tmpl",
@@ -30,6 +31,7 @@ define(['jquery'], function($) {
                     "\n" + S.template.menu +
                     "\n" + '<main class="mdl-layout__content">' + '<router-view  v-bind:searchbox="searchbox"></router-view>' + '</main>' +
                     "\n" + S.template.buttons.quickAdd +
+                    "\n" + S.template.toast +
                     '</div>';
         };
         //console.log(S.template);

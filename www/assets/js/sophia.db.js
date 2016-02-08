@@ -13,7 +13,7 @@ S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name
 //S.db = new PouchDB(S.config.db._full_url, {skipSetup: true});
 
 S.db ={
-  "localDB" : new PouchDB(S.config.db.name.replace(/^\/+/, '')),
+  "localDB" : new PouchDB("local-"+S.config.db.name.replace(/^\/+/, '')),
   "remoteDB" : new PouchDB(S.config.db._full_url, {skipSetup: true})
 }
 
@@ -40,12 +40,51 @@ S.db.users = {
           }).on('change', function (change) {
             console.log("Pouchdb.sync.change event");
             // yo, something changed!
+            //TODO detect in witch vue we are and update the data in consequences.
+            //TODO or trigger reload of page (less fun)
           }).on('paused', function (info) {
             console.log("Pouchdb.sync.paused event");
             // replication was paused, usually because of a lost connection
+            var data = {
+              message: 'Sync done !',
+              timeout: 2000
+            };
+            //window.setTimeout("$('#toast').hide()",3000);
+            document.querySelector('#toast').MaterialSnackbar.showSnackbar(data);
+
+            console.log("Pause matching page : ",window.location.hash.slice(3).split("/")[0]);
+            //switch($(S.vue.router.app.$children[1].$el).attr("id")){
+            switch(window.location.hash.slice(3).split("/")[0]){
+              case "home" :
+                S.db.fiches.getAllWithMine().then(function(data){
+                  S.vue.router.app.$children[1].$data.fiches = data.fiches;
+                  S.vue.router.app.$children[1].$data.my_fiches = data.my_fiches;
+                  console.log("Updating home data : ",data)
+                })
+                break;
+              case "fiche" :
+                var ficheid= window.location.hash.slice(3).split("/")[1]
+                S.db.fiches.getByID(ficheid).then(function (doc) {
+                  //S.vue.router.app.$children[1].$data.history
+                  //S.vue.router.app.$children[1].$data.fiche
+                  S.vue.router.app.$children[1].$data.fiche = doc;
+                  //S.vue.router.app.$children[1].$set('fiche', 2)
+                });
+              break;
+              default :
+                //TODO not working
+                  S.vue.router.replace(window.location.hash.slice(2)); //TODO better reload data not page
+                break;
+            }
+            //S.vue.router.replace(window.location.hash.slice(2)); //TODO better reload data not page
           }).on('active', function (info) {
             console.log("Pouchdb.sync.active event");
             // replication was resumed
+            var data = {
+              message: 'Syncing ...',
+              timeout: 5*1000
+            };
+            document.querySelector('#toast').MaterialSnackbar.showSnackbar(data);
           }).on('error', function (err) {
             console.log("Pouchdb.sync.error event");
             // totally unhandled error (shouldn't happen)
