@@ -27,33 +27,7 @@ S.user = {
     },
     login : function(user,pass){
       //TODO
-      console.log("Trying to login : ", user,pass)
-      //TODO don't use jquery promise
-      var deferred = new $.Deferred();
-      S.db.login(user, pass, function (err, response) {
-        if (err) {
-          console.log(err);
-          alert(err.message);
-          deferred.reject(err);
-          /*
-          if (err.name === 'unauthorized') {
-            // name or password incorrect
-          } else {
-            // cosmic rays, a meteor, etc.
-            //TODO reload app
-          }
-          */
-        }else{
-          //We are logged in ?
-          //console.log(response);
-          if(response.ok) {
-            $.extend(S.user._current, response);
-            //S.db_users.login(user, pass); //We also log the acces to the user db
-            //console.log(S.user._current);
-            deferred.resolve(response);
-          }
-        }
-      });
-      return deferred.promise();
+      console.log("Trying to login : ", user,pass);
+      return S.db.users.login(user,pass);
     }
 };

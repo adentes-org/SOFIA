@@ -50,12 +50,7 @@ S.data = {
                           S.tool.getDialog("#add-origin-dialog").showModal();
                       }
                       console.log("Fetching change for fiche in background ... ",ret.fiche, this)
-                      S.db.changes({
-                        since: 0,
-                        include_docs: true,
-                        style: 'all_docs', limit: 100,
-                        doc_ids: [ret.fiche._id]
-                      }).then(function (changes) {
+                      S.db.fiches.getChanges(ret.fiche._id).then(function (changes) {
                         console.log(changes)
                         ret.history.push("Done ("+changes.results.length+"/"+changes.last_seq+")");
                         console.log(ret);
@@ -77,7 +72,7 @@ S.data = {
                 if(ask){
                     console.log(this._data.fiche);
                     this._data.fiche.origin = origin;
-                    S.db.put(this._data.fiche);
+                    S.db.fiches.put(this._data.fiche);
                 }
               },
               showAddPathologyModal: function () {
@@ -117,7 +112,7 @@ S.data = {
                 });
                 this._data.fiche.close_context = close_context;
 
-                S.db.put(this._data.fiche);
+                S.db.fiches.put(this._data.fiche);
               },
               close: function () {
                   S.tool.getDialog("#close-fiche-dialog").showModal();
@@ -127,7 +122,7 @@ S.data = {
                  if(ask){
                      console.log(this._data.fiche);
                      this._data.fiche.owner_id = S.user._current.name
-                     S.db.put(this._data.fiche);
+                     S.db.fiches.put(this._data.fiche);
                  }
               },
               give: function () {
@@ -144,7 +139,7 @@ S.data = {
                    if(ask){
                        console.log(this._data.fiche);
                        this._data.fiche.owner_id = team;
-                       S.db.put(this._data.fiche);
+                       S.db.fiches.put(this._data.fiche);
                    }
                 }
               }
@@ -184,7 +179,7 @@ S.data = {
                     //TODO don't make direct call
 
                     $("#add_form :input").attr("disabled", true);
-                    S.db.post(
+                    S.db.fiches.post(
                       {
                              "uid": this._data.uid,
                              "owner_id": this._data.owner_id,

@@ -18,11 +18,11 @@ requirejs(['lib/material-design-lite/material.min','lib/dialog-polyfill/dialog-p
         isLoaded: true,
         id: "android",
         events: {
-          /*
             afterDeviceReady: function () {
-                window.setTimeout(componentHandler.upgradeDom, 500); //Application de la lib material-design
+              $("#menu .mdl-navigation .mdl-navigation__link").on("click",function(){
+                $(".mdl-layout__obfuscator.is-visible").click();
+              })
             },
-          */
             afterPageLoad: function () {
                 window.setTimeout(componentHandler.upgradeDom, 150); //Application de la lib material-design
             }
