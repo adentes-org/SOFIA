@@ -68,6 +68,8 @@ S.db.users = {
                   //S.vue.router.app.$children[1].$data.history
                   //S.vue.router.app.$children[1].$data.fiche
                   S.vue.router.app.$children[1].$data.fiche = doc;
+                  S.vue.router.app.$children[0].$data.options.title = doc.patient.firstname +" "+ doc.patient.lastname;
+
                   //S.vue.router.app.$children[1].$set('fiche', 2)
                 });
               break;

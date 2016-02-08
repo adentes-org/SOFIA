@@ -1,0 +1,8 @@
+<div class="mdl-grid">
+  <template v-for="conf in askFor" >
+    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-{{ conf.id }}">
+      <input v-on:change="update" type="checkbox" name="{{ conf.id }}" id="switch-{{ conf.id }}" class="mdl-switch__input" checked="{{ conf.value }}" >
+      <span class="mdl-switch__label">{{ conf.lang }}</span>
+    </label>
+  </template>
+</div>

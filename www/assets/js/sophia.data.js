@@ -70,7 +70,7 @@ S.data = {
               addOrigin: function (event) {
                 var origin = $(event.srcElement).text();
                 S.tool.getDialog("#add-origin-dialog").close();
-                var ask=confirm("Etes-vous sûr de selectionner "+origin+" ?");
+                var ask= (!S.config.local["ask-for"]["addOrigin-validation"] || confirm("Etes-vous sûr de selectionner "+origin+" ?"));
                 if(ask){
                     console.log(this._data.fiche);
                     this._data.fiche.origin = origin;
@@ -86,7 +86,7 @@ S.data = {
               addPathology: function (event) {
                 var path = $(event.srcElement).text();
                 S.tool.getDialog("#add-path-dialog").close();
-                var ask=confirm("Etes-vous sûr d'ajouter "+path+" ?");
+                var ask= !S.config.local["ask-for"]["addPathology-validation"] || confirm("Etes-vous sûr d'ajouter "+path+" ?");
                 if(ask){
                     console.log(this._data.fiche);
                     this._data.fiche.pathologys.push(path);
@@ -94,7 +94,7 @@ S.data = {
                 }
                },
               reopen: function () {
-                 var ask=confirm("Etes-vous sûr ?");
+                 var ask= !S.config.local["ask-for"]["reopen-validation"] || confirm("Etes-vous sûr ?");
                  if(ask){
                      console.log(this._data.fiche);
                      this._data.fiche.closed = false;
@@ -120,7 +120,7 @@ S.data = {
                   S.tool.getDialog("#close-fiche-dialog").showModal();
               },
               take: function () {
-                 var ask=confirm("Etes-vous sûr ?");
+                 var ask= !S.config.local["ask-for"]["take-validation"] || confirm("Etes-vous sûr ?");
                  if(ask){
                      console.log(this._data.fiche);
                      this._data.fiche.owner_id = S.user._current.name
@@ -137,7 +137,7 @@ S.data = {
 
                 if (team != null) {
                   //TODO check exitance of team
-                   var ask=confirm("Etes-vous sûr de tranferer à "+team+" ?");
+                   var ask= !S.config.local["ask-for"]["give-validation"] || confirm("Etes-vous sûr de tranferer à "+team+" ?");
                    if(ask){
                        console.log(this._data.fiche);
                        this._data.fiche.owner_id = team;
@@ -234,6 +234,36 @@ S.data = {
                 */
               }
             }
+        },
+        configuration: {
+            options : {
+                title: "Configuration",
+            },
+            route: {
+              data: function () {
+                  var ret = {
+                    askFor : []
+                  }
+                  console.log(ret);
+                  $.each(S.config.local["ask-for"],function(id,value){
+                    ret.askFor.push({"id":id,"value":value,"lang":id});
+                  });
+                  console.log(ret);
+                  return ret;
+              }
+            },
+            methods: {
+              update: function (event) {
+                console.log(this,event,$(event.srcElement).attr("name"),$(event.srcElement).is(':checked'))
+                S.config.local["ask-for"][$(event.srcElement).attr("name")] = $(event.srcElement).is(':checked');
+                localStorage["sophia-local-config"] = JSON.stringify(S.config.local)
+              }
+            },
+        },
+        memo: {
+            options : {
+                title: "Mémo",
+            },
         },
         home: {
             options : {
