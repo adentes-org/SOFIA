@@ -3,8 +3,8 @@ var S = S || {};
 
 S.config = {
   db : {
-    url : "http://carapuce.sapk.fr:5985",
-    name : "sophia-fiches"
+    url : "http://carapuce.sapk.fr:5984",
+    name : "sofia-fiches"
   },
   local : {
     "ask-for" : {
@@ -17,4 +17,4 @@ S.config = {
   }
 };
 
-S.config.local = (typeof localStorage["sophia-local-config"] === "string") ? JSON.parse(localStorage["sophia-local-config"]) : S.config.local;
+S.config.local = (typeof localStorage["sofia-local-config"] === "string") ? JSON.parse(localStorage["sofia-local-config"]) : S.config.local;

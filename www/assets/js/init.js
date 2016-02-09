@@ -35,16 +35,16 @@ requirejs.config({
     }
 });
 //TODO use more modular form with dependencie
-requirejs(['cordova', 'jquery', 'vue', 'vue-router', 'pouchdb', 'app/sophia.polyfill'], function (cordova, $, Vue, VueRouter, PouchDB) {
+requirejs(['cordova', 'jquery', 'vue', 'vue-router', 'pouchdb', 'app/sofia.polyfill'], function (cordova, $, Vue, VueRouter, PouchDB) {
     Vue.use(VueRouter);
     window.PouchDB = PouchDB; //Force PouchDB to DOM
     console.log(PouchDB);
     window.Vue = Vue; //Force Vue to DOM
     window.VueRouter = VueRouter; //Force VueRouter to DOM
-    requirejs(['pouchdb-authentication', 'app/sophia.tool', 'app/sophia.template', 'app/sophia.config'], function () {
+    requirejs(['pouchdb-authentication', 'app/sofia.tool', 'app/sofia.template', 'app/sofia.config'], function () {
         $("head").append('<link rel="stylesheet" type="text/css" href="assets/platform/' + cordova.platformId + '/css/style.css">');
-        requirejs(['platform/' + cordova.platformId + '/init', 'app/sophia.db'], function () {
-            requirejs(['app/sophia.vue', 'app/sophia.data', 'app/sophia.user', 'app/sophia.app'], function () {
+        requirejs(['platform/' + cordova.platformId + '/init', 'app/sofia.db'], function () {
+            requirejs(['app/sofia.vue', 'app/sofia.data', 'app/sofia.user', 'app/sofia.app'], function () {
                 S.app.initialize();
             });
         });

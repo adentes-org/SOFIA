@@ -260,7 +260,7 @@ S.data = {
               update: function (event) {
                 console.log(this,event,$(event.srcElement).attr("name"),$(event.srcElement).is(':checked'))
                 S.config.local["ask-for"][$(event.srcElement).attr("name")] = $(event.srcElement).is(':checked');
-                localStorage["sophia-local-config"] = JSON.stringify(S.config.local)
+                localStorage["sofia-local-config"] = JSON.stringify(S.config.local)
               }
             },
         },
