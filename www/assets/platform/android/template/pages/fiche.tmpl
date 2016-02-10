@@ -1,5 +1,5 @@
 <div class="fiche-view">
-  <div class="info mdl-grid mdl-grid--no-spacing">
+  <div class="info mdl-grid mdl-grid--no-spacing {{fiche.closed ? 'close':'open'}}">
     <div class="mdl-cell" style="width:60%; padding: 10px 20px;">
       <p>Née le : {{fiche.patient.birthdate}}</p>
       <p>Sexe : {{fiche.patient.gender}}</p>
@@ -19,22 +19,9 @@
 
   <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
     <div class="mdl-tabs__tab-bar">
-      <template v-if="fiche.closed == true">
-        <a href="#closed-panel" class="mdl-tabs__tab is-active" >Fermé</a>
-        <a href="#affections-panel" class="mdl-tabs__tab" >Affections</a>
-        <a href="#history-panel" class="mdl-tabs__tab" >Historique</a>
-      </template>
-      <template v-else>
         <a href="#affections-panel" class="mdl-tabs__tab is-active" >Affections</a>
         <a href="#history-panel" class="mdl-tabs__tab" >Historique</a>
-      </template>
     </div>
-
-    <template v-if="fiche.closed == true">
-      <div class="mdl-tabs__panel is-active" id="closed-panel">
-          <h5> Fiche fermée ! </h5>
-      </div>
-    </template>
     <div class="mdl-tabs__panel is-active" id="affections-panel">
       <ul class="mdl-list">
         <li class="mdl-list__item add-button">
