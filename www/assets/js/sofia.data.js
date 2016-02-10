@@ -98,8 +98,17 @@ S.data = {
                 var ask= !S.config.local["ask-for"]["addPathology-validation"] || confirm("Etes-vous sûr d'ajouter "+path+" ?");
                 if(ask){
                     console.log(this._data.fiche);
+                    if(this._data.fiche.pathologys.length == 0){
+                       this._data.fiche.primaryAffection = path; // By default we use the first added patho
+                    }
                     this._data.fiche.pathologys.push(path);
                     S.db.fiches.put(this._data.fiche);
+                    
+                    //Update ui if needed by interface
+                    if(typeof S.platform.events.afterPageLoad === "function"){
+                        S.platform.events.afterPageLoad();
+                    }
+                    
                 }
                },
               reopen: function () {
@@ -201,6 +210,7 @@ S.data = {
                              "closed" : false,
                              "close_context" : {},
                              "origin" : "",
+                             "primaryAffection": "",
                              "pathologys": [],
                              "events": []
                       }
