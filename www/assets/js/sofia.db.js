@@ -224,7 +224,25 @@ S.db.fiches = {
   },
   //TODO use startkey for get all the team fiches?
 
-  //TODO maybe use the count of the team
+  getMyCreationCount : function (){
+    var deferred = new $.Deferred()
+
+    S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
+      var count = 0;
+      $.each(result.rows, function( index, value ) {
+        if(value.doc.uid.split("-")[0] === S.user._current.name)
+          count ++;
+      });
+      console.log(count);
+      deferred.resolve(count);
+    }).catch(function (err) {
+            // handle err
+        console.log(err);
+        deferred.reject(err);
+    });
+
+    return deferred.promise();
+  },
   getCount : function (){
     var deferred = new $.Deferred()
     S.db.localDB.info().then(function (result) {

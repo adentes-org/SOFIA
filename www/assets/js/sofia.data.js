@@ -103,12 +103,12 @@ S.data = {
                     }
                     this._data.fiche.pathologys.push(path);
                     S.db.fiches.put(this._data.fiche);
-                    
+
                     //Update ui if needed by interface
                     if(typeof S.platform.events.afterPageLoad === "function"){
                         S.platform.events.afterPageLoad();
                     }
-                    
+
                 }
                },
               reopen: function () {
@@ -186,7 +186,7 @@ S.data = {
                                  "pathologys": [],
                                  "events": []
                           }
-                          S.db.fiches.getCount().then(function(count){
+                          S.db.fiches.getMyCreationCount().then(function(count){
                             ret.uid += (count+1);
                             console.log(ret);
                             deferred.resolve(ret);
@@ -291,7 +291,7 @@ S.data = {
         },
         home: {
             options : {
-                title: "Mes fiches", 
+                title: "Mes fiches",
                 titleInSearch: "Recherche"
             },
             route: {
