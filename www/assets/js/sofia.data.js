@@ -72,6 +72,13 @@ S.data = {
                 var ask= (!S.config.local["ask-for"]["changePrimaryAffection-validation"] || confirm("Etes-vous sûr de selectionner "+primary+" ?"));
                 if(ask){
                     console.log(this._data.fiche);
+                    this._data.fiche.events.push({
+                      type : "action",
+                      action : "changePrimaryAffection",
+                      message : S.user._current.name+" change l'affection principale de <b>"+this._data.fiche.primaryAffection+"</b> à <b>"+primary+"</b>",
+                      timestamp : Date.now(),
+                      user :  S.user._current.name
+                    })
                     this._data.fiche.primaryAffection = primary;
                     S.db.fiches.put(this._data.fiche);
                 }
@@ -82,6 +89,13 @@ S.data = {
                 var ask= (!S.config.local["ask-for"]["addOrigin-validation"] || confirm("Etes-vous sûr de selectionner "+origin+" ?"));
                 if(ask){
                     console.log(this._data.fiche);
+                    this._data.fiche.events.push({
+                      type : "action",
+                      action : "addOrigin",
+                      message : S.user._current.name+" définit l'origine à <b>"+origin+"</b>",
+                      timestamp : Date.now(),
+                      user :  S.user._current.name
+                    })
                     this._data.fiche.origin = origin;
                     S.db.fiches.put(this._data.fiche);
                 }
@@ -98,6 +112,13 @@ S.data = {
                 var ask= !S.config.local["ask-for"]["addPathology-validation"] || confirm("Etes-vous sûr d'ajouter "+path+" ?");
                 if(ask){
                     console.log(this._data.fiche);
+                    this._data.fiche.events.push({
+                      type : "action",
+                      action : "addPathology",
+                      message : S.user._current.name+" ajoute l'affection : <b>"+path+"</b>",
+                      timestamp : Date.now(),
+                      user :  S.user._current.name
+                    })
                     if(this._data.fiche.pathologys.length == 0){
                        this._data.fiche.primaryAffection = path; // By default we use the first added patho
                     }
@@ -115,6 +136,13 @@ S.data = {
                  var ask= !S.config.local["ask-for"]["reopen-validation"] || confirm("Etes-vous sûr ?");
                  if(ask){
                      console.log(this._data.fiche);
+                     this._data.fiche.events.push({
+                       type : "action",
+                       action : "reopen",
+                       message : S.user._current.name+" ré-ouvre la fiche.",
+                       timestamp : Date.now(),
+                       user :  S.user._current.name
+                     })
                      this._data.fiche.closed = false;
                      this._data.fiche.close_context = {};
                      S.db.fiches.put(this._data.fiche);
@@ -131,6 +159,14 @@ S.data = {
                   close_context[value.name] = value.value;
                 });
                 this._data.fiche.close_context = close_context;
+                this._data.fiche.events.push({
+                  type : "action",
+                  action : "close",
+                  message : S.user._current.name+" ferme la fiche.",
+                  close_context : this._data.fiche.close_context,
+                  timestamp : Date.now(),
+                  user :  S.user._current.name
+                })
 
                 S.db.fiches.put(this._data.fiche);
               },
@@ -141,6 +177,13 @@ S.data = {
                  var ask= !S.config.local["ask-for"]["take-validation"] || confirm("Etes-vous sûr ?");
                  if(ask){
                      console.log(this._data.fiche);
+                     this._data.fiche.events.push({
+                       type : "action",
+                       action : "take",
+                       message : S.user._current.name+" prend la fiche à "+this._data.fiche.owner_id,
+                       timestamp : Date.now(),
+                       user :  S.user._current.name
+                     })
                      this._data.fiche.owner_id = S.user._current.name
                      S.db.fiches.put(this._data.fiche);
                  }
@@ -158,6 +201,13 @@ S.data = {
                    var ask= !S.config.local["ask-for"]["give-validation"] || confirm("Etes-vous sûr de tranferer à "+team+" ?");
                    if(ask){
                        console.log(this._data.fiche);
+                       this._data.fiche.events.push({
+                         type : "action",
+                         action : "take",
+                         message : S.user._current.name+" donne la fiche à "+ team +"(ancien propriétaire : "+this._data.fiche.owner_id+")",
+                         timestamp : Date.now(),
+                         user :  S.user._current.name
+                       })
                        this._data.fiche.owner_id = team;
                        S.db.fiches.put(this._data.fiche);
                    }
@@ -212,7 +262,13 @@ S.data = {
                              "origin" : "",
                              "primaryAffection": "",
                              "pathologys": [],
-                             "events": []
+                             "events": [{
+                               type : "action",
+                               action : "creation",
+                               message : S.user._current.name+" crée la fiche.",
+                               timestamp : Date.now(),
+                               user :  S.user._current.name
+                             }]
                       }
                     ).then(function (response) {
                       //S.vue.router.go("/");

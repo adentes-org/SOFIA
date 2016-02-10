@@ -52,8 +52,8 @@
     </div>
     <div class="mdl-tabs__panel" id="history-panel">
       <ul class="mdl-list">
-      <li v-for="h in history"  class="mdl-list__item">
-        <span class="mdl-list__item-primary-content">{{ h }}</span>
+      <li v-for="e in fiche.events | orderBy 'timestamp' -1"  class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">{{{ e.message }}}</span>
       </li>
       </ul>
     </div>
