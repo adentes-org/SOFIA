@@ -225,10 +225,9 @@ S.data = {
                 displayMenu : false,
             },
             data: function() {
-                //TODO clean only for testing purpose
                 return {
-                  username : "User11",
-                  userpass : "3WWWWE"
+                  username : "",
+                  userpass : ""
                 };
             },
             methods: {
