@@ -11,7 +11,7 @@ cache:
   - node_modules
   - bower_components
 before_install:
-- openssl aes-256-cbc -K $encrypted_key -in sofia-release-key.keystore.enc -out sofia-release-key.keystore -d
+- openssl aes-256-cbc -k "$encrypted_key" -iv "$encrypted_iv" -in sofia-release-key.keystore.enc -out sofia-release-key.keystore -d
 - nvm install 5.1 && nvm alias default 5.1 && nvm use 5.1
 - npm install -g npm gulp cordova snyk
 - snyk auth $SNYK_KEY
