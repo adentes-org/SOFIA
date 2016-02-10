@@ -42,6 +42,11 @@
         </li>
         <li v-for="path in fiche.pathologys"  class="mdl-list__item">
           <span class="mdl-list__item-primary-content">{{ path }}</span>
+          <span class="mdl-list__item-secondary-action">
+              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-{{ path }}">
+                <input v-on:change="changePrimaryAffection" type="radio" id="option-{{ path }}" class="mdl-radio__button" name="primary-affection" value="{{ path }}" checked="{{ fiche.primaryAffection == path }}" />
+              </label>
+          </span>
         </li>
       </ul>
     </div>

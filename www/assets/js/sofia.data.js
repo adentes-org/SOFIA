@@ -67,6 +67,15 @@ S.data = {
                 }
             },
             methods: {
+              changePrimaryAffection: function (event) {
+                var primary = $(event.srcElement).val();
+                var ask= (!S.config.local["ask-for"]["changePrimaryAffection-validation"] || confirm("Etes-vous sûr de selectionner "+primary+" ?"));
+                if(ask){
+                    console.log(this._data.fiche);
+                    this._data.fiche.primaryAffection = primary;
+                    S.db.fiches.put(this._data.fiche);
+                }
+              },
               addOrigin: function (event) {
                 var origin = $(event.srcElement).text();
                 S.tool.getDialog("#add-origin-dialog").close();
