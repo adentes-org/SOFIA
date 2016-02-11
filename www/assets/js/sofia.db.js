@@ -155,6 +155,9 @@ S.db.fiches = {
           fiches: []
       }
       $.each(result.rows, function( index, value ) {
+        if(value.doc["_id"].split("/")[0] == "_design" )
+          return; //If it's a design doc
+
         if(value.doc.owner_id === S.user._current.name)
           ret.fiches[ret.fiches.length] = value.doc;
       });
@@ -181,6 +184,8 @@ S.db.fiches = {
             my_fiches: []
         }
         $.each(result.rows, function( index, value ) {
+          if(value.doc["_id"].split("/")[0] == "_design" )
+            return; //If it's a design doc
           ret.fiches[ret.fiches.length] = value.doc;
           if(value.doc.owner_id === S.user._current.name)
             ret.my_fiches[ret.my_fiches.length] = value.doc;
@@ -210,6 +215,8 @@ S.db.fiches = {
           fiches: []
       }
       $.each(result.rows, function( index, value ) {
+        if(value.doc["_id"].split("/")[0] == "_design" )
+          return; //If it's a design doc
         ret.fiches[ret.fiches.length] = value.doc;
       });
       deferred.resolve(ret);
@@ -230,6 +237,8 @@ S.db.fiches = {
     S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
       var count = 0;
       $.each(result.rows, function( index, value ) {
+        if(value.doc["_id"].split("/")[0] == "_design" )
+          return; //If it's a design doc
         if(value.doc.uid.split("-")[0] === S.user._current.name)
           count ++;
       });
@@ -243,6 +252,7 @@ S.db.fiches = {
 
     return deferred.promise();
   },
+  /* Not in use anymore
   getCount : function (){
     var deferred = new $.Deferred()
     S.db.localDB.info().then(function (result) {
@@ -264,4 +274,5 @@ S.db.fiches = {
       doc_ids: [id]
     })
   }
+  */
 }
