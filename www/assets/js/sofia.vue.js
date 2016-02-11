@@ -28,6 +28,11 @@ S.vue = {
         });
     },
     declare_filter: function () {
+        Vue.filter('formatTime', function (value) {
+          //return new Date(value).toLocaleString();
+          var d = new Date(value);
+          return "le "+d.toLocaleDateString().slice(0, -5)+" à "+d.toLocaleTimeString().slice(0, -3);
+        })
         /* Now using filterby with function
          Vue.filter('startsWith', function (value, input) {
          if (typeof value == "String") {
@@ -86,7 +91,7 @@ S.vue = {
             //S.router.replace("/_login");
             transition.redirect("/_login")
           } else if (transition.to.path == '/_login' && S.user._current.isLogged()) {
-            //Case where we go back in history (we are already logged at the front door) so we abort 
+            //Case where we go back in history (we are already logged at the front door) so we abort
             transition.abort()
           } else {
             transition.next()

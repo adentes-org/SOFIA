@@ -41,6 +41,9 @@
       <ul class="mdl-list">
       <li v-for="e in fiche.events | orderBy 'timestamp' -1"  class="mdl-list__item">
         <span class="mdl-list__item-primary-content">{{{ e.message }}}</span>
+        <span class="mdl-list__item-secondary-content">
+          <span class="mdl-list__item-secondary-info">{{ e.timestamp | formatTime }}</span>
+        </span>
       </li>
       </ul>
     </div>
