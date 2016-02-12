@@ -71,6 +71,12 @@ S.db.users = {
             console.log("Pause matching page : ",window.location.hash.slice(3).split("/")[0]);
             //switch($(S.vue.router.app.$children[1].$el).attr("id")){
             switch(window.location.hash.slice(3).split("/")[0]){
+              case "memo" :
+                S.db.config.getMemo().then(function(data){
+                  S.vue.router.app.$children[1].$data.memo = data.memo;
+                  console.log("Updating memo data : ",data)
+                })
+                break;
               case "home" :
                 S.db.fiches.getAllWithMine().then(function(data){
                   S.vue.router.app.$children[1].$data.fiches = data.fiches;
