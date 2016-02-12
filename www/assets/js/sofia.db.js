@@ -20,6 +20,22 @@ S.db ={
 
 //S.db_users = new PouchDB(S.config.db._user_url, {skipSetup: true});
 
+S.db.config = {
+  getMemo : function(){
+    var deferred = new $.Deferred();
+    S.db.localDB.getAttachment('_design/sofia-config', 'memo.html').then(function (blob) {
+      // handle result
+      var reader = new FileReader();
+      reader.onload = function(event){
+        deferred.resolve({ memo : reader.result});
+      };
+      reader.readAsText(blob);
+    }).catch(function (err) {
+      console.log(err);
+    });
+    return deferred.promise();
+  }
+}
 S.db.users = {
   login : function(user,pass){
     //TODO don't use jquery promise
