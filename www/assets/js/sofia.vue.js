@@ -24,7 +24,12 @@ S.vue = {
         });
         Vue.component('app-header', {
             props: ['options', "searchbox"],
-            template: S.template.header
+            template: S.template.header,
+            methods : {
+              onHeaderClick: function () {
+                this.$data.options.onHeaderClick();
+              }
+            }
         });
     },
     declare_filter: function () {
@@ -72,7 +77,8 @@ S.vue = {
                     headerOptions: {
                         "title": "",
                         "display": true,
-                        "displaySearchbox": true
+                        "displaySearchbox": true,
+                        "onHeaderClick": null
                     },
                     quickAddButtonOptions: {
                         "display": true
@@ -116,6 +122,7 @@ S.vue = {
                 S.vue.router.app.$data.headerOptions.display = (typeof current.options.displayHeader === "boolean") ? current.options.displayHeader : true;
                 S.vue.router.app.$data.headerOptions.title = (typeof current.options.title === "string") ? current.options.title : "";
                 S.vue.router.app.$data.headerOptions.titleInSearch = (typeof current.options.titleInSearch === "string") ? current.options.titleInSearch : ""; //We show nothing by default in searchmode
+                S.vue.router.app.$data.headerOptions.onHeaderClick = (typeof current.options.onHeaderClick === "function") ? current.options.onHeaderClick : null;
 
                 S.vue.router.app.$data.quickAddButtonOptions.display = (typeof current.options.displayQuickAddButton === "boolean") ? current.options.displayQuickAddButton : true;
 
