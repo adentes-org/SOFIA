@@ -57,17 +57,11 @@ S.db.users = {
           }).on('change', function (change) {
             console.log("Pouchdb.sync.change event");
             // yo, something changed!
-            //TODO detect in witch vue we are and update the data in consequences.
-            //TODO or trigger reload of page (less fun)
           }).on('paused', function (info) {
             console.log("Pouchdb.sync.paused event");
-            // replication was paused, usually because of a lost connection
-            var data = {
-              message: 'Sync done !',
-              timeout: 2000
-            };
-            //window.setTimeout("$('#toast').hide()",3000);
-            document.querySelector('#toast').MaterialSnackbar.showSnackbar(data);
+            // replication was paused, usually because of a lost connection or end of transmission
+
+            S.vue.router.app.$children[0].$data.options.displayLoadingBar = false;
 
             console.log("Pause matching page : ",window.location.hash.slice(3).split("/")[0]);
             //switch($(S.vue.router.app.$children[1].$el).attr("id")){
@@ -105,11 +99,7 @@ S.db.users = {
           }).on('active', function (info) {
             console.log("Pouchdb.sync.active event");
             // replication was resumed
-            var data = {
-              message: 'Syncing ...',
-              timeout: 5*1000
-            };
-            document.querySelector('#toast').MaterialSnackbar.showSnackbar(data);
+            S.vue.router.app.$children[0].$data.options.displayLoadingBar = true;
           }).on('error', function (err) {
             console.log("Pouchdb.sync.error event");
             // totally unhandled error (shouldn't happen)

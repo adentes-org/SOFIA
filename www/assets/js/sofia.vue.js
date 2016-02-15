@@ -44,19 +44,6 @@ S.vue = {
           var d = new Date(value);
           return "le "+d.toLocaleDateString().slice(0, -5)+" à "+d.toLocaleTimeString().slice(0, -3);
         })
-        /* Now using filterby with function
-         Vue.filter('startsWith', function (value, input) {
-         if (typeof value == "String") {
-         return value.startsWith(input)
-         } else {
-         arr = toArray(value);
-         if (input == null) {
-         return arr
-         }
-         return value.startsWith(input)
-         }
-         })
-         */
     },
     parse_template: function () {
         for (var i in S.template.pages) {
@@ -75,7 +62,7 @@ S.vue = {
         //console.log(S.vue.map);
     },
     init_router: function () {
-        //TODO not use S.vue.el. since it aonly the constructor and not the real object in use.
+        //TODO not use S.vue.el. since it only the constructor and not the real object in use.
         S.vue.el.App = Vue.extend({
             data: function () {
                 return {
@@ -83,6 +70,7 @@ S.vue = {
                     headerOptions: {
                         "title": "",
                         "display": true,
+                        "displayLoadingBar" : false,
                         "displaySearchbox": true,
                         "onHeaderClick": null
                     },
@@ -98,9 +86,7 @@ S.vue = {
         S.vue.router = new VueRouter();
         S.vue.router.map(S.vue.map);
         S.vue.router.beforeEach(function (transition) {
-          if (transition.to.path !== '/_login' && !S.user._current.isLogged()) { //TODO check for credential in database
-            //transition.abort()
-            //S.router.replace("/_login");
+          if (transition.to.path !== '/_login' && !S.user._current.isLogged()) {
             transition.redirect("/_login")
           } else if (transition.to.path == '/_login' && S.user._current.isLogged()) {
             //Case where we go back in history (we are already logged at the front door) so we abort
@@ -123,7 +109,6 @@ S.vue = {
             }
             //*
             if (current.options) {
-                //console.log(current.options, current.options.displaySearchbox);
                 S.vue.router.app.$data.headerOptions.displaySearchbox = (typeof current.options.displaySearchbox === "boolean") ? current.options.displaySearchbox : true;
                 S.vue.router.app.$data.headerOptions.display = (typeof current.options.displayHeader === "boolean") ? current.options.displayHeader : true;
                 S.vue.router.app.$data.headerOptions.title = (typeof current.options.title === "string") ? current.options.title : "";
@@ -139,7 +124,6 @@ S.vue = {
             if(typeof S.platform.events.afterPageLoad === "function"){
                 S.platform.events.afterPageLoad();
             }
-            //*/
         });
         // Redirect certain routes to other routes (by default hom and if not logged redirect to login)
         S.vue.router.redirect({
@@ -157,7 +141,6 @@ S.vue = {
     },
     init_menu: function () {
         //TODO choose if not use custom <menu> component
-        //TODO link the title of the menu to the title of the page
         S.vue.el.menu = new Vue({
             el: '#menu',
             data: {current: "Login", links: S.vue.map},
@@ -165,7 +148,5 @@ S.vue = {
                 isMenuEntry: S.tool.isMenuEntry
             }
         });
-        //*
-        //*/
     }
 };
