@@ -29,6 +29,12 @@ S.vue = {
               onHeaderClick: function () {
                 this.$data.options.onHeaderClick();
               }
+            },
+            computed: {
+              displayedTitle: function () {
+                console.log("Update displayedTitle : ",this.options.titleInSearch, this.searchbox.length, this.options.title)
+                return ( this.options.titleInSearch != "" && this.searchbox.length>0 ) ? this.options.titleInSearch : this.options.title;
+              }
             }
         });
     },
