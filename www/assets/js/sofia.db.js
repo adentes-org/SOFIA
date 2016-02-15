@@ -154,7 +154,14 @@ S.db.fiches = {
   put : function(obj) { //Update or Create
     //TODO check-up
     obj.pathologys = S.tool.uniq(obj.pathologys); // Remove any duplicate
-    return S.db.localDB.put(obj);
+    return S.db.localDB.put(obj).catch(function (err) {
+            console.log(err);
+            if (err.status === 409) {
+              // conflict! //TODO handle
+            } else {
+              // some other error
+            }
+        });
   },
   getByID : function(id) {
     var deferred = new $.Deferred()
