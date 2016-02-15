@@ -78,7 +78,6 @@
                 </div>
               <br>
           </div>
-          <!-- TODO reset on annuler -->
           <div class="mdl-dialog__actions">
               <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Valider" />
               <button v-on:click="closeUpdateInformation" type="button" class="mdl-button close">Annuler</button>
@@ -121,8 +120,8 @@
     <h4 class="mdl-dialog__title">Ajout d'une affection</h4>
     <div class="mdl-dialog__content">
       <ul class="mdl-list">
-        <li v-for="path in config.pathologys"  class="mdl-list__item">
-          <span v-on:click="addPathology" class="mdl-list__item-primary-content">{{ path }}</span>
+        <li v-on:click="addPathology" v-for="path in config.pathologys"  class="mdl-list__item">
+          <span class="mdl-list__item-primary-content">{{ path }}</span>
         </li>
       </ul>
     </div>

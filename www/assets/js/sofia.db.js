@@ -12,8 +12,9 @@ S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name
 //TODO use a local that replcaite to S.config.db._full_url for offline function
 //S.db = new PouchDB(S.config.db._full_url, {skipSetup: true});
 
+//console.log("local-"+S.config.db._full_url.substring(7)); // We use the url minu the http:// replace by local in order to don't have conflict between different intervention
 S.db ={
-  "localDB" : new PouchDB("local-"+S.config.db.name.replace(/^\/+/, '')),
+  "localDB" : new PouchDB("local-"+S.config.db._full_url.substring(7)),
   "remoteDB" : new PouchDB(S.config.db._full_url, {skipSetup: true})
 }
 
@@ -147,10 +148,12 @@ S.db.users = {
 };
 */
 S.db.fiches = {
-  post : function(obj) {
+  post : function(obj) { //Create
     return S.db.localDB.post(obj);
   },
-  put : function(obj) {
+  put : function(obj) { //Update or Create
+    //TODO check-up
+    obj.pathologys = S.tool.uniq(obj.pathologys); // Remove any duplicate
     return S.db.localDB.put(obj);
   },
   getByID : function(id) {

@@ -139,7 +139,7 @@ S.data = {
                   S.tool.getDialog("#add-path-dialog").close();
               },
               addPathology: function (event) {
-                var path = $(event.srcElement).text();
+                var path = $.trim($(event.srcElement).text());
                 S.tool.getDialog("#add-path-dialog").close();
                 var ask= !S.config.local["ask-for"]["addPathology-validation"] || confirm("Etes-vous sûr d'ajouter "+path+" ?");
                 if(ask){
