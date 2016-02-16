@@ -3,7 +3,7 @@ var S = S || {};
 
 S.config = {
   db : {
-    url : "http://carapuce.sapk.fr:5984",
+    url : "https://carapuce.sapk.fr:5984",
     name : "sofia-fiches"
   },
   local : { /* default */
