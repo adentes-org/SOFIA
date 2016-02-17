@@ -324,14 +324,13 @@ S.data = {
                 displayHeader : false,
                 displayMenu : false,
             },
-            data: function() {
-                return {
-                  u : {
-                    username : "",
-                    userpass : ""
-                  },
-                  db : S.config.db
-                };
+            route: {
+              data: function() {
+                  return {
+                    u : S.config.user,
+                    db : S.config.db
+                  };
+              }
             },
             methods: {
               login: function () {

@@ -19,6 +19,7 @@ S.db = {
   setUrl : function(dbConfig) {
     //TODO backup in localstorage
     S.config.db = dbConfig; //TODO check
+    localStorage["sofia-server-config"] = JSON.stringify(S.config.db);
     S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name.replace(/^\/+/, '');
     S.db.localDB = new PouchDB("local-"+S.config.db.name.replace(/^\/+/, ''));
     S.db.remoteDB = new PouchDB(S.config.db._full_url, {skipSetup: true}); //TODO maybe clean it if exist ?
@@ -56,6 +57,13 @@ S.db.users = {
       }else{
         //console.log(response);
         if(response.ok) {
+          //We are logged in
+          S.config.user = {
+              username : user,
+              userpass : pass
+          };
+          localStorage["sofia-user-config"] = JSON.stringify(S.config.user);
+
           $.extend(S.user._current, response);
 
           S.db.localDB.sync(S.db.remoteDB, {
