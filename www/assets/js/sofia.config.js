@@ -17,7 +17,7 @@ S.config = {
     }
   }
 };
-
+$.extend(true, S.config.db, (typeof localStorage["sofia-server-config"] === "string") ? JSON.parse(localStorage["sofia-server-config"]) : null); 
 $.extend(true, S.config.local, (typeof localStorage["sofia-local-config"] === "string") ? JSON.parse(localStorage["sofia-local-config"]) : null); 
 //S.config.local = (typeof localStorage["sofia-local-config"] === "string") ? JSON.parse(localStorage["sofia-local-config"]) : _defaultConfig;
 

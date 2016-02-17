@@ -1,3 +1,4 @@
+/* global cordova */
 'use strict';
 var S = S || {};
 
@@ -236,15 +237,18 @@ S.data = {
             },
             data: function() {
                 return {
-                  username : "",
-                  userpass : ""
+                  u : {
+                    username : "",
+                    userpass : ""
+                  },
+                  db : S.config.db
                 };
             },
             methods: {
               login: function () {
                 //TODO check format of user and pass
                 //TODO determine if not use lazy attribute to use less ressouces
-                S.user.login(this.username, this.userpass).then(function(user){
+                S.user.login(this.u.username, this.u.userpass).then(function(user){
                     console.log(user);
                     S.vue.router.go("/");
                 })
@@ -252,6 +256,30 @@ S.data = {
                     //TODO handle errors
                 });
                 */
+              },
+              showConfigurationModal: function () {
+                  S.tool.getDialog("#show-config-dialog").showModal();
+              },
+              closeConfigurationModal: function () {
+                  this.db = S.config.db; //Reset
+                  S.tool.getDialog("#show-config-dialog").close();
+              },
+              scanQRCode: function (event) {
+                cordova.plugins.barcodeScanner.scan(
+                    function (result) {
+                        alert("We got a barcode\n" +
+                              "Result: " + result.text + "\n" +
+                              "Format: " + result.format + "\n" +
+                              "Cancelled: " + result.cancelled);
+                    }, 
+                    function (error) {
+                        alert("Scanning failed: " + error);
+                    }
+                 );
+              },
+              updtConfiguration: function (event) {
+                  S.config.db = this.db //TODO backup in localstorage
+                  S.tool.getDialog("#show-config-dialog").close();
               }
             }
         },
