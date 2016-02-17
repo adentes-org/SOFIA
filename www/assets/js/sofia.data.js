@@ -104,12 +104,12 @@ S.data = {
                     }
                     this._data.fiche.pathologys.push(path);
                     S.db.fiches.put(this._data.fiche);
-                    
+
                     //Update ui if needed by interface
                     if(typeof S.platform.events.afterPageLoad === "function"){
                         S.platform.events.afterPageLoad();
                     }
-                    
+
                 }
                },
               reopen: function () {
@@ -265,13 +265,24 @@ S.data = {
                   S.tool.getDialog("#show-config-dialog").close();
               },
               scanQRCode: function (event) {
+                var el = this;
                 cordova.plugins.barcodeScanner.scan(
                     function (result) {
-                        alert("We got a barcode\n" +
-                              "Result: " + result.text + "\n" +
-                              "Format: " + result.format + "\n" +
-                              "Cancelled: " + result.cancelled);
-                    }, 
+                      console.log("We got a barcode\n" +
+                            "Result: " + result.text + "\n" +
+                            "Format: " + result.format + "\n" +
+                            "Cancelled: " + result.cancelled);
+                      if(!result.cancelled){
+                        if(result.format != "QR_CODE"){
+                          alert("Format "+result.format+" incorrect !")
+                        }else{
+                          var tmp = result.text.split("/");
+                          el.db.name = tmp.pop()
+                          el.db.url = tmp.join('/')
+                          //TODO support username and password
+                        }
+                      }
+                    },
                     function (error) {
                         alert("Scanning failed: " + error);
                     }
@@ -319,7 +330,7 @@ S.data = {
         },
         home: {
             options : {
-                title: "Mes fiches", 
+                title: "Mes fiches",
                 titleInSearch: "Recherche"
             },
             route: {
