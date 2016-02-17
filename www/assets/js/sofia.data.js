@@ -376,7 +376,7 @@ S.data = {
                           }
                           el.db.name = tmp.pop()
                           el.db.url = tmp.join('/')
-                          //TODO support password
+                          //TODO updt config
                         }
                       }
                     },
