@@ -13,9 +13,6 @@ var LessPluginCleanCSS = require('less-plugin-clean-css'),
     LessPluginAutoPrefix = require('less-plugin-autoprefix'),
     cleancss = new LessPluginCleanCSS({ advanced: true }),
     autoprefix = new LessPluginAutoPrefix({browsers: ['> 0.01%', 'last 3 versions', 'Android > 18', 'last 5 ChromeAndroid versions', 'iOS > 3']});
-//var uglify = require('gulp-uglify');
-//var minifyCss = require('gulp-minify-css');
-//var rename = require("gulp-rename");
 
 var folders = {
     root : "./www/"
@@ -29,7 +26,7 @@ folders.platform = folders.assets + "platform/";
 
 var platformList = ["android", "browser", "ios"]; //TODO generate from folder
 gulp.task('clean', function () {
-  //return 
+  //return
     del([folders.css + '/*.css', folders.css + '/maps/*.css.map']);
     for (var i in platformList) {
         if(platformList.hasOwnProperty(i)){
@@ -55,15 +52,15 @@ gulp.task('less', function () {
                       .pipe(sourcemaps.init())
                       .pipe(less({ plugins: [autoprefix,cleancss] }))
                       .pipe(sourcemaps.write("./maps"))
-                      .pipe(gulp.dest(folders.platform + p + '/css/'));  
-                      /*                      
+                      .pipe(gulp.dest(folders.platform + p + '/css/'));
+                      /*
                       .pipe(gulp.dest(folders.platform + p + '/css/'))
                       .pipe(minifyCss())
                       .pipe(rename({ extname: '.min.css' }))
                       */
         }
     }
-    
+
 });
 
 gulp.task('cordova:init', function() {
@@ -93,6 +90,5 @@ gulp.task('build', ['clean','less', 'cordova:build']);
 gulp.task('default', ['clean','less', 'watch']);
 
 
-//TODO remove cli dependance for lessc ?
-//TODO minify js
+//TODO minify js & html
 //TODO minify apk and other package delivery
