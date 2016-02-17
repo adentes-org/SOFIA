@@ -278,7 +278,7 @@ S.data = {
                  );
               },
               updtConfiguration: function (event) {
-                  S.config.db = this.db //TODO backup in localstorage
+                  S.db.setUrl(this.db)
                   S.tool.getDialog("#show-config-dialog").close();
               }
             }
