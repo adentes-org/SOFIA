@@ -369,6 +369,10 @@ S.data = {
                           if(result.text.indexOf("@")> -1){ //We have a username
                             tmp[2] = tmp[2].split("@");
                             el.u.username = tmp[2].shift();
+                            if(el.u.username.text.indexOf(":")> -1){ //We have a password
+                              el.u.userpass = el.u.username.split(":")[1]
+                              el.u.username = el.u.username.split(":")[0]
+                            }
                             tmp[2] = tmp[2].join("");
                           }
                           el.db.name = tmp.pop()
