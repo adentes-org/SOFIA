@@ -5,15 +5,20 @@
       <h2>SOFIA</h2>
       <h3>Croix-Rouge fran&ccedil;aise</h3>
     </div>
+    <div class="mdl-card mdl-shadow--2dp" style="min-height:0px;" v-on:click="showConfigurationModal" >
+      <div class="mdl-card__supporting-text">
+        <button class="mdl-button mdl-js-button" >Changer paramètres de connexion</button>
+      </div>
+    </div>
     <div class="mdl-card mdl-shadow--2dp">
       <div class="mdl-card__supporting-text">
       	<form action="#" v-on:submit.prevent="login">
 					<div class="mdl-textfield mdl-js-textfield">
-						<input class="mdl-textfield__input" type="text" id="username" v-model="username" />
+						<input class="mdl-textfield__input" type="text" id="username" v-model="u.username" />
 						<label class="mdl-textfield__label" for="username">Username</label>
 					</div>
 					<div class="mdl-textfield mdl-js-textfield">
-						<input class="mdl-textfield__input" type="password" id="userpass" v-model="userpass" />
+						<input class="mdl-textfield__input" type="password" id="userpass" v-model="u.userpass" />
 						<label class="mdl-textfield__label" for="userpass">Password</label>
 					</div>
           <div class="mdl-card__actions mdl-card--border">
@@ -23,4 +28,26 @@
       </div>
     </div>
   </main>
+
+  <dialog id="show-config-dialog" class="mdl-dialog">
+        <h4 class="mdl-dialog__title">Information serveur</h4>
+         <form  action="#" v-on:submit.prevent="updtConfiguration">
+          <div class="mdl-dialog__content">
+            <button style="width: 100%;" v-on:click="scanQRCode" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" >SCAN QRCode</button>
+            <hr>
+            <div class="mdl-textfield mdl-js-textfield">
+  						<input class="mdl-textfield__input" type="text" id="url" v-model="db.url" />
+  						<label class="mdl-textfield__label" for="url">URL</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield">
+  						<input class="mdl-textfield__input" type="text" id="name" v-model="db.name" />
+  						<label class="mdl-textfield__label" for="name">Name</label>
+            </div>
+        </div>
+        <div class="mdl-dialog__actions">
+            <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Valider" />
+            <button v-on:click="closeConfigurationModal" type="button" class="mdl-button close">Annuler</button>
+        </div>
+      </form>
+  </dialog>
 </div>
