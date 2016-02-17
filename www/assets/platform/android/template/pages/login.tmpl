@@ -5,7 +5,7 @@
       <h2>SOFIA</h2>
       <h3>Croix-Rouge fran&ccedil;aise</h3>
     </div>
-    <div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card mdl-shadow--2dp" style="height:42px;">
       <div class="mdl-card__supporting-text">
         <button v-on:click="showConfigurationModal" class="mdl-button mdl-js-button" >Changer paramètres de connexion</button>
       </div>
@@ -42,6 +42,7 @@
   						<label class="mdl-textfield__label" for="name">Name</label>
             </div>
             <hr>
+            <button v-on:click="scanQRCode" class="mdl-button mdl-js-button" >SCAN QRCode</button>
         </div>
         <div class="mdl-dialog__actions">
             <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Valider" />

@@ -22,7 +22,7 @@ S.db ={
     S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name.replace(/^\/+/, '');
 
     S.db.localDB = new PouchDB("local-"+S.config.db.name.replace(/^\/+/, ''))
-    S.db.remoteDB = new PouchDB(S.config.db._full_url, {skipSetup: true})
+    S.db.remoteDB = new PouchDB(S.config.db._full_url, {skipSetup: true}) //TODO maybe clean it if exist ?
   }
 }
 
