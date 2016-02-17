@@ -33,7 +33,7 @@
         <h4 class="mdl-dialog__title">Information serveur</h4>
          <form  action="#" v-on:submit.prevent="updtConfiguration">
           <div class="mdl-dialog__content">
-            <button style="width: 100%;" v-on:click="scanQRCode" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" >SCAN QRCode</button>
+            <button style="width: 100%;" v-on:click.prevent="scanQRCode" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" >SCAN QRCode</button>
             <hr>
             <div class="mdl-textfield mdl-js-textfield">
   						<input class="mdl-textfield__input" type="text" id="url" v-model="db.url" />

@@ -28,13 +28,17 @@
     "install": {
         "path": "www/assets/lib",
         "sources": {
-            "jquery": "bower_components/jquery/dist/**",
-            "pouchdb": "bower_components/pouchdb/dist/**",
-            "pouchdb-authentication": "bower_components/pouchdb-authentication/dist/**",
-            "vue": "bower_components/vue/dist/**",
-            "vue-router": "bower_components/vue-router/dist/**",
+            "jquery": "bower_components/jquery/dist/jquery.min.js",
+            "pouchdb": "bower_components/pouchdb/dist/pouchdb.min.js",
+            "pouchdb-authentication": "bower_components/pouchdb-authentication/dist/pouchdb.authentication.min.js",
+            "vue": "bower_components/vue/dist/vue.min.js",
+            "vue-router": "bower_components/vue-router/dist/vue-router.min.js",
             "requirejs" : "bower_components/requirejs/require.js",
-            "material-design-icons" : "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.*",
+            "material-design-icons" : [
+              "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.ttf",
+              "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.woff",
+              "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.woff2"
+            ],
             "requirejs-promise" : "bower_components/requirejs-promise/requirejs-promise.js"
         }
     },

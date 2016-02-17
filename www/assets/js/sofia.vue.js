@@ -33,7 +33,7 @@ S.vue = {
             computed: {
               displayedTitle: function () {
                 console.log("Update displayedTitle : ",this.options.titleInSearch, this.searchbox.length, this.options.title)
-                return ( this.options.titleInSearch != "" && this.searchbox.length>0 ) ? this.options.titleInSearch : this.options.title;
+                return ( this.options.titleInSearch !== "" && this.searchbox.length>0 ) ? this.options.titleInSearch : this.options.title;
               }
             }
         });
@@ -88,7 +88,7 @@ S.vue = {
         S.vue.router.beforeEach(function (transition) {
           if (transition.to.path !== '/_login' && !S.user._current.isLogged()) {
             transition.redirect("/_login")
-          } else if (transition.to.path == '/_login' && S.user._current.isLogged()) {
+          } else if (transition.to.path === '/_login' && S.user._current.isLogged()) {
             //Case where we go back in history (we are already logged at the front door) so we abort
             transition.abort()
           } else {

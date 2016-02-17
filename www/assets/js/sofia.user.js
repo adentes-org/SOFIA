@@ -4,7 +4,7 @@ var S = S || {};
 S.user = {
     _current : {
         isLogged : function(){
-            return (typeof S.user._current.name != "undefined" && (S.user._current.name != null || S.user._current.roles[0] === "_admin" ) ) ;
+            return (typeof S.user._current.name !== "undefined" && (S.user._current.name !== null || S.user._current.roles[0] === "_admin" ) ) ;
             //TODO rellogin if not based on registred value
             /*
             //TODO don't use jquery promise ?

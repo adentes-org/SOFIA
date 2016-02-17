@@ -80,7 +80,7 @@ S.data = {
                     $.extend(true,data.fiche, doc) //TODO maybe cache the init value ?
                   });
               },
-              changeInformation: function (event) {
+              changeInformation: function () {
                 var ask= (!S.config.local["ask-for"]["changeInformation-validation"] || confirm("Etes-vous sûr ?"));
                 if(ask){
                   console.log(this._data.fiche);
@@ -153,7 +153,7 @@ S.data = {
                       timestamp : Date.now(),
                       user :  S.user._current.name
                     })
-                    if(this._data.fiche.pathologys.length == 0){
+                    if(this._data.fiche.pathologys.length === 0){
                        this._data.fiche.primaryAffection = path; // By default we use the first added patho
                     }
                     this._data.fiche.pathologys.push(path);
@@ -324,14 +324,13 @@ S.data = {
                 displayHeader : false,
                 displayMenu : false,
             },
-            data: function() {
-                return {
-                  u : {
-                    username : "",
-                    userpass : ""
-                  },
-                  db : S.config.db
-                };
+            route: {
+              data: function() {
+                  return {
+                    u : S.config.user,
+                    db : S.config.db
+                  };
+              }
             },
             methods: {
               login: function () {
@@ -362,13 +361,22 @@ S.data = {
                             "Format: " + result.format + "\n" +
                             "Cancelled: " + result.cancelled);
                       if(!result.cancelled){
-                        if(result.format != "QR_CODE"){
+                        if(result.format !== "QR_CODE"){
                           alert("Format "+result.format+" incorrect !")
                         }else{
                           var tmp = result.text.split("/");
+                          if(result.text.indexOf("@")> -1){ //We have a username
+                            tmp[2] = tmp[2].split("@");
+                            el.u.username = tmp[2].shift();
+                            if(el.u.username.indexOf(":")> -1){ //We have a password
+                              el.u.userpass = el.u.username.split(":")[1]
+                              el.u.username = el.u.username.split(":")[0]
+                            }
+                            tmp[2] = tmp[2].join("");
+                          }
                           el.db.name = tmp.pop()
                           el.db.url = tmp.join('/')
-                          //TODO support username and password
+                          //TODO updt config
                         }
                       }
                     },
@@ -392,6 +400,7 @@ S.data = {
             route: {
               data: function () {
                   var ret = {
+                    user : S.user._current,
                     askFor : []
                   }
                   console.log(ret);
@@ -407,6 +416,20 @@ S.data = {
                 console.log(this,event,$(event.srcElement).attr("name"),$(event.srcElement).is(':checked'))
                 S.config.local["ask-for"][$(event.srcElement).attr("name")] = $(event.srcElement).is(':checked');
                 localStorage["sofia-local-config"] = JSON.stringify(S.config.local)
+              },
+              /*
+              resetLocalConfig: function(){
+                delete localStorage['sofia-local-config'];
+                window.location.reload();
+              },
+              */
+              resetCredConfig: function(){
+                delete localStorage['sofia-user-config'];
+                window.location.reload();
+              },
+              resetServerConfig: function(){
+                delete localStorage['sofia-server-config'];
+                window.location.reload();
               }
             },
         },

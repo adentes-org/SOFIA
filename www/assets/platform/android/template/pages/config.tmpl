@@ -1,8 +1,21 @@
 <div class="mdl-grid">
-  <template v-for="conf in askFor" >
-    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-{{ conf.id }}">
-      <input v-on:change="update" type="checkbox" name="{{ conf.id }}" id="switch-{{ conf.id }}" class="mdl-switch__input" checked="{{ conf.value }}" >
-      <span class="mdl-switch__label">{{ conf.lang }}</span>
-    </label>
-  </template>
+  <button disabled class="mdl-button mdl-js-button mdl-button--raised" style="color: #222;font-size: 120%;font-weight: bold;">
+      {{ user.name }}
+  </button>
+  <div class="mdl-card mdl-shadow--2dp">
+    <div class="mdl-card__supporting-text">
+      <template v-for="conf in askFor" >
+        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-{{ conf.id }}">
+          <input v-on:change="update" type="checkbox" name="{{ conf.id }}" id="switch-{{ conf.id }}" class="mdl-switch__input" checked="{{ conf.value }}" >
+          <span class="mdl-switch__label">{{ conf.lang }}</span>
+        </label>
+      </template>
+    </div>
+  </div>
+  <button v-on:click="resetCredConfig" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+    Reset Credential
+  </button>
+  <button v-on:click="resetServerConfig" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+    Reset Server Config
+  </button>
 </div>

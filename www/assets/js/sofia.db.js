@@ -19,6 +19,7 @@ S.db = {
   setUrl : function(dbConfig) {
     //TODO backup in localstorage
     S.config.db = dbConfig; //TODO check
+    localStorage["sofia-server-config"] = JSON.stringify(S.config.db);
     S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name.replace(/^\/+/, '');
     S.db.localDB = new PouchDB("local-"+S.config.db.name.replace(/^\/+/, ''));
     S.db.remoteDB = new PouchDB(S.config.db._full_url, {skipSetup: true}); //TODO maybe clean it if exist ?
@@ -56,6 +57,13 @@ S.db.users = {
       }else{
         //console.log(response);
         if(response.ok) {
+          //We are logged in
+          S.config.user = {
+              username : user,
+              userpass : pass
+          };
+          localStorage["sofia-user-config"] = JSON.stringify(S.config.user);
+
           $.extend(S.user._current, response);
 
           S.db.localDB.sync(S.db.remoteDB, {
@@ -184,11 +192,13 @@ S.db.fiches = {
           fiches: []
       }
       $.each(result.rows, function( index, value ) {
-        if(value.doc["_id"].split("/")[0] == "_design" )
+        if(value.doc["_id"].split("/")[0] === "_design" ){
           return; //If it's a design doc
+        }
 
-        if(value.doc.owner_id === S.user._current.name)
+        if(value.doc.owner_id === S.user._current.name){
           ret.fiches[ret.fiches.length] = value.doc;
+        }
       });
       //console.log(ret);
       deferred.resolve(ret);
@@ -213,8 +223,9 @@ S.db.fiches = {
             my_fiches: []
         }
         $.each(result.rows, function( index, value ) {
-          if(value.doc["_id"].split("/")[0] == "_design" )
+          if(value.doc["_id"].split("/")[0] == "_design" ){
             return; //If it's a design doc
+          }
           ret.fiches[ret.fiches.length] = value.doc;
           if(value.doc.owner_id === S.user._current.name)
             ret.my_fiches[ret.my_fiches.length] = value.doc;
@@ -266,10 +277,12 @@ S.db.fiches = {
     S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
       var count = 0;
       $.each(result.rows, function( index, value ) {
-        if(value.doc["_id"].split("/")[0] == "_design" )
+        if(value.doc["_id"].split("/")[0] == "_design" ){
           return; //If it's a design doc
-        if(value.doc.uid.split("-")[0] === S.user._current.name)
+        }
+        if(value.doc.uid.split("-")[0] === S.user._current.name){
           count ++;
+        }
       });
       console.log(count);
       deferred.resolve(count);
