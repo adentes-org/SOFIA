@@ -366,9 +366,14 @@ S.data = {
                           alert("Format "+result.format+" incorrect !")
                         }else{
                           var tmp = result.text.split("/");
+                          if(result.text.indexOf("@")> -1){ //We have a username
+                            tmp[2] = tmp[2].split("@");
+                            el.u.username = tmp[2].shift();
+                            tmp[2] = tmp[2].join("");
+                          }
                           el.db.name = tmp.pop()
                           el.db.url = tmp.join('/')
-                          //TODO support username and password
+                          //TODO support password
                         }
                       }
                     },
