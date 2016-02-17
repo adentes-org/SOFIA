@@ -415,6 +415,20 @@ S.data = {
                 console.log(this,event,$(event.srcElement).attr("name"),$(event.srcElement).is(':checked'))
                 S.config.local["ask-for"][$(event.srcElement).attr("name")] = $(event.srcElement).is(':checked');
                 localStorage["sofia-local-config"] = JSON.stringify(S.config.local)
+              },
+              /*
+              resetLocalConfig: function(){
+                delete localStorage['sofia-local-config'];
+                window.location.reload();
+              },
+              */
+              resetCredConfig: function(){
+                delete localStorage['sofia-user-config'];
+                window.location.reload();
+              },
+              resetServerConfig: function(){
+                delete localStorage['sofia-server-config'];
+                window.location.reload();
               }
             },
         },
