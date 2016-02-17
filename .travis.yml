@@ -21,7 +21,10 @@ before_script:
 - sed -i '/android {/a lintOptions { abortOnError false } ' platforms/android/build.gradle
 - gulp clean less
 script:
-- gulp cordova:build 
+- gulp cordova:build
+- find . -type f -name '*.less' -delete
+- find . -type f -name '*.map' -delete
+- rm -Rf www/assets/platform/browser
 - cordova build android --release
 after_success:
 - cp platforms/android/build/outputs/apk/android-release-unsigned.apk platforms/android/build/outputs/apk/android-release-signed.apk
