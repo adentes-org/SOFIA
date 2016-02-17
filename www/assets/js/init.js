@@ -10,7 +10,6 @@ requirejs.config({
         app: 'js',
         lib: 'lib',
         cordova: '../cordova',
-        barcodescanner: '../barcodescanner',
         jquery: 'lib/jquery/jquery.min',
         pouchdb: 'lib/pouchdb/pouchdb.min',
         "pouchdb-authentication": 'lib/pouchdb-authentication/pouchdb.authentication.min',
@@ -36,7 +35,7 @@ requirejs.config({
     }
 });
 //TODO use more modular form with dependencie
-requirejs(['cordova','barcodescanner', 'jquery', 'vue', 'vue-router', 'pouchdb', 'app/sofia.polyfill'], function (cordova, $, Vue, VueRouter, PouchDB) {
+requirejs(['cordova', 'jquery', 'vue', 'vue-router', 'pouchdb', 'app/sofia.polyfill'], function (cordova, $, Vue, VueRouter, PouchDB) {
     Vue.use(VueRouter);
     window.PouchDB = PouchDB; //Force PouchDB to DOM
     console.log(PouchDB);

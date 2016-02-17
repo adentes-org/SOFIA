@@ -13,16 +13,16 @@ PouchDB.debug.enable('*');
 //TODO use a local that replcaite to S.config.db._full_url for offline function
 //S.db = new PouchDB(S.config.db._full_url, {skipSetup: true});
 
-S.db ={
+S.db = {
   /*"localDB" : new PouchDB("local-"+S.config.db.name.replace(/^\/+/, '')), */
   /*"remoteDB" : new PouchDB(S.config.db._full_url, {skipSetup: true}), */
-  setUrl : function(dbConfig){
+  setUrl : function(dbConfig) {
     //TODO backup in localstorage
     S.config.db = dbConfig; //TODO check
     S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name.replace(/^\/+/, '');
 
-    S.db.localDB = new PouchDB("local-"+S.config.db.name.replace(/^\/+/, ''))
-    S.db.remoteDB = new PouchDB(S.config.db._full_url, {skipSetup: true}) //TODO maybe clean it if exist ?
+    S.db.localDB = new PouchDB("local-"+S.config.db.name.replace(/^\/+/, ''));
+    S.db.remoteDB = new PouchDB(S.config.db._full_url, {skipSetup: true}); //TODO maybe clean it if exist ?
   }
 }
 
