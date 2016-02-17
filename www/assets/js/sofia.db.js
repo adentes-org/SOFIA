@@ -12,14 +12,31 @@ S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name
 //TODO use a local that replcaite to S.config.db._full_url for offline function
 //S.db = new PouchDB(S.config.db._full_url, {skipSetup: true});
 
+//console.log("local-"+S.config.db._full_url.substring(7)); // We use the url minu the http:// replace by local in order to don't have conflict between different intervention
 S.db ={
-  "localDB" : new PouchDB("local-"+S.config.db.name.replace(/^\/+/, '')),
+  "localDB" : new PouchDB("local-"+S.config.db._full_url.substring(7)),
   "remoteDB" : new PouchDB(S.config.db._full_url, {skipSetup: true})
 }
 
 
 //S.db_users = new PouchDB(S.config.db._user_url, {skipSetup: true});
 
+S.db.config = {
+  getMemo : function(){
+    var deferred = new $.Deferred();
+    S.db.localDB.getAttachment('_design/sofia-config', 'memo.html').then(function (blob) {
+      // handle result
+      var reader = new FileReader();
+      reader.onload = function(event){
+        deferred.resolve({ memo : reader.result});
+      };
+      reader.readAsText(blob);
+    }).catch(function (err) {
+      console.log(err);
+    });
+    return deferred.promise();
+  }
+}
 S.db.users = {
   login : function(user,pass){
     //TODO don't use jquery promise
@@ -40,21 +57,21 @@ S.db.users = {
           }).on('change', function (change) {
             console.log("Pouchdb.sync.change event");
             // yo, something changed!
-            //TODO detect in witch vue we are and update the data in consequences.
-            //TODO or trigger reload of page (less fun)
           }).on('paused', function (info) {
             console.log("Pouchdb.sync.paused event");
-            // replication was paused, usually because of a lost connection
-            var data = {
-              message: 'Sync done !',
-              timeout: 2000
-            };
-            //window.setTimeout("$('#toast').hide()",3000);
-            document.querySelector('#toast').MaterialSnackbar.showSnackbar(data);
+            // replication was paused, usually because of a lost connection or end of transmission
+
+            S.vue.router.app.$children[0].$data.options.displayLoadingBar = false;
 
             console.log("Pause matching page : ",window.location.hash.slice(3).split("/")[0]);
             //switch($(S.vue.router.app.$children[1].$el).attr("id")){
             switch(window.location.hash.slice(3).split("/")[0]){
+              case "memo" :
+                S.db.config.getMemo().then(function(data){
+                  S.vue.router.app.$children[1].$data.memo = data.memo;
+                  console.log("Updating memo data : ",data)
+                })
+                break;
               case "home" :
                 S.db.fiches.getAllWithMine().then(function(data){
                   S.vue.router.app.$children[1].$data.fiches = data.fiches;
@@ -82,11 +99,7 @@ S.db.users = {
           }).on('active', function (info) {
             console.log("Pouchdb.sync.active event");
             // replication was resumed
-            var data = {
-              message: 'Syncing ...',
-              timeout: 5*1000
-            };
-            document.querySelector('#toast').MaterialSnackbar.showSnackbar(data);
+            S.vue.router.app.$children[0].$data.options.displayLoadingBar = true;
           }).on('error', function (err) {
             console.log("Pouchdb.sync.error event");
             // totally unhandled error (shouldn't happen)
@@ -125,11 +138,20 @@ S.db.users = {
 };
 */
 S.db.fiches = {
-  post : function(obj) {
+  post : function(obj) { //Create
     return S.db.localDB.post(obj);
   },
-  put : function(obj) {
-    return S.db.localDB.put(obj);
+  put : function(obj) { //Update or Create
+    //TODO check-up
+    obj.pathologys = S.tool.uniq(obj.pathologys); // Remove any duplicate
+    return S.db.localDB.put(obj).catch(function (err) {
+            console.log(err);
+            if (err.status === 409) {
+              // conflict! //TODO handle
+            } else {
+              // some other error
+            }
+        });
   },
   getByID : function(id) {
     var deferred = new $.Deferred()
@@ -155,6 +177,9 @@ S.db.fiches = {
           fiches: []
       }
       $.each(result.rows, function( index, value ) {
+        if(value.doc["_id"].split("/")[0] == "_design" )
+          return; //If it's a design doc
+
         if(value.doc.owner_id === S.user._current.name)
           ret.fiches[ret.fiches.length] = value.doc;
       });
@@ -181,6 +206,8 @@ S.db.fiches = {
             my_fiches: []
         }
         $.each(result.rows, function( index, value ) {
+          if(value.doc["_id"].split("/")[0] == "_design" )
+            return; //If it's a design doc
           ret.fiches[ret.fiches.length] = value.doc;
           if(value.doc.owner_id === S.user._current.name)
             ret.my_fiches[ret.my_fiches.length] = value.doc;
@@ -210,6 +237,8 @@ S.db.fiches = {
           fiches: []
       }
       $.each(result.rows, function( index, value ) {
+        if(value.doc["_id"].split("/")[0] == "_design" )
+          return; //If it's a design doc
         ret.fiches[ret.fiches.length] = value.doc;
       });
       deferred.resolve(ret);
@@ -230,6 +259,8 @@ S.db.fiches = {
     S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
       var count = 0;
       $.each(result.rows, function( index, value ) {
+        if(value.doc["_id"].split("/")[0] == "_design" )
+          return; //If it's a design doc
         if(value.doc.uid.split("-")[0] === S.user._current.name)
           count ++;
       });
@@ -243,6 +274,7 @@ S.db.fiches = {
 
     return deferred.promise();
   },
+  /* Not in use anymore
   getCount : function (){
     var deferred = new $.Deferred()
     S.db.localDB.info().then(function (result) {
@@ -264,4 +296,5 @@ S.db.fiches = {
       doc_ids: [id]
     })
   }
+  */
 }

@@ -7,7 +7,8 @@ S.data = {
             options: {
                 title: "Fiche",
                 displayQuickAddButton : false,
-                displaySearchbox: false
+                displaySearchbox: false,
+                onHeaderClick : function(){S.tool.getDialog("#update-fiche-information-dialog").showModal()}
             },
             route: {
                 data: function () {
@@ -67,6 +68,37 @@ S.data = {
                 }
             },
             methods: {
+              showUpdateInformation: function () {
+                  S.tool.getDialog("#update-fiche-information-dialog").showModal();
+              },
+              closeUpdateInformation: function () {
+                  var data = this._data
+                  S.tool.getDialog("#update-fiche-information-dialog").close();
+                  S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
+                    //Reset to what is in localDB
+                    $.extend(true,data.fiche, doc) //TODO maybe cache the init value ?
+                  });
+              },
+              changeInformation: function (event) {
+                var ask= (!S.config.local["ask-for"]["changeInformation-validation"] || confirm("Etes-vous sûr ?"));
+                if(ask){
+                  console.log(this._data.fiche);
+                  this._data.fiche.events.push({
+                    type : "action",
+                    action : "changeInformation",
+                    message : S.user._current.name+" a mis à jour les informations : {TODO}", //TODO make diff between in DB and in Vue object
+                    timestamp : Date.now(),
+                    user :  S.user._current.name
+                  })
+                  //Update this._data.fiche with additionnal data from data or update them
+                  //$.extend(true, this._data.fiche, data); //TODO be more strict on wath can be edited
+                  //DATA is already updated by vue in live
+                  S.vue.router.app.$children[0].$data.options.title = this._data.fiche.patient.firstname +" "+ this._data.fiche.patient.lastname;
+                  S.tool.getDialog("#update-fiche-information-dialog").close();
+
+                  S.db.fiches.put(this._data.fiche);//Saving
+                }
+              },
               changePrimaryAffection: function (event) {
                 var primary = $(event.srcElement).val();
                 var ask= (!S.config.local["ask-for"]["changePrimaryAffection-validation"] || confirm("Etes-vous sûr de selectionner "+primary+" ?"));
@@ -107,7 +139,8 @@ S.data = {
                   S.tool.getDialog("#add-path-dialog").close();
               },
               addPathology: function (event) {
-                var path = $(event.srcElement).text();
+                //TODO check if already exist and display it
+                var path = $.trim($(event.srcElement).text());
                 S.tool.getDialog("#add-path-dialog").close();
                 var ask= !S.config.local["ask-for"]["addPathology-validation"] || confirm("Etes-vous sûr d'ajouter "+path+" ?");
                 if(ask){
@@ -343,6 +376,11 @@ S.data = {
                 title: "Mémo",
                 displayQuickAddButton : false,
                 displaySearchbox: false
+            },
+            route: {
+              data: function () {
+                  return S.db.config.getMemo()
+              }
             },
         },
         home: {

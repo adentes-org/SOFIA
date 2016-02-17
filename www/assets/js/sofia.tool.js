@@ -3,6 +3,11 @@
 var S = S || {};
 
 S.tool = {
+    uniq: function (a) {
+      return $.grep(a, function(item, pos) {
+            return $.inArray(item, a) === pos;
+      });
+    },
     getDialog: function (queryId) {
       var dialog = document.querySelector(queryId);
       if (!dialog.showModal || !dialog.close) {
