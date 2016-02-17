@@ -34,7 +34,11 @@
             "vue": "bower_components/vue/dist/vue.min.js",
             "vue-router": "bower_components/vue-router/dist/vue-router.min.js",
             "requirejs" : "bower_components/requirejs/require.js",
-            "material-design-icons" : "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.*",
+            "material-design-icons" : [
+              "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.ttf",
+              "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.woff",
+              "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.woff2"
+            ],
             "requirejs-promise" : "bower_components/requirejs-promise/requirejs-promise.js"
         }
     },
