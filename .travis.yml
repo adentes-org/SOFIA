@@ -18,9 +18,10 @@ before_install:
 before_script:
 - npm install
 - snyk test || echo "Some librarie(s) need fix"
+- sed -i '/android {/a lintOptions { abortOnError false } ' platforms/android/build.gradle
 - gulp clean less
 script:
-- gulp cordova:build
+- gulp cordova:build 
 - cordova build android --release
 after_success:
 - cp platforms/android/build/outputs/apk/android-release-unsigned.apk platforms/android/build/outputs/apk/android-release-signed.apk

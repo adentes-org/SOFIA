@@ -1,3 +1,4 @@
+/* global cordova */
 'use strict';
 var S = S || {};
 
@@ -325,15 +326,18 @@ S.data = {
             },
             data: function() {
                 return {
-                  username : "",
-                  userpass : ""
+                  u : {
+                    username : "",
+                    userpass : ""
+                  },
+                  db : S.config.db
                 };
             },
             methods: {
               login: function () {
                 //TODO check format of user and pass
                 //TODO determine if not use lazy attribute to use less ressouces
-                S.user.login(this.username, this.userpass).then(function(user){
+                S.user.login(this.u.username, this.u.userpass).then(function(user){
                     console.log(user);
                     S.vue.router.go("/");
                 })
@@ -341,6 +345,41 @@ S.data = {
                     //TODO handle errors
                 });
                 */
+              },
+              showConfigurationModal: function () {
+                  S.tool.getDialog("#show-config-dialog").showModal();
+              },
+              closeConfigurationModal: function () {
+                  this.db = S.config.db; //Reset
+                  S.tool.getDialog("#show-config-dialog").close();
+              },
+              scanQRCode: function (event) {
+                var el = this;
+                cordova.plugins.barcodeScanner.scan(
+                    function (result) {
+                      console.log("We got a barcode\n" +
+                            "Result: " + result.text + "\n" +
+                            "Format: " + result.format + "\n" +
+                            "Cancelled: " + result.cancelled);
+                      if(!result.cancelled){
+                        if(result.format != "QR_CODE"){
+                          alert("Format "+result.format+" incorrect !")
+                        }else{
+                          var tmp = result.text.split("/");
+                          el.db.name = tmp.pop()
+                          el.db.url = tmp.join('/')
+                          //TODO support username and password
+                        }
+                      }
+                    },
+                    function (error) {
+                        alert("Scanning failed: " + error);
+                    }
+                 );
+              },
+              updtConfiguration: function (event) {
+                  S.db.setUrl(this.db)
+                  S.tool.getDialog("#show-config-dialog").close();
               }
             }
         },

@@ -57,7 +57,8 @@
       "plugin",
       "add",
       "cordova-plugin-whitelist",
-      "cordova-plugin-dialogs"
+      "cordova-plugin-dialogs",
+      "phonegap-plugin-barcodescanner"    
     ]
   ],
   "license": "MIT"

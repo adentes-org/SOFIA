@@ -1,3 +1,4 @@
+/* global PouchDB */
 'use strict';
 var S = S || {};
 
@@ -6,19 +7,25 @@ var req_limit = 1000000;
 //TODO disable for live
 PouchDB.debug.enable('*');
 
-S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name.replace(/^\/+/, '')
+//S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name.replace(/^\/+/, '')
 //S.config.db._user_url = S.config.db.url.replace(/\/+$/, '')+"/"+"_users"
 
 //TODO use a local that replcaite to S.config.db._full_url for offline function
 //S.db = new PouchDB(S.config.db._full_url, {skipSetup: true});
 
-//console.log("local-"+S.config.db._full_url.substring(7)); // We use the url minu the http:// replace by local in order to don't have conflict between different intervention
-S.db ={
-  "localDB" : new PouchDB("local-"+S.config.db._full_url.substring(7)),
-  "remoteDB" : new PouchDB(S.config.db._full_url, {skipSetup: true})
+S.db = {
+  /*"localDB" : new PouchDB("local-"+S.config.db.name.replace(/^\/+/, '')), */
+  /*"remoteDB" : new PouchDB(S.config.db._full_url, {skipSetup: true}), */
+  setUrl : function(dbConfig) {
+    //TODO backup in localstorage
+    S.config.db = dbConfig; //TODO check
+    S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name.replace(/^\/+/, '');
+    S.db.localDB = new PouchDB("local-"+S.config.db.name.replace(/^\/+/, ''));
+    S.db.remoteDB = new PouchDB(S.config.db._full_url, {skipSetup: true}); //TODO maybe clean it if exist ?
+  }
 }
 
-
+S.db.setUrl(S.config.db);
 //S.db_users = new PouchDB(S.config.db._user_url, {skipSetup: true});
 
 S.db.config = {
