@@ -400,6 +400,7 @@ S.data = {
             route: {
               data: function () {
                   var ret = {
+                    user : S.user._current,
                     askFor : []
                   }
                   console.log(ret);
