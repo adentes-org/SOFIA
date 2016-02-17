@@ -80,7 +80,7 @@ S.data = {
                     $.extend(true,data.fiche, doc) //TODO maybe cache the init value ?
                   });
               },
-              changeInformation: function (event) {
+              changeInformation: function () {
                 var ask= (!S.config.local["ask-for"]["changeInformation-validation"] || confirm("Etes-vous sûr ?"));
                 if(ask){
                   console.log(this._data.fiche);
@@ -153,7 +153,7 @@ S.data = {
                       timestamp : Date.now(),
                       user :  S.user._current.name
                     })
-                    if(this._data.fiche.pathologys.length == 0){
+                    if(this._data.fiche.pathologys.length === 0){
                        this._data.fiche.primaryAffection = path; // By default we use the first added patho
                     }
                     this._data.fiche.pathologys.push(path);
@@ -362,7 +362,7 @@ S.data = {
                             "Format: " + result.format + "\n" +
                             "Cancelled: " + result.cancelled);
                       if(!result.cancelled){
-                        if(result.format != "QR_CODE"){
+                        if(result.format !== "QR_CODE"){
                           alert("Format "+result.format+" incorrect !")
                         }else{
                           var tmp = result.text.split("/");
