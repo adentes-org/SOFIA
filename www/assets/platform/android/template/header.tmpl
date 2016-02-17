@@ -1,6 +1,6 @@
 <header class="mdl-layout__header" v-show="options.display">
     <div class="mdl-layout__header-row">
-        <h3>{{ ( options.titleInSearch != "" && searchbox.length>0 ) ? options.titleInSearch : options.title }}</h3>
+        <h3 v-on:click.prevent="onHeaderClick">{{ displayedTitle }}</h3>
         <div class="mdl-layout-spacer"></div>
             <div v-show="options.displaySearchbox" class="mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right">
                 <label class="mdl-button mdl-js-button mdl-button--icon" for="fixed-header-drawer-exp">
@@ -11,4 +11,5 @@
             </div>
         </div>
     </div>
+    <div v-show="options.displayLoadingBar" id="loading-bar" style="width: 100%;" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 </header>

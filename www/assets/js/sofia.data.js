@@ -8,7 +8,8 @@ S.data = {
             options: {
                 title: "Fiche",
                 displayQuickAddButton : false,
-                displaySearchbox: false
+                displaySearchbox: false,
+                onHeaderClick : function(){S.tool.getDialog("#update-fiche-information-dialog").showModal()}
             },
             route: {
                 data: function () {
@@ -68,11 +69,49 @@ S.data = {
                 }
             },
             methods: {
+              showUpdateInformation: function () {
+                  S.tool.getDialog("#update-fiche-information-dialog").showModal();
+              },
+              closeUpdateInformation: function () {
+                  var data = this._data
+                  S.tool.getDialog("#update-fiche-information-dialog").close();
+                  S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
+                    //Reset to what is in localDB
+                    $.extend(true,data.fiche, doc) //TODO maybe cache the init value ?
+                  });
+              },
+              changeInformation: function (event) {
+                var ask= (!S.config.local["ask-for"]["changeInformation-validation"] || confirm("Etes-vous sûr ?"));
+                if(ask){
+                  console.log(this._data.fiche);
+                  this._data.fiche.events.push({
+                    type : "action",
+                    action : "changeInformation",
+                    message : S.user._current.name+" a mis à jour les informations : {TODO}", //TODO make diff between in DB and in Vue object
+                    timestamp : Date.now(),
+                    user :  S.user._current.name
+                  })
+                  //Update this._data.fiche with additionnal data from data or update them
+                  //$.extend(true, this._data.fiche, data); //TODO be more strict on wath can be edited
+                  //DATA is already updated by vue in live
+                  S.vue.router.app.$children[0].$data.options.title = this._data.fiche.patient.firstname +" "+ this._data.fiche.patient.lastname;
+                  S.tool.getDialog("#update-fiche-information-dialog").close();
+
+                  S.db.fiches.put(this._data.fiche);//Saving
+                }
+              },
               changePrimaryAffection: function (event) {
                 var primary = $(event.srcElement).val();
                 var ask= (!S.config.local["ask-for"]["changePrimaryAffection-validation"] || confirm("Etes-vous sûr de selectionner "+primary+" ?"));
                 if(ask){
                     console.log(this._data.fiche);
+                    this._data.fiche.events.push({
+                      type : "action",
+                      action : "changePrimaryAffection",
+                      message : S.user._current.name+" change l'affection principale de <b>"+this._data.fiche.primaryAffection+"</b> à <b>"+primary+"</b>",
+                      timestamp : Date.now(),
+                      user :  S.user._current.name
+                    })
                     this._data.fiche.primaryAffection = primary;
                     S.db.fiches.put(this._data.fiche);
                 }
@@ -83,6 +122,13 @@ S.data = {
                 var ask= (!S.config.local["ask-for"]["addOrigin-validation"] || confirm("Etes-vous sûr de selectionner "+origin+" ?"));
                 if(ask){
                     console.log(this._data.fiche);
+                    this._data.fiche.events.push({
+                      type : "action",
+                      action : "addOrigin",
+                      message : S.user._current.name+" définit l'origine à <b>"+origin+"</b>",
+                      timestamp : Date.now(),
+                      user :  S.user._current.name
+                    })
                     this._data.fiche.origin = origin;
                     S.db.fiches.put(this._data.fiche);
                 }
@@ -94,11 +140,19 @@ S.data = {
                   S.tool.getDialog("#add-path-dialog").close();
               },
               addPathology: function (event) {
-                var path = $(event.srcElement).text();
+                //TODO check if already exist and display it
+                var path = $.trim($(event.srcElement).text());
                 S.tool.getDialog("#add-path-dialog").close();
                 var ask= !S.config.local["ask-for"]["addPathology-validation"] || confirm("Etes-vous sûr d'ajouter "+path+" ?");
                 if(ask){
                     console.log(this._data.fiche);
+                    this._data.fiche.events.push({
+                      type : "action",
+                      action : "addPathology",
+                      message : S.user._current.name+" ajoute l'affection : <b>"+path+"</b>",
+                      timestamp : Date.now(),
+                      user :  S.user._current.name
+                    })
                     if(this._data.fiche.pathologys.length == 0){
                        this._data.fiche.primaryAffection = path; // By default we use the first added patho
                     }
@@ -116,6 +170,13 @@ S.data = {
                  var ask= !S.config.local["ask-for"]["reopen-validation"] || confirm("Etes-vous sûr ?");
                  if(ask){
                      console.log(this._data.fiche);
+                     this._data.fiche.events.push({
+                       type : "action",
+                       action : "reopen",
+                       message : S.user._current.name+" ré-ouvre la fiche.",
+                       timestamp : Date.now(),
+                       user :  S.user._current.name
+                     })
                      this._data.fiche.closed = false;
                      this._data.fiche.close_context = {};
                      S.db.fiches.put(this._data.fiche);
@@ -132,6 +193,14 @@ S.data = {
                   close_context[value.name] = value.value;
                 });
                 this._data.fiche.close_context = close_context;
+                this._data.fiche.events.push({
+                  type : "action",
+                  action : "close",
+                  message : S.user._current.name+" ferme la fiche.",
+                  close_context : this._data.fiche.close_context,
+                  timestamp : Date.now(),
+                  user :  S.user._current.name
+                })
 
                 S.db.fiches.put(this._data.fiche);
               },
@@ -142,6 +211,13 @@ S.data = {
                  var ask= !S.config.local["ask-for"]["take-validation"] || confirm("Etes-vous sûr ?");
                  if(ask){
                      console.log(this._data.fiche);
+                     this._data.fiche.events.push({
+                       type : "action",
+                       action : "take",
+                       message : S.user._current.name+" prend la fiche à "+this._data.fiche.owner_id,
+                       timestamp : Date.now(),
+                       user :  S.user._current.name
+                     })
                      this._data.fiche.owner_id = S.user._current.name
                      S.db.fiches.put(this._data.fiche);
                  }
@@ -159,6 +235,13 @@ S.data = {
                    var ask= !S.config.local["ask-for"]["give-validation"] || confirm("Etes-vous sûr de tranferer à "+team+" ?");
                    if(ask){
                        console.log(this._data.fiche);
+                       this._data.fiche.events.push({
+                         type : "action",
+                         action : "take",
+                         message : S.user._current.name+" donne la fiche à "+ team +"(ancien propriétaire : "+this._data.fiche.owner_id+")",
+                         timestamp : Date.now(),
+                         user :  S.user._current.name
+                       })
                        this._data.fiche.owner_id = team;
                        S.db.fiches.put(this._data.fiche);
                    }
@@ -187,7 +270,7 @@ S.data = {
                                  "pathologys": [],
                                  "events": []
                           }
-                          S.db.fiches.getCount().then(function(count){
+                          S.db.fiches.getMyCreationCount().then(function(count){
                             ret.uid += (count+1);
                             console.log(ret);
                             deferred.resolve(ret);
@@ -213,7 +296,13 @@ S.data = {
                              "origin" : "",
                              "primaryAffection": "",
                              "pathologys": [],
-                             "events": []
+                             "events": [{
+                               type : "action",
+                               action : "creation",
+                               message : S.user._current.name+" crée la fiche.",
+                               timestamp : Date.now(),
+                               user :  S.user._current.name
+                             }]
                       }
                     ).then(function (response) {
                       //S.vue.router.go("/");
@@ -326,6 +415,11 @@ S.data = {
                 title: "Mémo",
                 displayQuickAddButton : false,
                 displaySearchbox: false
+            },
+            route: {
+              data: function () {
+                  return S.db.config.getMemo()
+              }
             },
         },
         home: {

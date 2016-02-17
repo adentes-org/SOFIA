@@ -1,5 +1,5 @@
 <div class="fiche-view">
-  <div class="info mdl-grid mdl-grid--no-spacing">
+  <div class="info mdl-grid mdl-grid--no-spacing {{fiche.closed ? 'close':'open'}}" v-on:click.prevent="showUpdateInformation">
     <div class="mdl-cell" style="width:60%; padding: 10px 20px;">
       <p>Née le : {{fiche.patient.birthdate}}</p>
       <p>Sexe : {{fiche.patient.gender}}</p>
@@ -19,22 +19,9 @@
 
   <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
     <div class="mdl-tabs__tab-bar">
-      <template v-if="fiche.closed == true">
-        <a href="#closed-panel" class="mdl-tabs__tab is-active" >Fermé</a>
-        <a href="#affections-panel" class="mdl-tabs__tab" >Affections</a>
-        <a href="#history-panel" class="mdl-tabs__tab" >Historique</a>
-      </template>
-      <template v-else>
         <a href="#affections-panel" class="mdl-tabs__tab is-active" >Affections</a>
         <a href="#history-panel" class="mdl-tabs__tab" >Historique</a>
-      </template>
     </div>
-
-    <template v-if="fiche.closed == true">
-      <div class="mdl-tabs__panel is-active" id="closed-panel">
-          <h5> Fiche fermée ! </h5>
-      </div>
-    </template>
     <div class="mdl-tabs__panel is-active" id="affections-panel">
       <ul class="mdl-list">
         <li class="mdl-list__item add-button">
@@ -52,13 +39,51 @@
     </div>
     <div class="mdl-tabs__panel" id="history-panel">
       <ul class="mdl-list">
-      <li v-for="h in history"  class="mdl-list__item">
-        <span class="mdl-list__item-primary-content">{{ h }}</span>
+      <li v-for="e in fiche.events | orderBy 'timestamp' -1"  class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">{{{ e.message }}}</span>
+        <span class="mdl-list__item-secondary-content">
+          <span class="mdl-list__item-secondary-info">{{ e.timestamp | formatTime }}</span>
+        </span>
       </li>
       </ul>
     </div>
   </div>
 
+    <dialog id="update-fiche-information-dialog" class="mdl-dialog">
+          <h4 class="mdl-dialog__title">Mise à jour des informations</h4>
+           <form  action="#" v-on:submit.prevent="changeInformation">
+            <div class="mdl-dialog__content">
+                <div class="mdl-textfield mdl-js-textfield">
+                  <input class="mdl-textfield__input" type="text" id="lastname" v-model="fiche.patient.lastname" />
+                  <label class="mdl-textfield__label" for="lastname">Nom</label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield">
+                  <input class="mdl-textfield__input" type="text" id="firstname" v-model="fiche.patient.firstname" />
+                  <label class="mdl-textfield__label" for="firstname">Prénom</label>
+                </div>
+                <div>
+                  <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+                    <input type="radio" id="option-1" class="mdl-radio__button" name="gender" v-model="fiche.patient.gender" value="Homme">
+                    <span class="mdl-radio__label">Homme</span>
+                  </label>
+                  <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                    <input type="radio" id="option-2" class="mdl-radio__button" name="gender" v-model="fiche.patient.gender" value="Femme">
+                    <span class="mdl-radio__label">Femme</span>
+                  </label>
+                </div>
+                <div class="mdl-textfield mdl-js-textfield">
+                  <input class="mdl-textfield__input" type="date" id="birthdate" v-model="fiche.patient.birthdate" />
+                  <label class="mdl-textfield__label" for="birthdate">Date de naissance</label>
+                  <span class="mdl-textfield__error">Veuillez saisir une date valide</span>
+                </div>
+              <br>
+          </div>
+          <div class="mdl-dialog__actions">
+              <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Valider" />
+              <button v-on:click="closeUpdateInformation" type="button" class="mdl-button close">Annuler</button>
+          </div>
+        </form>
+    </dialog>
   <dialog id="close-fiche-dialog" class="mdl-dialog">
         <h4 class="mdl-dialog__title">Merci de saisir ces informations</h4>
          <form  action="#" v-on:submit.prevent="submitClose">
@@ -95,8 +120,8 @@
     <h4 class="mdl-dialog__title">Ajout d'une affection</h4>
     <div class="mdl-dialog__content">
       <ul class="mdl-list">
-        <li v-for="path in config.pathologys"  class="mdl-list__item">
-          <span v-on:click="addPathology" class="mdl-list__item-primary-content">{{ path }}</span>
+        <li v-on:click="addPathology" v-for="path in config.pathologys"  class="mdl-list__item">
+          <span class="mdl-list__item-primary-content">{{ path }}</span>
         </li>
       </ul>
     </div>

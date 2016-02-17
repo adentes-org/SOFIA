@@ -15,7 +15,8 @@ define(['jquery'], function($) {
                 add  : "pages/add.tmpl",
                 _login : "pages/login.tmpl",
                 "fiche/:fiche_id":  "pages/fiche.tmpl",
-                configuration : "pages/config.tmpl"
+                configuration : "pages/config.tmpl",
+                memo: "pages/memo.tmpl",
             },
             buttons : {
                 quickAdd : "buttons/quickAdd.tmpl"

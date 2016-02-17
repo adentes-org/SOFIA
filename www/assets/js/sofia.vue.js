@@ -24,23 +24,26 @@ S.vue = {
         });
         Vue.component('app-header', {
             props: ['options', "searchbox"],
-            template: S.template.header
+            template: S.template.header,
+            methods : {
+              onHeaderClick: function () {
+                this.$data.options.onHeaderClick();
+              }
+            },
+            computed: {
+              displayedTitle: function () {
+                console.log("Update displayedTitle : ",this.options.titleInSearch, this.searchbox.length, this.options.title)
+                return ( this.options.titleInSearch != "" && this.searchbox.length>0 ) ? this.options.titleInSearch : this.options.title;
+              }
+            }
         });
     },
     declare_filter: function () {
-        /* Now using filterby with function
-         Vue.filter('startsWith', function (value, input) {
-         if (typeof value == "String") {
-         return value.startsWith(input)
-         } else {
-         arr = toArray(value);
-         if (input == null) {
-         return arr
-         }
-         return value.startsWith(input)
-         }
-         })
-         */
+        Vue.filter('formatTime', function (value) {
+          //return new Date(value).toLocaleString();
+          var d = new Date(value);
+          return "le "+d.toLocaleDateString().slice(0, -5)+" à "+d.toLocaleTimeString().slice(0, -3);
+        })
     },
     parse_template: function () {
         for (var i in S.template.pages) {
@@ -59,7 +62,7 @@ S.vue = {
         //console.log(S.vue.map);
     },
     init_router: function () {
-        //TODO not use S.vue.el. since it aonly the constructor and not the real object in use.
+        //TODO not use S.vue.el. since it only the constructor and not the real object in use.
         S.vue.el.App = Vue.extend({
             data: function () {
                 return {
@@ -67,7 +70,9 @@ S.vue = {
                     headerOptions: {
                         "title": "",
                         "display": true,
-                        "displaySearchbox": true
+                        "displayLoadingBar" : false,
+                        "displaySearchbox": true,
+                        "onHeaderClick": null
                     },
                     quickAddButtonOptions: {
                         "display": true
@@ -81,10 +86,11 @@ S.vue = {
         S.vue.router = new VueRouter();
         S.vue.router.map(S.vue.map);
         S.vue.router.beforeEach(function (transition) {
-          if (transition.to.path !== '/_login' && !S.user._current.isLogged()) { //TODO check for credential in database
-            //transition.abort()
-            //S.router.replace("/_login");
+          if (transition.to.path !== '/_login' && !S.user._current.isLogged()) {
             transition.redirect("/_login")
+          } else if (transition.to.path == '/_login' && S.user._current.isLogged()) {
+            //Case where we go back in history (we are already logged at the front door) so we abort
+            transition.abort()
           } else {
             transition.next()
           }
@@ -103,11 +109,11 @@ S.vue = {
             }
             //*
             if (current.options) {
-                //console.log(current.options, current.options.displaySearchbox);
                 S.vue.router.app.$data.headerOptions.displaySearchbox = (typeof current.options.displaySearchbox === "boolean") ? current.options.displaySearchbox : true;
                 S.vue.router.app.$data.headerOptions.display = (typeof current.options.displayHeader === "boolean") ? current.options.displayHeader : true;
                 S.vue.router.app.$data.headerOptions.title = (typeof current.options.title === "string") ? current.options.title : "";
                 S.vue.router.app.$data.headerOptions.titleInSearch = (typeof current.options.titleInSearch === "string") ? current.options.titleInSearch : ""; //We show nothing by default in searchmode
+                S.vue.router.app.$data.headerOptions.onHeaderClick = (typeof current.options.onHeaderClick === "function") ? current.options.onHeaderClick : null;
 
                 S.vue.router.app.$data.quickAddButtonOptions.display = (typeof current.options.displayQuickAddButton === "boolean") ? current.options.displayQuickAddButton : true;
 
@@ -118,7 +124,6 @@ S.vue = {
             if(typeof S.platform.events.afterPageLoad === "function"){
                 S.platform.events.afterPageLoad();
             }
-            //*/
         });
         // Redirect certain routes to other routes (by default hom and if not logged redirect to login)
         S.vue.router.redirect({
@@ -136,7 +141,6 @@ S.vue = {
     },
     init_menu: function () {
         //TODO choose if not use custom <menu> component
-        //TODO link the title of the menu to the title of the page
         S.vue.el.menu = new Vue({
             el: '#menu',
             data: {current: "Login", links: S.vue.map},
@@ -144,7 +148,5 @@ S.vue = {
                 isMenuEntry: S.tool.isMenuEntry
             }
         });
-        //*
-        //*/
     }
 };
