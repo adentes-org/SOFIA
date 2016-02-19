@@ -16,6 +16,10 @@
     &.close{
       background-color: #ccc;
     }
+    &.del{
+      color: #EEE;
+      background-color: #333;
+    }
     border-bottom: 1px solid #666;
     /* padding: 0 6px 24px !important; */
     h4{
@@ -76,15 +80,12 @@
 
 a.fiche.patient{
     text-decoration: none;
-    &[data-closed="true"]{
-       .mdl-card{
-      }
-    }
     .mdl-card{
         min-height: 0px;
         width: 100%;
         &.close{
           background: #DDD;
+          min-height: 134px;
         }
         .mdl-card__title {
             padding-bottom: 0;

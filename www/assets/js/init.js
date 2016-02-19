@@ -1,8 +1,8 @@
+/* global requirejs */
 'use strict';
 /*
  * Init the app dependency with requirejs
  */
-/* global requirejs */
 
 requirejs.config({
     baseUrl: 'assets',

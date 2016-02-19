@@ -1,5 +1,5 @@
 <div class="fiche-view">
-  <div class="info mdl-grid mdl-grid--no-spacing {{fiche.closed ? 'close':'open'}}" v-on:click.prevent="showUpdateInformation">
+  <div class="info mdl-grid mdl-grid--no-spacing {{fiche.closed ? 'close':'open'}} {{fiche.deleted ? 'del':' '}}"  v-on:click.prevent="showUpdateInformation">
     <div class="mdl-cell" style="width:60%; padding: 10px 20px;">
       <p>Née le : {{fiche.patient.birthdate}}</p>
       <p>Sexe : {{fiche.patient.gender}}</p>
@@ -10,13 +10,13 @@
       <h3>{{fiche.uid}}</h3>
     </div>
   </div>
+  <template v-if="!f.deleted">
+    <button v-on:click="give" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">Envoyer</button>
+    <button v-on:click="take" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>Prendre</button>
 
-  <button v-on:click="give" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">Envoyer</button>
-  <button v-on:click="take" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>Prendre</button>
-
-  <button v-on:click="reopen" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.closed == true">Ré-Ouvrir</button>
-  <button v-on:click="close" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>Fermer</button>
-
+    <button v-on:click="reopen" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.closed == true">Ré-Ouvrir</button>
+    <button v-on:click="close" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>Fermer</button>
+  </template>
   <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
     <div class="mdl-tabs__tab-bar">
         <a href="#affections-panel" class="mdl-tabs__tab is-active" >Affections</a>

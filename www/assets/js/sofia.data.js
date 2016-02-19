@@ -292,6 +292,7 @@ S.data = {
                              "owner_id": this._data.owner_id,
                              "patient": this._data.patient,
                              "closed" : false,
+                             "deleted": false,
                              "close_context" : {},
                              "origin" : "",
                              "primaryAffection": "",

@@ -1,4 +1,4 @@
-<section class="section--center mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-shadow--2dp">
+<section v-if="!f.deleted" class="section--center mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-shadow--2dp">
     <a class="fiche patient" href="#!/fiche/{{f._id}}">
         <div class="mdl-card {{f.closed  ? 'close' : 'open'}}" >
             <div class="mdl-card__title">
