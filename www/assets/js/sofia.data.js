@@ -425,7 +425,7 @@ S.data = {
               },
               */
               resetCredConfig: function(){
-                delete localStorage['sofia-user-config'];
+                S.user.reset();
                 window.location.reload();
               },
               resetServerConfig: function(){

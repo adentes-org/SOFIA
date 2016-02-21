@@ -4,30 +4,31 @@ var S = S || {};
 S.user = {
     _current : {
         isLogged : function(){
-            return (typeof S.user._current.name !== "undefined" && (S.user._current.name !== null || S.user._current.roles[0] === "_admin" ) ) ;
-            //TODO rellogin if not based on registred value
-            /*
-            //TODO don't use jquery promise ?
-            var deferred = new $.Deferred()
-            db.getSession(function (err, response) {
-              if (err) {
-                // network error
-                deferred.reject("No network !");
-              } else if (!response.userCtx.name) {
-                // nobody's logged in
-                deferred.reject("Not logged !");
-              } else {
-                // response.userCtx.name is the current user
-                deferred.resolve(response.userCtx);
-              }
-            });
-            return deferred.promise();
-            */
+            return (typeof S.user._current.name !== "undefined" && typeof S.user._current._id !== "undefined" && (S.user._current.name !== null || S.user._current.roles[0] === "_admin" ) ) ;
         }
     },
-    login : function(user,pass){
-      //TODO
-      console.log("Trying to login : ", user,pass);
-      return S.db.users.login(user,pass);
+    login : function(user,pass,silent){
+    console.log("Trying to login : ", user,pass,silent);
+      if(typeof silent === "undefined"){
+        silent = false;
+      }
+      return S.db.users.login(user,pass,silent);
+    },
+    set : function(user,pass){
+      S.config.user = {
+          username : user,
+          userpass : pass
+      };
+      localStorage["sofia-user-config"] = JSON.stringify(S.config.user);
+      $.extend(S.user._current, response);
+    },
+    logout : function(){
+      S.user._current.name !== null; //logout
+      //TODO redirect to login
+    },
+    reset : function(){
+      //S.config.user.username=""; // We don't reset in case the team really exist
+      S.config.user.userpass="";
+      delete localStorage['sofia-user-config'];
     }
 };

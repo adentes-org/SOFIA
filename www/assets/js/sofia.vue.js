@@ -87,9 +87,30 @@ S.vue = {
         S.vue.router.map(S.vue.map);
         S.vue.router.beforeEach(function (transition) {
           if (transition.to.path !== '/_login' && !S.user._current.isLogged()) {
-            transition.redirect("/_login")
+            if(S.config.user.username !== "" && S.config.user.userpass !== "") {
+              //We have something to try !
+              S.user.login(S.config.user.username, S.config.user.userpass, true).fail(function(err){
+
+                switch (err.status) {
+                  case 401://Wrong cred
+                    S.user.reset(); //We clear cache if their are bad
+                    transition.redirect("/_login")
+                    break;
+                  default:
+                    transition.redirect("/_login")
+                  //TODO manage server not joignable and login if already logged in before
+                }
+                //We redirect to login page
+              }).then(function(){
+                //We are logged
+              });
+            }
+            /*
+            */
+            transition.redirect("/_login") //TODO backup url coming to redirect after
           } else if (transition.to.path === '/_login' && S.user._current.isLogged()) {
             //Case where we go back in history (we are already logged at the front door) so we abort
+            //TODO redirect to remember page before log
             transition.abort()
           } else {
             transition.next()
@@ -104,8 +125,6 @@ S.vue = {
                 S.vue.el.menu.$set('current', current.name);
                 $("head>title").text("SOFIA" + ((current.name && current.name !== "") ? " - " + current.name : ""));
                 //TODO use a for each to redefine each custom options
-                //TODO afficher le nom de l'utilisteur dans le cas de fiche
-                //console.log(S.vue.map[transition.to.path].name, S.vue.el.menu);
             }
             //*
             if (current.options) {
@@ -128,8 +147,7 @@ S.vue = {
         // Redirect certain routes to other routes (by default hom and if not logged redirect to login)
         S.vue.router.redirect({
             '/': '/home',
-            // redirect any not-found route to home
-            '*': '/home'
+            '*': '/home'// redirect any not-found route to home
         })
 
         S.vue.router.start(S.vue.el.App, '.app');
