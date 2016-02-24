@@ -16,7 +16,7 @@ S.data = {
                     var ret;
                     var deferred = new $.Deferred()
                     S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
-                      console.log(doc);
+                      //console.log(doc);
                       S.vue.router.app.$children[0].$data.options.title = doc.patient.firstname +" "+ doc.patient.lastname;
                       ret = {
                         fiche:doc,
@@ -49,6 +49,7 @@ S.data = {
                           ]
                         }
                       };
+                      console.log(ret);
                       deferred.resolve(ret);
                       if(!ret.fiche.origin || ret.fiche.origin === ""){ // L'ogine n'est pas saisie on force la saisie
                           S.tool.getDialog("#add-origin-dialog").showModal();
@@ -182,6 +183,44 @@ S.data = {
                      S.db.fiches.put(this._data.fiche);
                  }
                },
+              undelete: function () {
+                if(S.user._current.isAdmin()){
+                  //We are admin
+                  var ask= !S.config.local["ask-for"]["delete-validation"] || confirm("Etes-vous sûr d'annuler la suppression de la fiche ?");
+                  if(ask){
+                    this._data.fiche.deleted = false;
+                    this._data.fiche.events.push({
+                      type : "action",
+                      action : "undelete",
+                      message : S.user._current.name+" annule la suppression de la fiche.",
+                      timestamp : Date.now(),
+                      user :  S.user._current.name
+                    })
+                    S.db.fiches.put(this._data.fiche);
+                  }
+                }else{
+                  //Else we do nothing
+                }
+              },
+              delete: function () {
+                if(S.user._current.isAdmin()){
+                  //We are admin
+                  var ask= !S.config.local["ask-for"]["delete-validation"] || confirm("Etes-vous sûr de supprimer la fiche ?");
+                  if(ask){
+                    this._data.fiche.deleted = true;
+                    this._data.fiche.events.push({
+                      type : "action",
+                      action : "delete",
+                      message : S.user._current.name+" supprime la fiche.",
+                      timestamp : Date.now(),
+                      user :  S.user._current.name
+                    })
+                    S.db.fiches.put(this._data.fiche);
+                  }
+                }else{
+                  //Else we do nothing
+                }
+              },
               closeCloseModal: function () {
                    S.tool.getDialog("#close-fiche-dialog").close();
               },

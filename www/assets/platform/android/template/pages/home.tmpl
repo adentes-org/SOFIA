@@ -4,7 +4,7 @@
             <fiche v-bind:f="fiche" v-if="fiche.closed != true" ></fiche>
         </template>
   </template>
-    <template v-if="searchbox.length > 1 ">
+  <template v-if="searchbox.length > 1">
         <template v-for="fiche in fiches  | filterBy searchbox" >
             <fiche v-bind:f="fiche"></fiche>
         </template>

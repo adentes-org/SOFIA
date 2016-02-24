@@ -10,9 +10,11 @@
       <h3>{{fiche.uid}}</h3>
     </div>
   </div>
-  <template v-if="f.deleted == true">
+  <template v-if="fiche.deleted == true">
+    <button v-on:click="undelete" class="deleting-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="user.isAdmin() == true">Annuler suppression</button>
   </template>
   <template v-else>
+    <button v-on:click="delete" class="deleting-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="user.isAdmin() == true">Supprimer</button>
     <button v-on:click="give" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">Envoyer</button>
     <button v-on:click="take" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>Prendre</button>
 
