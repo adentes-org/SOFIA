@@ -17,7 +17,7 @@ S.vue = {
         //TODO maybe declare them directly in the App contructor ?
         Vue.component('fiche', {
             // declare the props
-            props: ['f'],
+            props: ['f','u'],
             // the prop can be used inside templates, and will also
             // be set as `this.f`
             template: S.template.fiche

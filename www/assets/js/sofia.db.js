@@ -233,6 +233,7 @@ S.db.fiches = {
       S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
         // handle result
         var ret = {
+            user : S.user._current,
             fiches: [],
             my_fiches: []
         }
