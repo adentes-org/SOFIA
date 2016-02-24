@@ -1,9 +1,15 @@
 <div class="mdl-grid">
-  <template v-if="searchbox.length === 0 ">
+  <template v-if="searchbox.length === 0 && !user.isAdmin()">
         <template v-for="fiche in my_fiches" >
             <fiche v-bind:f="fiche" v-bind:u="user" v-if="fiche.closed != true" ></fiche>
         </template>
   </template>
+    <template v-if="searchbox.length === 0 && user.isAdmin()">
+          <!-- Addmin see all living fiche (not closed or deleted)-->
+          <template v-for="fiche in fiches" >
+              <fiche v-bind:f="fiche" v-bind:u="user" v-if="fiche.closed != true && fiche.deleted != true" ></fiche>
+          </template>
+    </template>
   <template v-if="searchbox.length > 1">
         <template v-for="fiche in fiches  | filterBy searchbox" >
             <fiche v-bind:f="fiche" v-bind:u="user"></fiche>
