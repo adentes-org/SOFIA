@@ -337,10 +337,10 @@ S.data = {
               login: function () {
                 //TODO check format of user and pass
                 //TODO determine if not use lazy attribute to use less ressouces
-                S.user.login(this.u.username, this.u.userpass).then(function(user){
-                    console.log(user);
+                S.user.login(this.u.username, this.u.userpass,false).then(function(user){
+                    console.log("Receiving the user : ",user);
                     S.vue.router.go("/");
-                })
+                });
                 /*.catch(function(error){
                     //TODO handle errors
                 });

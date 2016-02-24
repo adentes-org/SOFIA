@@ -4,8 +4,12 @@ var S = S || {};
 
 //TODO paginataion
 var req_limit = 1000000;
+
+/**** DEBUG ****/
 //TODO disable for live
-PouchDB.debug.enable('*');
+//PouchDB.debug.enable('*');
+PouchDB.debug.disable();
+/**** ***** ****/
 
 //S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name.replace(/^\/+/, '')
 //S.config.db._user_url = S.config.db.url.replace(/\/+$/, '')+"/"+"_users"
@@ -21,8 +25,11 @@ S.db = {
     S.config.db = dbConfig; //TODO check
     localStorage["sofia-server-config"] = JSON.stringify(S.config.db);
     S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name.replace(/^\/+/, '');
-    S.db.localDB = new PouchDB("local-"+S.config.db.name.replace(/^\/+/, ''));
-    S.db.remoteDB = new PouchDB(S.config.db._full_url, {skipSetup: true}); //TODO maybe clean it if exist ?
+    S.config.db._local_url ="local-"+S.config.db._full_url.replace(/:/gi, '').replace(/\/+/gi, '#');
+    //S.config.db._local_url = "local-"+S.config.db.name.replace(/^\/+/, '');
+
+    S.db.localDB = new PouchDB(S.config.db._local_url); // Use the full url in case same db on other domain could lead to corruption //TODO maybe clean it if exist ?
+    S.db.remoteDB = new PouchDB(S.config.db._full_url, {skipSetup: true});
   }
 }
 
@@ -52,7 +59,8 @@ S.db.users = {
     S.db.remoteDB.login(user, pass, function (err, response) {
       if (err) {
         console.log(err);
-        if(!silent)
+        //TODO support timeout
+        if(!silent){
           alert(err.message);
         }
         deferred.reject(err);
@@ -60,9 +68,10 @@ S.db.users = {
         //console.log(response);
         if(response.ok) {
           //We are logged in
-          S.user.set(user,pass)
+          console.log("We are logged in !", response);
+          S.user.set(user,pass,response);
           S.db.fiches.startSync();
-
+          //console.log("Resolving the deffer with", response);
           deferred.resolve(response);
         }
       }
@@ -133,6 +142,7 @@ S.db.fiches = {
   },
   startSync : function() {
 
+              console.log("Starting sync ...");
               S.db.localDB.sync(S.db.remoteDB, {
                 live: true,
                 retry: true
@@ -155,6 +165,7 @@ S.db.fiches = {
                 console.log("Pouchdb.sync.complete event");
                 // replication was canceled!
               });
+              console.log("Sync in place !");
   },
   post : function(obj) { //Create
     return S.db.localDB.post(obj);
@@ -290,7 +301,7 @@ S.db.fiches = {
       console.log(count);
       deferred.resolve(count);
     }).catch(function (err) {
-            // handle err
+        // handle err
         console.log(err);
         deferred.reject(err);
     });

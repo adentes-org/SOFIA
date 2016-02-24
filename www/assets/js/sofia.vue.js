@@ -90,19 +90,28 @@ S.vue = {
             if(S.config.user.username !== "" && S.config.user.userpass !== "") {
               //We have something to try !
               S.user.login(S.config.user.username, S.config.user.userpass, true).fail(function(err){
-
+                console.log(err)
                 switch (err.status) {
-                  case 401://Wrong cred
+                  case 401: //Wrong cred
                     S.user.reset(); //We clear cache if their are bad
                     transition.redirect("/_login")
                     break;
+                  case 500: //Database didn't respond maybe we are offline we can go on it should be fine
+                    if(S.user._current.wasLoggedIn()){
+                      //Doing like we are logged in
+                      S.user._current.restoreSession()
+                      S.db.fiches.startSync();
+                      S.vue.router.go("/");
+                    }
+                    break;
                   default:
+                    //We redirect to login page
                     transition.redirect("/_login")
-                  //TODO manage server not joignable and login if already logged in before
                 }
-                //We redirect to login page
-              }).then(function(){
+              }).then(function(user){
                 //We are logged
+                console.log("Receiving the user : ",user);
+                S.vue.router.go("/");
               });
             }
             /*
