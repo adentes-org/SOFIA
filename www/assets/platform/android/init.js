@@ -1,6 +1,6 @@
 /* global componentHandler, S */
 'use strict';
-(function () {
+//(function () {
   //Vue.config.silent = true
   console.log("Init android platform");
 
@@ -29,4 +29,4 @@
           }
       };
   });
-}());
+//}());
