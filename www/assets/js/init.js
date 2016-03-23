@@ -3,6 +3,7 @@
  * Init the app dependency with requirejs
  */
 /* global requirejs */
+var S = S || {};
 
 requirejs.config({
     baseUrl: 'assets',
@@ -34,19 +35,39 @@ requirejs.config({
         }
     }
 });
-//TODO use more modular form with dependencie
-requirejs(['cordova', 'jquery', 'vue', 'vue-router', 'pouchdb', 'app/sofia.polyfill'], function (cordova, $, Vue, VueRouter, PouchDB) {
-    Vue.use(VueRouter);
-    window.PouchDB = PouchDB; //Force PouchDB to DOM
-    console.log(PouchDB);
-    window.Vue = Vue; //Force Vue to DOM
-    window.VueRouter = VueRouter; //Force VueRouter to DOM
-    requirejs(['pouchdb-authentication', 'app/sofia.tool', 'app/sofia.template', 'app/sofia.config'], function () {
-        $("head").append('<link rel="stylesheet" type="text/css" href="assets/platform/' + cordova.platformId + '/css/style.css">');
-        requirejs(['platform/' + cordova.platformId + '/init', 'app/sofia.db'], function () {
-            requirejs(['app/sofia.vue', 'app/sofia.data', 'app/sofia.user', 'app/sofia.app'], function () {
-                S.app.initialize();
-            });
-        });
-    });
+
+//var base = ;
+//base.unshift();
+S.init = function(cordova){
+  requirejs(['jquery', 'vue', 'vue-router', 'pouchdb', 'app/sofia.polyfill'], function ($, Vue, VueRouter, PouchDB) {
+      Vue.use(VueRouter);
+      window.PouchDB = PouchDB; //Force PouchDB to DOM
+      console.log(PouchDB);
+      window.Vue = Vue; //Force Vue to DOM
+      window.VueRouter = VueRouter; //Force VueRouter to DOM
+      requirejs(['pouchdb-authentication', 'app/sofia.tool', 'app/sofia.template', 'app/sofia.config'], function () {
+          $("head").append('<link rel="stylesheet" type="text/css" href="assets/platform/' + cordova.platformId + '/css/style.css">');
+          requirejs(['platform/' + cordova.platformId + '/init', 'app/sofia.db'], function () {
+              requirejs(['app/sofia.vue', 'app/sofia.data', 'app/sofia.user', 'app/sofia.app'], function () {
+                  S.app.initialize();
+              });
+          });
+      });
+  });
+};
+
+
+requirejs(['cordova'], S.init , function (err) {
+  //Handle error for example if cordova isn't here
+  console.log(err.requireModules, err.requireType);
+  if(err && err.requireModules.length === 1 && err.requireModules[0] === "cordova" && err.requireType === "scripterror"){ //Cordova fail to load
+    //Ignoring and mocking
+    window.cordova = {
+      is_mock: true,
+      platformId : "browser"
+    }
+    S.init(window.cordova);
+  } else {
+    throw err;
+  }
 });
