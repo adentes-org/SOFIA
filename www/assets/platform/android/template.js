@@ -41,9 +41,7 @@ define(['jquery'], function($) {
     }).then(function(){
         S.template._isLoaded = true;
         deferred.resolve(S.template);
-        //TODO
     });
     //TODO reject case;
     return deferred.promise();
-
 });
