@@ -72,10 +72,12 @@ S.user = {
         $.extend(S.user._current, doc);
       }
     },
+    /*
     logout : function(){
       S.user._current.name !== null; //logout
       //TODO redirect to login
     },
+    */
     reset : function(){
       //S.config.user.username=""; // We don't reset in case the team really exist
       S.config.user.userpass="";

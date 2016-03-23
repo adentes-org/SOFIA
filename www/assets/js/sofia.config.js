@@ -10,6 +10,32 @@ S.config = {
     url : "",
     name : ""
   },
+  fiche : {
+    pathologys : [
+      "Inconscient",
+      "Arret Cardio Respiratoire",
+      "Petit soin",
+      "Hémorragie",
+      "Difficulté respiratoire",
+      "Malaise",
+      "Traumatologie",
+      "Consultation médicale",
+    ],
+    origins : [
+        "Spontané",
+        "Brancardé",
+        "VPSP",
+        "Avec témoin",
+        "Avec sécurité",
+    ],
+    outputs : [
+        "Laissé sur place",
+        "Simple",
+        "Surveillance et sortie simple",
+        "Evacuation Sapeurs-Pompiers",
+        "Evacuation",
+    ]
+  },
   local : { /* default */
     "ask-for" : {
       "take-validation" : true,

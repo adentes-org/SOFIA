@@ -22,32 +22,7 @@ S.data = {
                         fiche:doc,
                         user:S.user._current,
                         history: [], //TODO (Will be build after because not at first and require data)
-                        config : {
-                          pathologys : [
-                            "Inconscient",
-                            "Arret Cardio Respiratoire",
-                            "Petit soin",
-                            "Hémorragie",
-                            "Difficulté respiratoire",
-                            "Malaise",
-                            "Traumatologie",
-                            "Consultation médicale",
-                          ],
-                          origins : [
-                              "Spontané",
-                              "Brancardé",
-                              "VPSP",
-                              "Avec témoin",
-                              "Avec sécurité",
-                          ],
-                          outputs : [
-                              "Laissé sur place",
-                              "Simple",
-                              "Surveillance et sortie simple",
-                              "Evacuation Sapeurs-Pompiers",
-                              "Evacuation",
-                          ]
-                        }
+                        config : S.config.fiche
                       };
                       console.log(ret);
                       deferred.resolve(ret);
@@ -392,7 +367,7 @@ S.data = {
                   this.db = S.config.db; //Reset
                   S.tool.getDialog("#show-config-dialog").close();
               },
-              scanQRCode: function (event) {
+              scanQRCode: function () {
                 var el = this;
                 cordova.plugins.barcodeScanner.scan(
                     function (result) {
@@ -425,7 +400,7 @@ S.data = {
                     }
                  );
               },
-              updtConfiguration: function (event) {
+              updtConfiguration: function () {
                   S.db.setUrl(this.db)
                   S.tool.getDialog("#show-config-dialog").close();
               }

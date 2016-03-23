@@ -42,7 +42,7 @@ S.db.config = {
     S.db.localDB.getAttachment('_design/sofia-config', 'memo.html').then(function (blob) {
       // handle result
       var reader = new FileReader();
-      reader.onload = function(event){
+      reader.onload = function(){
         deferred.resolve({ memo : reader.result});
       };
       reader.readAsText(blob);
@@ -147,22 +147,22 @@ S.db.fiches = {
                 live: true,
                 retry: true
               }).on('change', function (change) {
-                console.log("Pouchdb.sync.change event");
+                console.log("Pouchdb.sync.change event",change);
                 // yo, something changed!
               }).on('paused', function (info) {
-                console.log("Pouchdb.sync.paused event");
+                console.log("Pouchdb.sync.paused event",info);
                 // replication was paused, usually because of a lost connection or end of transmission
                 S.db.fiches.parseSync(info);
                 //S.vue.router.replace(window.location.hash.slice(2)); //TODO better reload data not page
               }).on('active', function (info) {
-                console.log("Pouchdb.sync.active event");
+                console.log("Pouchdb.sync.active event",info);
                 // replication was resumed
                 S.vue.router.app.$children[0].$data.options.displayLoadingBar = true;
               }).on('error', function (err) {
-                console.log("Pouchdb.sync.error event");
+                console.log("Pouchdb.sync.error event",err);
                 // totally unhandled error (shouldn't happen)
               }).on('complete', function (info) {
-                console.log("Pouchdb.sync.complete event");
+                console.log("Pouchdb.sync.complete event",info);
                 // replication was canceled!
               });
               console.log("Sync in place !");
@@ -238,12 +238,13 @@ S.db.fiches = {
             my_fiches: []
         }
         $.each(result.rows, function( index, value ) {
-          if(value.doc["_id"].split("/")[0] == "_design" ){
+          if(value.doc["_id"].split("/")[0] === "_design" ){
             return; //If it's a design doc
           }
           ret.fiches[ret.fiches.length] = value.doc;
-          if(value.doc.owner_id === S.user._current.name)
+          if(value.doc.owner_id === S.user._current.name){
             ret.my_fiches[ret.my_fiches.length] = value.doc;
+          }
         });
         console.log(ret);
         deferred.resolve(ret);
@@ -270,8 +271,9 @@ S.db.fiches = {
           fiches: []
       }
       $.each(result.rows, function( index, value ) {
-        if(value.doc["_id"].split("/")[0] == "_design" )
+        if(value.doc["_id"].split("/")[0] === "_design" ){
           return; //If it's a design doc
+        }
         ret.fiches[ret.fiches.length] = value.doc;
       });
       deferred.resolve(ret);
