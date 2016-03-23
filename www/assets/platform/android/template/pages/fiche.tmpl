@@ -58,7 +58,7 @@
            <form  action="#" v-on:submit.prevent="changeInformation">
             <div class="mdl-dialog__content">
                 <div class="mdl-textfield mdl-js-textfield">
-                  <input class="mdl-textfield__input" type="text" id="lastname" v-model="fiche.patient.lastname" />
+                  <input class="mdl-textfield__input" type="text" id="lastname" v-model="fiche.patient.lastname" maxlength="1"/>
                   <label class="mdl-textfield__label" for="lastname">Nom</label>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield">
