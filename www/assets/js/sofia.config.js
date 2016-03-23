@@ -18,7 +18,8 @@ S.config = {
       "addPathology-validation" : true,
       "addOrigin-validation" : true,
       "changePrimaryAffection-validation" : false,
-      "changeInformation-validation" : true
+      "changeInformation-validation" : true,
+      "delete-validation" : true
     }
   }
 };

@@ -1,3 +1,4 @@
+/* global requirejs */
 'use strict';
 /*
  * Init the app dependency with requirejs

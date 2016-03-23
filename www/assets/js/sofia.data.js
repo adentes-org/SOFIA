@@ -16,7 +16,7 @@ S.data = {
                     var ret;
                     var deferred = new $.Deferred()
                     S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
-                      console.log(doc);
+                      //console.log(doc);
                       S.vue.router.app.$children[0].$data.options.title = doc.patient.firstname +" "+ doc.patient.lastname;
                       ret = {
                         fiche:doc,
@@ -49,6 +49,7 @@ S.data = {
                           ]
                         }
                       };
+                      console.log(ret);
                       deferred.resolve(ret);
                       if(!ret.fiche.origin || ret.fiche.origin === ""){ // L'ogine n'est pas saisie on force la saisie
                           S.tool.getDialog("#add-origin-dialog").showModal();
@@ -182,6 +183,44 @@ S.data = {
                      S.db.fiches.put(this._data.fiche);
                  }
                },
+              undelete: function () {
+                if(S.user._current.isAdmin()){
+                  //We are admin
+                  var ask= !S.config.local["ask-for"]["delete-validation"] || confirm("Etes-vous sûr d'annuler la suppression de la fiche ?");
+                  if(ask){
+                    this._data.fiche.deleted = false;
+                    this._data.fiche.events.push({
+                      type : "action",
+                      action : "undelete",
+                      message : S.user._current.name+" annule la suppression de la fiche.",
+                      timestamp : Date.now(),
+                      user :  S.user._current.name
+                    })
+                    S.db.fiches.put(this._data.fiche);
+                  }
+                }else{
+                  //Else we do nothing
+                }
+              },
+              delete: function () {
+                if(S.user._current.isAdmin()){
+                  //We are admin
+                  var ask= !S.config.local["ask-for"]["delete-validation"] || confirm("Etes-vous sûr de supprimer la fiche ?");
+                  if(ask){
+                    this._data.fiche.deleted = true;
+                    this._data.fiche.events.push({
+                      type : "action",
+                      action : "delete",
+                      message : S.user._current.name+" supprime la fiche.",
+                      timestamp : Date.now(),
+                      user :  S.user._current.name
+                    })
+                    S.db.fiches.put(this._data.fiche);
+                  }
+                }else{
+                  //Else we do nothing
+                }
+              },
               closeCloseModal: function () {
                    S.tool.getDialog("#close-fiche-dialog").close();
               },
@@ -292,6 +331,7 @@ S.data = {
                              "owner_id": this._data.owner_id,
                              "patient": this._data.patient,
                              "closed" : false,
+                             "deleted": false,
                              "close_context" : {},
                              "origin" : "",
                              "primaryAffection": "",
@@ -336,10 +376,10 @@ S.data = {
               login: function () {
                 //TODO check format of user and pass
                 //TODO determine if not use lazy attribute to use less ressouces
-                S.user.login(this.u.username, this.u.userpass).then(function(user){
-                    console.log(user);
+                S.user.login(this.u.username, this.u.userpass,false).then(function(user){
+                    console.log("Receiving the user : ",user);
                     S.vue.router.go("/");
-                })
+                });
                 /*.catch(function(error){
                     //TODO handle errors
                 });
@@ -424,7 +464,7 @@ S.data = {
               },
               */
               resetCredConfig: function(){
-                delete localStorage['sofia-user-config'];
+                S.user.reset();
                 window.location.reload();
               },
               resetServerConfig: function(){
