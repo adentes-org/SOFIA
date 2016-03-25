@@ -28,6 +28,19 @@
   }
 
   /**
+   * Blur the specified element, as long as it's not the HTML body element.
+   * This works around an IE9/10 bug - blurring the body causes Windows to
+   * blur the whole application.
+   *
+   * @param {Element} el to blur
+   */
+  function safeBlur(el) {
+    if (el && el.blur && el != document.body) {
+      el.blur();
+    }
+  }
+
+  /**
    * @param {!NodeList} nodeList to search
    * @param {Node} node to find
    * @return {boolean} whether node is inside nodeList
@@ -49,6 +62,11 @@
     this.dialog_ = dialog;
     this.replacedStyleTop_ = false;
     this.openAsModal_ = false;
+
+    // Set a11y role. Browsers that support dialog implicitly know this already.
+    if (!dialog.hasAttribute('role')) {
+      dialog.setAttribute('role', 'dialog');
+    }
 
     dialog.show = this.show.bind(this);
     dialog.showModal = this.showModal.bind(this);
@@ -164,13 +182,13 @@
      */
     showModal: function() {
       if (this.dialog_.hasAttribute('open')) {
-        throw 'Failed to execute \'showModal\' on dialog: The element is already open, and therefore cannot be opened modally.';
+        throw new Error('Failed to execute \'showModal\' on dialog: The element is already open, and therefore cannot be opened modally.');
       }
       if (!document.body.contains(this.dialog_)) {
-        throw 'Failed to execute \'showModal\' on dialog: The element is not in a Document.'
+        throw new Error('Failed to execute \'showModal\' on dialog: The element is not in a Document.');
       }
       if (!dialogPolyfill.dm.pushDialog(this)) {
-        throw 'Failed to execute \'showModal\' on dialog: There are too many open modal dialogs.'
+        throw new Error('Failed to execute \'showModal\' on dialog: There are too many open modal dialogs.');
       }
       this.show();
       this.openAsModal_ = true;
@@ -198,7 +216,7 @@
         }).join(', ');
         target = this.dialog_.querySelector(query);
       }
-      document.activeElement && document.activeElement.blur && document.activeElement.blur();
+      safeBlur(document.activeElement);
       target && target.focus();
     },
 
@@ -210,7 +228,7 @@
      */
     close: function(opt_returnValue) {
       if (!this.dialog_.hasAttribute('open')) {
-        throw 'Failed to execute \'close\' on dialog: The element does not have an \'open\' attribute, and therefore cannot be closed.'
+        throw new Error('Failed to execute \'close\' on dialog: The element does not have an \'open\' attribute, and therefore cannot be closed.');
       }
       this.setOpen(false);
 
@@ -290,7 +308,7 @@
           'may not work correctly', element);
     }
     if (element.nodeName.toUpperCase() != 'DIALOG') {
-      throw 'Failed to register dialog: The element is not a dialog.';
+      throw new Error('Failed to register dialog: The element is not a dialog.');
     }
     new dialogPolyfillInfo(/** @type {!HTMLDialogElement} */ (element));
   };
@@ -381,7 +399,7 @@
     if (candidate != this.topDialogElement()) {
       event.preventDefault();
       event.stopPropagation();
-      event.target.blur();
+      safeBlur(/** @type {Element} */ (event.target));
       // TODO: Focus on the browser chrome (aka document) or the dialog itself
       // depending on the tab direction.
       return false;
@@ -480,7 +498,17 @@
     dialog.close(returnValue);
   }, true);
 
-  window['dialogPolyfill'] = dialogPolyfill;
   dialogPolyfill['forceRegisterDialog'] = dialogPolyfill.forceRegisterDialog;
   dialogPolyfill['registerDialog'] = dialogPolyfill.registerDialog;
+
+  if (typeof module === 'object' && typeof module['exports'] === 'object') {
+    // CommonJS support
+    module['exports'] = dialogPolyfill;
+  } else if (typeof define === 'function' && 'amd' in define) {
+    // AMD support
+    define(function() { return dialogPolyfill; });
+  } else {
+    // all others
+    window['dialogPolyfill'] = dialogPolyfill;
+  }
 })();
