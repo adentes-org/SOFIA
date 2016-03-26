@@ -4,7 +4,7 @@ var S = S || {};
 S.app = {
     // Application Constructor
     initialize: function () {
-        this.bindEvents();
+        S.app.bindEvents();
     },
     // Bind Event Listeners
     //
@@ -41,4 +41,3 @@ S.app = {
         window.setTimeout(S.app.removeLoader, 1000);
     }
 };
-

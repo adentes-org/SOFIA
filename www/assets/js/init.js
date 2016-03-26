@@ -50,7 +50,7 @@ S.init = function(cordova){
           $("head").append('<link rel="stylesheet" type="text/css" href="assets/platform/' + cordova.platformId + '/css/style.css">');
           requirejs(['platform/' + cordova.platformId + '/init', 'app/sofia.db'], function () {
               requirejs(['app/sofia.vue', 'app/sofia.data', 'app/sofia.user', 'app/sofia.app'], function () {
-                  S.app.initialize();
+                  window.setTimeout(S.app.initialize,250); // Add time if all not already loadede for safety
               });
           });
       });
