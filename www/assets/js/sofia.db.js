@@ -242,6 +242,8 @@ S.db.fiches = {
             return; //If it's a design doc
           }
           ret.fiches[ret.fiches.length] = value.doc;
+          value.doc.last_update = value.doc.events[value.doc.events.length -1].timestamp
+          value.doc.last_update_since = moment(value.doc.last_update).fromNow();
           if(value.doc.owner_id === S.user._current.name){
             ret.my_fiches[ret.my_fiches.length] = value.doc;
           }

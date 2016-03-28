@@ -1,46 +1,51 @@
 {
-    "name": "SOFIA",
-    "description": "Suivi Opérationnel des Fiches d'Intervention par Applicatif",
-    "version": "0.0.2",
-    "authors": [
-        {
-            "name": "Antoine GIRARD",
-            "email": "antoine.girard@sapk.fr",
-            "homepage": "https://sapk.fr"
-        }
-    ],
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/adentes-org/SOFIA.git"
-    },
-    "dependencies": {
-        "jquery": "latest",
-        "requirejs": "latest",
-        "pouchdb": "latest",
-        "pouchdb-authentication": "sapk/pouchdb-authentication",
-        "vue": "v1.0.16",
-        "vue-router": "latest",
-        "material-design-lite": "latest",
-        "material-design-icons": "latest",
-        "dialog-polyfill": "latest",
-        "requirejs-promise": "latest"
-    },
-    "install": {
-        "path": "www/assets/lib",
-        "sources": {
-            "jquery": "bower_components/jquery/dist/jquery.min.js",
-            "pouchdb": "bower_components/pouchdb/dist/pouchdb.min.js",
-            "pouchdb-authentication": "bower_components/pouchdb-authentication/dist/pouchdb.authentication.min.js",
-            "vue": "bower_components/vue/dist/vue.min.js",
-            "vue-router": "bower_components/vue-router/dist/vue-router.min.js",
-            "requirejs" : "bower_components/requirejs/require.js",
-            "material-design-icons" : [
-              "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.ttf",
-              "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.woff",
-              "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.woff2"
-            ],
-            "requirejs-promise" : "bower_components/requirejs-promise/requirejs-promise.js"
-        }
-    },
-    "private": true
+  "name": "SOFIA",
+  "description": "Suivi Opérationnel des Fiches d'Intervention par Applicatif",
+  "version": "0.0.2",
+  "authors": [
+    {
+      "name": "Antoine GIRARD",
+      "email": "antoine.girard@sapk.fr",
+      "homepage": "https://sapk.fr"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/adentes-org/SOFIA.git"
+  },
+  "dependencies": {
+    "jquery": "latest",
+    "requirejs": "latest",
+    "pouchdb": "latest",
+    "pouchdb-authentication": "sapk/pouchdb-authentication",
+    "vue": "v1.0.16",
+    "vue-router": "latest",
+    "material-design-lite": "latest",
+    "material-design-icons": "latest",
+    "dialog-polyfill": "latest",
+    "requirejs-promise": "latest",
+    "moment": "^2.12.0"
+  },
+  "install": {
+    "path": "www/assets/lib",
+    "sources": {
+      "jquery": "bower_components/jquery/dist/jquery.min.js",
+      "pouchdb": "bower_components/pouchdb/dist/pouchdb.min.js",
+      "pouchdb-authentication": "bower_components/pouchdb-authentication/dist/pouchdb.authentication.min.js",
+      "vue": "bower_components/vue/dist/vue.min.js",
+      "vue-router": "bower_components/vue-router/dist/vue-router.min.js",
+      "requirejs": "bower_components/requirejs/require.js",
+      "material-design-icons": [
+        "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.ttf",
+        "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.woff",
+        "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.woff2"
+      ],
+      "moment": [
+        "bower_components/moment/min/moment.min.js",
+        "bower_components/moment/min/locales.min.js"
+      ],
+      "requirejs-promise": "bower_components/requirejs-promise/requirejs-promise.js"
+    }
+  },
+  "private": true
 }
