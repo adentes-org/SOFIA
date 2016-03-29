@@ -1,7 +1,7 @@
 <div class="fiche-view">
   <div class="info mdl-grid mdl-grid--no-spacing {{fiche.closed ? 'close':'open'}} {{fiche.deleted ? 'del':' '}}"  v-on:click.prevent="showUpdateInformation">
     <div class="mdl-cell" style="width:60%; padding: 10px 20px;">
-      <p>Née le : {{fiche.patient.birthdate}}</p>
+      <p>Née le : {{fiche.patient.birthdate}} ({{_patient_age}})</p>
       <p>Sexe : {{fiche.patient.gender}}</p>
       <p>Origine : {{fiche.origin}}</p>
       <p>Equipe resp. : {{fiche.owner_id}} <span v-if="fiche.owner_id == user.name">(Vous)</span></p>
