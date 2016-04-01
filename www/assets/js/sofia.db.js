@@ -244,6 +244,9 @@ S.db.fiches = {
           ret.fiches[ret.fiches.length] = value.doc;
           value.doc.last_update = value.doc.events[value.doc.events.length -1].timestamp
           value.doc.last_update_since = moment(value.doc.last_update).fromNow();
+          var d = moment(value.doc.patient.birthdate);
+          value.doc.patient.age = moment().diff(d, 'years')
+          value.doc.patient.age_formatted = d.fromNow(true)
           if(value.doc.owner_id === S.user._current.name){
             ret.my_fiches[ret.my_fiches.length] = value.doc;
           }

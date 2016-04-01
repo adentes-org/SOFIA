@@ -1,15 +1,16 @@
 <section v-if="!f.deleted || u.isAdmin()" class="section--center mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--12-col-phone mdl-shadow--2dp">
     <a class="fiche patient" href="#!/fiche/{{f._id}}">
-        <div class="mdl-card {{f.closed  ? 'close' : 'open'}} {{f.deleted ? 'del':' '}}" >
+        <div class="mdl-card {{f.closed  ? 'close' : 'open'}} {{f.deleted ? 'del':' '}}" data-patient-age="{{f.patient.age}}" >
             <div class="mdl-card__title">
                 <h4>{{ f.patient.firstname }} {{ f.patient.lastname }}</h4>
             </div>
             <div class="mdl-card__supporting-text">
-                <span class="gender">{{f.patient.gender}}</span> <span class="birthdate">{{f.patient.birthdate}}</span>
+                <span class="gender">{{f.patient.gender}} ({{f.patient.age_formatted}})</span>
+                <span class="birthdate">{{f.patient.birthdate}}</span>
                 <br>
                 <span>{{f.pathologys | json}}<span>
             </div>
-            <span class="timestamp">{{ f.last_update_since }}</span> 
+            <span class="timestamp">{{ f.last_update_since }}</span>
         </div>
     </a>
 </section>
