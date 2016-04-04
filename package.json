@@ -33,14 +33,14 @@
   },
   "devDependencies": {
     "bower-installer": "~1.2.0",
-    "cordova": "~6.0.0",
+    "cordova": "^6.1.1",
     "del": "~2.2.0",
     "gulp": "~3.9.0",
     "gulp-cordova": "~6.0.0",
     "gulp-less": "~3.0.5",
+    "gulp-sourcemaps": "~1.6.0",
     "less-plugin-autoprefix": "~1.5.1",
-    "less-plugin-clean-css": "~1.5.1",
-    "gulp-sourcemaps": "~1.6.0"
+    "less-plugin-clean-css": "~1.5.1"
   },
   "cordova": [
     [
