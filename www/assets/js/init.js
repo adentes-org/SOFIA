@@ -17,7 +17,10 @@ requirejs.config({
         "pouchdb-authentication": 'lib/pouchdb-authentication/pouchdb.authentication.min',
         vue: 'lib/vue/vue.min',
         "vue-router": 'lib/vue-router/vue-router.min',
+        /* "vue-i18n": 'lib/vue-i18n-plugin/vue-i18n.min', */
+        /* "vue-format": "lib/vue-format/vue-format", */
         promise: 'lib/requirejs-promise/requirejs-promise',
+        i18n: 'lib/requirejs-i18n/i18n',
         moment: 'lib/moment/moment.min',
         "moment-locales": 'lib/moment/locales.min'
                 /*
@@ -36,13 +39,20 @@ requirejs.config({
         pouchdb: {
             exports: 'PouchDB'
         }
+    },
+    config: {
+        //Set the config for the i18n
+        //module ID
+        i18n: {
+            locale: localStorage["sofia-language"] || navigator.language || navigator.userLanguage || 'en'
+        }
     }
 });
-
 //var base = ;
 //base.unshift();
 S.init = function(cordova){
   requirejs(['jquery', 'vue', 'vue-router', 'pouchdb', 'moment', 'moment-locales', 'app/sofia.polyfill'], function ($, Vue, VueRouter, PouchDB, moment) {
+       // Set plugin
       Vue.use(VueRouter);
       window.PouchDB = PouchDB; //Force PouchDB to DOM
       console.log(PouchDB);
@@ -54,7 +64,11 @@ S.init = function(cordova){
           $("head").append('<link rel="stylesheet" type="text/css" href="assets/platform/' + cordova.platformId + '/css/style.css">');
           requirejs(['platform/' + cordova.platformId + '/init', 'app/sofia.db'], function () {
               requirejs(['app/sofia.vue', 'app/sofia.data', 'app/sofia.user', 'app/sofia.app'], function () {
-                  window.setTimeout(S.app.initialize,250); // Add time if all not already loadede for safety
+                  requirejs(['i18n!app/nls/base'], function (lang) {
+                    console.log(lang);
+                    S.lang = lang;
+                    window.setTimeout(S.app.initialize,250); // Add time if all not already loaded for safety
+                  });
               });
           });
       });

@@ -22,7 +22,7 @@ S.data = {
                       ret = {
                         fiche:doc,
                         user:S.user._current,
-                        history: [], //TODO (Will be build after because not at first and require data)
+                        history: [],
                         config : S.config.fiche
                       };
                       console.log(ret);
@@ -422,11 +422,12 @@ S.data = {
               data: function () {
                   var ret = {
                     user : S.user._current,
+                    lang : S.lang,
                     askFor : []
                   }
                   console.log(ret);
                   $.each(S.config.local["ask-for"],function(id,value){
-                    ret.askFor.push({"id":id,"value":value,"lang":id});
+                    ret.askFor.push({"id":id,"value":value,"lang":S.lang[id] || id});
                   });
                   console.log(ret);
                   return ret;
@@ -438,12 +439,6 @@ S.data = {
                 S.config.local["ask-for"][$(event.srcElement).attr("name")] = $(event.srcElement).is(':checked');
                 localStorage["sofia-local-config"] = JSON.stringify(S.config.local)
               },
-              /*
-              resetLocalConfig: function(){
-                delete localStorage['sofia-local-config'];
-                window.location.reload();
-              },
-              */
               resetCredConfig: function(){
                 S.user.reset();
                 window.location.reload();
@@ -451,6 +446,17 @@ S.data = {
               resetServerConfig: function(){
                 delete localStorage['sofia-server-config'];
                 window.location.reload();
+              },
+              showLangModal : function() {
+                S.tool.getDialog("#choose-lang-dialog").showModal();
+              },
+              changeLanguage: function (event) {
+                var lang = $.trim($(event.srcElement).attr("data-id"));
+                //localStorage["sofia-language"] = lang;
+                S.tool.getDialog("#choose-lang-dialog").close();
+
+                //Reload app //HERE
+                //window.location.reload();
               }
             },
         },

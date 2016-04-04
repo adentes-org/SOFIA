@@ -16,6 +16,8 @@
   "dependencies": {
     "jquery": "latest",
     "requirejs": "latest",
+    "requirejs-promise": "latest",
+    "requirejs-i18n": "latest",
     "pouchdb": "latest",
     "pouchdb-authentication": "sapk/pouchdb-authentication",
     "vue": "v1.0.16",
@@ -23,7 +25,6 @@
     "material-design-lite": "latest",
     "material-design-icons": "latest",
     "dialog-polyfill": "latest",
-    "requirejs-promise": "latest",
     "moment": "^2.12.0"
   },
   "install": {
@@ -35,6 +36,8 @@
       "vue": "bower_components/vue/dist/vue.min.js",
       "vue-router": "bower_components/vue-router/dist/vue-router.min.js",
       "requirejs": "bower_components/requirejs/require.js",
+      "requirejs-promise": "bower_components/requirejs-promise/requirejs-promise.js",
+      "requirejs-i18n": "bower_components/requirejs-i18n/i18n.js",
       "material-design-icons": [
         "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.ttf",
         "bower_components/material-design-icons/iconfont/MaterialIcons-Regular.woff",
@@ -43,8 +46,7 @@
       "moment": [
         "bower_components/moment/min/moment.min.js",
         "bower_components/moment/min/locales.min.js"
-      ],
-      "requirejs-promise": "bower_components/requirejs-promise/requirejs-promise.js"
+      ]
     }
   },
   "private": true
