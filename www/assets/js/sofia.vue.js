@@ -32,7 +32,6 @@ S.vue = {
             },
             computed: {
               displayedTitle: function () {
-                console.log("Update displayedTitle : ",this.options.titleInSearch, this.searchbox.length, this.options.title)
                 return ( this.options.titleInSearch !== "" && this.searchbox.length>0 ) ? this.options.titleInSearch : this.options.title;
               }
             }
@@ -56,7 +55,12 @@ S.vue = {
                     methods: S.data.pages[i] && S.data.pages[i].methods || null, //We load methods part if set
                     route: S.data.pages[i] && S.data.pages[i].route || null //We load route part if set
                 });
-                S.vue.map["/" + i] = {url: "/" + i, name: S.tool.capitalizeFirstLetter(i), component: S.vue.el.pages[i], options: (S.data.pages[i] && S.data.pages[i].options || {})};
+                S.vue.map["/" + i] = {url: "/" + i, name: (S.lang[i] || i).capitalize(), component: S.vue.el.pages[i], options: (S.data.pages[i] && S.data.pages[i].options || {})};
+/*
+                if(S.vue.map["/" + i].options.title && S.lang[S.vue.map["/" + i].options.title]){
+                  S.vue.map["/" + i].options.title = S.lang[S.vue.map["/" + i].options.title].capitalize();
+                }
+*/
             }
         }
         //console.log(S.vue.map);

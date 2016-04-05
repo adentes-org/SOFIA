@@ -1,6 +1,6 @@
 define({
     options : {
-        title: "Configuration",
+        title: S.lang["settings"].capitalize(),
         displayQuickAddButton : false,
         displaySearchbox: false
     },
@@ -11,11 +11,9 @@ define({
             lang : S.lang,
             askFor : []
           }
-          console.log(ret);
           $.each(S.config.local["ask-for"],function(id,value){
             ret.askFor.push({"id":id,"value":value,"lang":S.lang.config[id] || id});
           });
-          console.log(ret);
           return ret;
       }
     },
@@ -38,11 +36,11 @@ define({
       },
       changeLanguage: function (event) {
         var lang = $.trim($(event.srcElement).attr("data-id"));
-        //localStorage["sofia-language"] = lang;
+        localStorage["sofia-language"] = lang;
+        console.log($(event.srcElement),$(event.srcElement).attr("data-id"), lang,localStorage["sofia-language"]);
         S.tool.getDialog("#choose-lang-dialog").close();
-
-        //Reload app //HERE
-        //window.location.reload();
+        //Reload app
+        window.location.reload();
       }
     },
 });

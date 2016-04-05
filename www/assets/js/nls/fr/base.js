@@ -2,7 +2,13 @@ define({
     "_current" : "fr",
     "user": "utilisateur",
     "username": "username",
-    config : {
+    "my-sheets": "mes fiches",
+    "search": "recherche",
+    "home" : "accueil",
+    "add" : "ajouter",
+    "memo" : "mémo",
+    "settings": "configuration",
+    "config" : {
       "take-validation": "Confirmation à la prise de ticket",
       "give-validation": "Confirmation au passage de ticket",
       "reopen-validation": "Confirmation à la réouverture de ticket",

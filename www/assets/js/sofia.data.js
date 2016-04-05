@@ -1,7 +1,7 @@
 /* global cordova */
 'use strict';
 var S = S || {};
-requirejs(['app/page/configuration'], function (objConfiguration) {
+requirejs(['app/page/home','app/page/configuration'], function (pHome,pConfig) {
   S.data = {
       pages: {
           "fiche/:fiche_id": {
@@ -412,7 +412,7 @@ requirejs(['app/page/configuration'], function (objConfiguration) {
                 }
               }
           },
-          configuration: objConfiguration,
+          configuration: pConfig,
           memo: {
               options : {
                   title: "Mémo",
@@ -425,24 +425,7 @@ requirejs(['app/page/configuration'], function (objConfiguration) {
                 }
               },
           },
-          home: {
-              options : {
-                  title: "Mes fiches",
-                  titleInSearch: "Recherche"
-              },
-              route: {
-                data: function () {
-                    return S.db.fiches.getAllWithMine()
-                    //TODO catch
-                }
-              },
-              data: function () {
-                return {
-                    fiches: [],
-                    my_fiches: []
-                };
-              }
-          }
+          home: pHome
       }
   };
 });

@@ -2,7 +2,13 @@ define({
     "_current" : "en",
     "user": "user",
     "username": "username",
-    config : {
+    "my-sheets": "my sheets",
+    "search": "search",
+    "home" : "home",
+    "add" : "add",
+    "memo" : "memo",
+    "settings": "settings",
+    "config" : {
       "take-validation": "Ask confirmation to take a ticket",
       "give-validation": "Ask confirmation to give a ticket",
       "reopen-validation": "Ask confirmation to re-open a ticket",

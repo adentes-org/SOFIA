@@ -51,7 +51,7 @@ requirejs.config({
 //var base = ;
 //base.unshift();
 S.init = function(cordova){
-  requirejs(['jquery', 'vue', 'vue-router', 'pouchdb', 'moment', 'moment-locales', 'app/sofia.polyfill'], function ($, Vue, VueRouter, PouchDB, moment) {
+  requirejs(['jquery','i18n!app/nls/base', 'vue', 'vue-router', 'pouchdb', 'moment', 'moment-locales', 'app/sofia.polyfill'], function ($,lang, Vue, VueRouter, PouchDB, moment) {
        // Set plugin
       Vue.use(VueRouter);
       window.PouchDB = PouchDB; //Force PouchDB to DOM
@@ -60,15 +60,12 @@ S.init = function(cordova){
       window.VueRouter = VueRouter; //Force VueRouter to DOM
       moment.locale(navigator.language);
       window.moment = moment; //Force moment to DOM
+      S.lang = lang; //Setup lang
       requirejs(['pouchdb-authentication', 'app/sofia.tool', 'app/sofia.template', 'app/sofia.config'], function () {
           $("head").append('<link rel="stylesheet" type="text/css" href="assets/platform/' + cordova.platformId + '/css/style.css">');
           requirejs(['platform/' + cordova.platformId + '/init', 'app/sofia.db'], function () {
               requirejs(['app/sofia.vue', 'app/sofia.data', 'app/sofia.user', 'app/sofia.app'], function () {
-                  requirejs(['i18n!app/nls/base'], function (lang) {
-                    console.log(lang);
-                    S.lang = lang;
-                    window.setTimeout(S.app.initialize,250); // Add time if all not already loaded for safety
-                  });
+                  window.setTimeout(S.app.initialize,250); // Add time if all not already loaded for safety
               });
           });
       });
