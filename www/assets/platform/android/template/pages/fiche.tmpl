@@ -1,17 +1,17 @@
 <div class="fiche-view">
   <div class="info mdl-grid mdl-grid--no-spacing {{fiche.closed ? 'close':'open'}} {{fiche.deleted ? 'del':' '}}"  v-on:click.prevent="showUpdateInformation">
     <div class="mdl-cell" style="width:60%; padding: 10px 20px;">
-      <p>Née le : {{fiche.patient.birthdate}} ({{_patient_age}})</p>
-      <p>Sexe : {{fiche.patient.gender}}</p>
-      <p>Origine : {{fiche.origin}}</p>
-      <p>Equipe resp. : {{fiche.owner_id}} <span v-if="fiche.owner_id == user.name">(Vous)</span></p>
+      <p>{{ lang.fiche.birthdate }} : {{fiche.patient.birthdate}} ({{_patient_age}})</p>
+      <p>{{ lang.fiche.sex }} : {{fiche.patient.gender}}</p>
+      <p>{{ lang.fiche.origin }} : {{ lang.fiche.origins[fiche.origin] || fiche.origin }}</p>
+      <p>{{ lang.fiche.team }} : {{fiche.owner_id}} <span v-if="fiche.owner_id == user.name">({{ lang.you }})</span></p>
     </div>
     <div class="mdl-cell" style="width:40%;">
       <h3>{{fiche.uid}}</h3>
     </div>
   </div>
   <template v-if="fiche.deleted == true">
-    <button v-on:click="undelete" class="deleting-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="user.isAdmin() == true">Annuler suppression</button>
+    <button v-on:click="undelete" class="deleting-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="user.isAdmin() == true">{{ lang.fiche['cancel-del'] | capitalize }}</button>
   </template>
   <template v-else>
     <button v-on:click="delete" class="deleting-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="user.isAdmin() == true">Supprimer</button>
@@ -23,16 +23,16 @@
   </template>
   <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
     <div class="mdl-tabs__tab-bar">
-        <a href="#affections-panel" class="mdl-tabs__tab is-active" >Affections</a>
-        <a href="#history-panel" class="mdl-tabs__tab" >Historique</a>
+        <a href="#affections-panel" class="mdl-tabs__tab is-active" >{{ lang.fiche.diseases | capitalize }}</a>
+        <a href="#history-panel" class="mdl-tabs__tab" >{{ lang.fiche.history | capitalize }}</a>
     </div>
     <div class="mdl-tabs__panel is-active" id="affections-panel">
       <ul class="mdl-list">
         <li class="mdl-list__item add-button">
-          <span v-on:click="showAddPathologyModal" class="mdl-list__item-primary-content">Ajouter +</span>
+          <span v-on:click="showAddPathologyModal" class="mdl-list__item-primary-content">{{ lang.add | capitalize }} +</span>
         </li>
         <li v-for="path in fiche.pathologys"  class="mdl-list__item">
-          <span class="mdl-list__item-primary-content">{{ path }}</span>
+          <span class="mdl-list__item-primary-content">{{ lang.fiche.pathologys[path] || path }}</span>
           <span class="mdl-list__item-secondary-action">
               <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-{{ path }}">
                 <input v-on:change="changePrimaryAffection" type="radio" id="option-{{ path }}" class="mdl-radio__button" name="primary-affection" value="{{ path }}" checked="{{ fiche.primaryAffection == path }}" />
@@ -84,7 +84,7 @@
           </div>
           <div class="mdl-dialog__actions">
               <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Valider" />
-              <button v-on:click="closeUpdateInformation" type="button" class="mdl-button close">Annuler</button>
+              <button v-on:click="closeUpdateInformation" type="button" class="mdl-button close">{{ lang.cancel | capitalize }}</button>
           </div>
         </form>
     </dialog>
@@ -106,31 +106,31 @@
         </div>
         <div class="mdl-dialog__actions">
             <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Valider" />
-            <button v-on:click="closeCloseModal" type="button" class="mdl-button close">Annuler</button>
+            <button v-on:click="closeCloseModal" type="button" class="mdl-button close">{{ lang.cancel | capitalize }}</button>
         </div>
       </form>
   </dialog>
   <dialog id="add-origin-dialog" class="mdl-dialog">
-      <h4 class="mdl-dialog__title">Ajouter l'origine de la fiche</h4>
+      <h4 class="mdl-dialog__title">{{ lang.fiche['add-origin'] }}</h4>
       <div class="mdl-dialog__content">
         <ul class="mdl-list">
           <li v-for="origin in config.origins"  class="mdl-list__item">
-            <span v-on:click="addOrigin" class="mdl-list__item-primary-content">{{ origin }}</span>
+            <span v-on:click="addOrigin" class="mdl-list__item-primary-content" data-id="{{ origin }}">{{ lang.fiche.origins[origin] || origin }}</span>
           </li>
         </ul>
       </div>
   </dialog>
   <dialog id="add-path-dialog" class="mdl-dialog">
-    <h4 class="mdl-dialog__title">Ajout d'une affection</h4>
+    <h4 class="mdl-dialog__title">{{ lang.fiche['add-path'] }}</h4>
     <div class="mdl-dialog__content">
       <ul class="mdl-list">
         <li v-on:click="addPathology" v-for="path in config.pathologys"  class="mdl-list__item">
-          <span class="mdl-list__item-primary-content">{{ path }}</span>
+          <span class="mdl-list__item-primary-content" data-id="{{ path }}" >{{ lang.fiche.pathologys[path] || path }}</span>
         </li>
       </ul>
     </div>
         <div class="mdl-dialog__actions">
-          <button v-on:click="closeAddPathologyModal" type="button" class="mdl-button close">Annuler</button>
+          <button v-on:click="closeAddPathologyModal" type="button" class="mdl-button close">{{ lang.cancel | capitalize }}</button>
         </div>
   </dialog>
 </div>

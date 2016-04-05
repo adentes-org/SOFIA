@@ -6,8 +6,13 @@ define({
     "search": "search",
     "home" : "home",
     "add" : "add",
+    "cancel" : "cancel",
     "memo" : "memo",
     "settings": "settings",
+    "fiche" : "ticket",
+    "you" : "You",
+    "ask-confirm" : "Are you sure to choose",
+    "to" : "to",
     "config" : {
       "take-validation": "Ask confirmation to take a ticket",
       "give-validation": "Ask confirmation to give a ticket",
@@ -20,5 +25,45 @@ define({
       "resetCredConfig" : "Reset Credential",
       "resetServerConfig" : "Reset Server Config",
       "choose-lang" : "Choose a language"
+    },
+    "log" : {
+      "add-path" : "add the disease",
+      "set-origin" : "set origin to",
+      "change-primary" : "set primary disease from"
+    },
+    "fiche" : {
+      "birthdate" : "Birthdate",
+      "sex" : "Sex",
+      "origin" : "Origin",
+      "team" : "Team",
+      "history" : "history",
+      "diseases" : "diseases",
+      "add-path" : "Add a disease",
+      "add-origin" : "Add origin to ticket",
+      "cancel-del" : "cancel deletion",
+      "pathologys" : {
+        "unconscious" : "Unconscious",
+        "cardio-respiratory-stop" : "Cardio Respiratory Stop",
+        "little-care" : "Little Care",
+        "bleeding" : "Bleeding",
+        "difficulty-breathing" : "Difficulty Breathing",
+        "malaise" : "Malaise",
+        "trauma" : "Trauma",
+        "medical-consultation" : "Medical Consultation",
+      },
+      "origins" : {
+        "spontaneous" : "Spontaneous",
+        "stretcher" : "Stretcher",
+        "vpsp" : "VPSP",
+        "with-witness" : "With witness",
+        "with-security" : "With security",
+      },
+      "outputs" : {
+        "left-in-place" :"Left in place",
+        "simple" : "Simple",
+        "monitoring-and-single-output" : "Monitoring and single output",
+        "firemen-evacuation" : "Firemen evacuation",
+        "evacuation" : "Evacuation",
+      }
     }
 });

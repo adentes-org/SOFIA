@@ -35,12 +35,9 @@ define({
         S.tool.getDialog("#choose-lang-dialog").showModal();
       },
       changeLanguage: function (event) {
-        var lang = $.trim($(event.srcElement).attr("data-id"));
-        localStorage["sofia-language"] = lang;
-        console.log($(event.srcElement),$(event.srcElement).attr("data-id"), lang,localStorage["sofia-language"]);
+        localStorage["sofia-language"] = $.trim($(event.srcElement).attr("data-id"));
         S.tool.getDialog("#choose-lang-dialog").close();
-        //Reload app
-        window.location.reload();
+        window.location.reload();        //Reload app
       }
     },
 });

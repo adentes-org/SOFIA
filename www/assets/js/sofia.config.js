@@ -12,28 +12,28 @@ S.config = {
   },
   fiche : {
     pathologys : [
-      "Inconscient",
-      "Arret Cardio Respiratoire",
-      "Petit soin",
-      "Hémorragie",
-      "Difficulté respiratoire",
-      "Malaise",
-      "Traumatologie",
-      "Consultation médicale",
+      "unconscious",
+      "cardio-respiratory-stop",
+      "little-care",
+      "bleeding",
+      "difficulty-breathing",
+      "malaise",
+      "trauma",
+      "medical-consultation",
     ],
     origins : [
-        "Spontané",
-        "Brancardé",
-        "VPSP",
-        "Avec témoin",
-        "Avec sécurité",
+      "spontaneous",
+      "stretcher",
+      "vpsp",
+      "with-witness",
+      "with-security",
     ],
     outputs : [
-        "Laissé sur place",
-        "Simple",
-        "Surveillance et sortie simple",
-        "Evacuation Sapeurs-Pompiers",
-        "Evacuation",
+      "left-in-place",
+      "simple",
+      "monitoring-and-single-output",
+      "firemen-evacuation",
+      "evacuation",
     ]
   },
   local : { /* default */
@@ -53,6 +53,4 @@ S.config = {
 $.extend(true, S.config.user, (typeof localStorage["sofia-user-config"] === "string") ? JSON.parse(localStorage["sofia-user-config"]) : null);
 $.extend(true, S.config.db, (typeof localStorage["sofia-server-config"] === "string") ? JSON.parse(localStorage["sofia-server-config"]) : null);
 $.extend(true, S.config.local, (typeof localStorage["sofia-local-config"] === "string") ? JSON.parse(localStorage["sofia-local-config"]) : null);
-//S.config.local = (typeof localStorage["sofia-local-config"] === "string") ? JSON.parse(localStorage["sofia-local-config"]) : _defaultConfig;
-//TODO permit to reset
 //TODO check if all config is ok

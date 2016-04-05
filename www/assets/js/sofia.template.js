@@ -14,7 +14,7 @@ S.template = {
         _login: "",
         memo: "{{{ memo }}}",
         "fiche/:fiche_id":  "{{ fiche | json }}",
-        configuration : "{{ S.config | json }}"
+        settings : "{{ S.config | json }}"
     },
     header: function () {},
     menu: function () {}
