@@ -6,7 +6,7 @@
     {{ lang._list[lang._current] | capitalize }}
   </button>
       <dialog id="choose-lang-dialog" class="mdl-dialog">
-        <h4 class="mdl-dialog__title">{{ lang.choose_lang | capitalize }}</h4>
+        <h4 class="mdl-dialog__title">{{ lang.config.choose-lang | capitalize }}</h4>
         <div class="mdl-dialog__content">
           <ul class="mdl-list">
             <li v-on:click="changeLanguage" v-for="(id, la)  in lang._list"  class="mdl-list__item">
@@ -26,9 +26,9 @@
     </div>
   </div>
   <button v-on:click="resetCredConfig" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-    {{ lang.resetCredConfig | uppercase }}
+    {{ lang.config.resetCredConfig | uppercase }}
   </button>
   <button v-on:click="resetServerConfig" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-    {{ lang.resetServerConfig | uppercase }}
+    {{ lang.config.resetServerConfig | uppercase }}
   </button>
 </div>
