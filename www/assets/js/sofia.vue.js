@@ -65,6 +65,7 @@ S.vue = {
                     headerOptions: {
                         "title": "",
                         "display": true,
+                        "backColor"  : S.config.header.backColorOffline, /* @Start of offline */
                         "displayLoadingBar" : false,
                         "displaySearchbox": true,
                         "onHeaderClick": null

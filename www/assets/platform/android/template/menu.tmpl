@@ -1,7 +1,7 @@
 <div class="mdl-layout__drawer" id="menu">
-    <span class="mdl-layout-title" id="menu-title">sofia - {{current}}</span>
+    <span class="mdl-layout-title" id="menu-title">SOFIA - {{current}}</span>
     <nav class="mdl-navigation">
-        <template v-for="link in links | filterBy isMenuEntry"> 
+        <template v-for="link in links | filterBy isMenuEntry">
             <a class="mdl-navigation__link"  href="#!{{link.url}}" link="{path : \'{{link.url}}\'}" >{{ link.name }}</a>
         </template>
     </nav>

@@ -1,4 +1,4 @@
-<header class="mdl-layout__header" v-show="options.display">
+<header class="mdl-layout__header" v-show="options.display" style="background-color: {{ options.backColor }};">
     <div class="mdl-layout__header-row">
         <h3 v-on:click.prevent="onHeaderClick">{{ displayedTitle }}</h3>
         <div class="mdl-layout-spacer"></div>

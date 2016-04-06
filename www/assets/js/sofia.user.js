@@ -38,7 +38,7 @@ S.user = {
             return (typeof S.user._current.name !== "undefined" && (S.user._current.name !== null || S.user._current.roles[0] === "_admin" ) ) ;
         },
         isAdmin : function(){
-            console.log("isAdmin ? ", S.user._current.isLogged && ($.inArray("_admin", S.user._current.roles)!==-1 || $.inArray("sofia-admin", S.user._current.roles)!==-1));
+            //console.log("isAdmin ? ", S.user._current.isLogged && ($.inArray("_admin", S.user._current.roles)!==-1 || $.inArray("sofia-admin", S.user._current.roles)!==-1));
             return S.user._current.isLogged && ($.inArray("_admin", S.user._current.roles)!==-1 || $.inArray("sofia-admin", S.user._current.roles)!==-1);
         }
     },

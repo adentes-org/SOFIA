@@ -8,7 +8,12 @@ S.config = {
   },
   db : {
     url : "",
-    name : ""
+    name : "",
+  },
+  header : {
+    backColor : "#3f51b5",
+    backColorOffline : "#999",
+    timeoutOffline : "45" /* Number of seconds without info to be consider offline*/
   },
   fiche : {
     pathologys : [

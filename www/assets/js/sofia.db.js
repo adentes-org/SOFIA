@@ -52,7 +52,6 @@ S.db.users = {
     S.db.remoteDB.login(user, pass, function (err, response) {
       if (err) {
         console.log(err);
-        //TODO support timeout
         if(!silent){
           alert(err.message);
         }
@@ -94,13 +93,15 @@ S.db.users = {
 };
 */
 S.db.fiches = {
+  changeToParse : 0,
   parseSync : function(info) {
           console.log("Parsing sync : ", info);
 
           S.vue.router.app.$children[0].$data.options.displayLoadingBar = false;
 
-          console.log("Pause matching page : ",window.location.hash.slice(3).split("/")[0]);
+          console.log("Currently shown page : ",window.location.hash.slice(3).split("/")[0]);
           //switch($(S.vue.router.app.$children[1].$el).attr("id")){
+          //TODO detect if refresh needed base on the element refresh and the one being displayed
           switch(window.location.hash.slice(3).split("/")[0]){
               case "memo" :
                         S.db.config.getMemo().then(function(data){
@@ -127,36 +128,57 @@ S.db.fiches = {
                         });
                       break;
               default :
-                        //TODO not working
-                          S.vue.router.replace(window.location.hash.slice(2)); //TODO better reload data not page
+                        S.vue.router.replace(window.location.hash.slice(2)); //TODO better reload data not page
                         break;
           }
+          if(S.db.fiches.changeToParse>0)
+            S.db.fiches.changeToParse--;
+  },
+  watch : function(sync) {
+    sync.on('change', function (change) {
+      S.db.fiches.changeToParse++;
+      console.log("Pouchdb.sync.change event",change,Date());// yo, something changed!
+    }).on('paused', function (info) {
+      // replication was paused, usually because of a lost connection or end of transmission
+      console.log("Pouchdb.sync.paused event",info,Date());
+      //We jsut receive data from server so wa are online
+        if(S.vue.router.app.$children[0].$data.options.backColor !== S.config.header.backColor){
+          //The header is display not as online
+          console.log("Setting header color to online")
+          S.vue.router.app.$children[0].$data.options.backColor = S.config.header.backColor;
+        } else {
+          //The header is display as online
+          if(S.db.fiches.offlineTimeout){
+            console.log("Clearing offline timeout")
+            window.clearTimeout(S.db.fiches.offlineTimeout)
+          }
+          //We are changing the color if in the n second swe did'nt comme back here
+          S.db.fiches.offlineTimeout = window.setTimeout("console.log('Setting header color to offline');S.vue.router.app.$children[0].$data.options.backColor = S.config.header.backColorOffline;",S.config.header.timeoutOffline*1000);
+        }
+        if(S.db.fiches.changeToParse>0 || S.vue.router.app.$children[0].$data.options.displayLoadingBar)
+          S.db.fiches.parseSync(info);
+    }).on('active', function (info) {
+      console.log("Pouchdb.sync.active event",info,Date());
+      // replication was resumed
+      S.vue.router.app.$children[0].$data.options.displayLoadingBar = true;
+    }).on('error', function (err) {
+      console.log("Pouchdb.sync.error event",err,Date());
+      // totally unhandled error (shouldn't happen)
+    }).on('complete', function (info) {
+      console.log("Pouchdb.sync.complete event",info,Date());
+      // replication was canceled!
+      S.db.fiches.watch(S.db.localDB.sync(S.db.remoteDB, {
+        live: true,
+        retry: true
+      })); //Reload Sync
+    });
   },
   startSync : function() {
-
               console.log("Starting sync ...");
-              S.db.localDB.sync(S.db.remoteDB, {
+              S.db.fiches.watch(S.db.localDB.sync(S.db.remoteDB, {
                 live: true,
                 retry: true
-              }).on('change', function (change) {
-                console.log("Pouchdb.sync.change event",change);
-                // yo, something changed!
-              }).on('paused', function (info) {
-                console.log("Pouchdb.sync.paused event",info);
-                // replication was paused, usually because of a lost connection or end of transmission
-                S.db.fiches.parseSync(info);
-                //S.vue.router.replace(window.location.hash.slice(2)); //TODO better reload data not page
-              }).on('active', function (info) {
-                console.log("Pouchdb.sync.active event",info);
-                // replication was resumed
-                S.vue.router.app.$children[0].$data.options.displayLoadingBar = true;
-              }).on('error', function (err) {
-                console.log("Pouchdb.sync.error event",err);
-                // totally unhandled error (shouldn't happen)
-              }).on('complete', function (info) {
-                console.log("Pouchdb.sync.complete event",info);
-                // replication was canceled!
-              });
+              }));
               console.log("Sync in place !");
   },
   post : function(obj) { //Create
