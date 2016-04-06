@@ -40,7 +40,7 @@ define({
       "add-path" : "ajoute l'affection",
       "set-origin" : "définit l'origine à",
       "change-primary" : "change l'affection principale de",
-      "reopen-fiche" "ré-ouvre la fiche",
+      "reopen-fiche" : "ré-ouvre la fiche",
       "cancel-del": "annule la suppression de la fiche",
       "del-fiche" : "supprime la fiche",
       "close-fiche" : "ferme la fiche",

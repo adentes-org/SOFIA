@@ -9,7 +9,7 @@
         <h4 class="mdl-dialog__title">{{ lang.config['choose-lang'] | capitalize }}</h4>
         <div class="mdl-dialog__content">
           <ul class="mdl-list">
-            <li v-on:click="changeLanguage" v-for="(id, la)  in lang._list"  class="mdl-list__item">
+            <li v-on:click="changeLanguage" v-for="(id, la)  in lang._list"  class="mdl-list__item" data-id="{{ id }}">
               <span class="mdl-list__item-primary-content" data-id="{{ id }}">{{ la }}</span>
             </li>
           </ul>

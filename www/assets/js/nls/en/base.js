@@ -41,7 +41,7 @@ define({
       "add-path" : "add the disease",
       "set-origin" : "set origin to",
       "change-primary" : "set primary disease from",
-      "reopen-fiche" "re-open ticket",
+      "reopen-fiche" : "re-open ticket",
       "cancel-del": "cancel deletion of ticket",
       "del-fiche" : "delete ticket",
       "close-fiche" : "close ticket",
