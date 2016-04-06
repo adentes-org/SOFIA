@@ -11,17 +11,10 @@ var req_limit = 1000000;
 PouchDB.debug.disable();
 /**** ***** ****/
 
-//S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name.replace(/^\/+/, '')
-//S.config.db._user_url = S.config.db.url.replace(/\/+$/, '')+"/"+"_users"
-
-//TODO use a local that replcaite to S.config.db._full_url for offline function
-//S.db = new PouchDB(S.config.db._full_url, {skipSetup: true});
-
 S.db = {
   /*"localDB" : new PouchDB("local-"+S.config.db.name.replace(/^\/+/, '')), */
   /*"remoteDB" : new PouchDB(S.config.db._full_url, {skipSetup: true}), */
   setUrl : function(dbConfig) {
-    //TODO backup in localstorage
     S.config.db = dbConfig; //TODO check
     localStorage["sofia-server-config"] = JSON.stringify(S.config.db);
     S.config.db._full_url = S.config.db.url.replace(/\/+$/, '')+"/"+S.config.db.name.replace(/^\/+/, '');
@@ -65,7 +58,6 @@ S.db.users = {
         }
         deferred.reject(err);
       }else{
-        //console.log(response);
         if(response.ok) {
           //We are logged in
           console.log("We are logged in !", response);
@@ -196,82 +188,29 @@ S.db.fiches = {
     return deferred.promise();
 
   },
-  getMine : function() {
-    var deferred = new $.Deferred()
-    //TODO don't use query too slow no local calc
-    //TODO use the loogeged id
-    S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
-      // handle result
-      var ret = {
-          fiches: []
+  filterMine : function(fiches) {
+    var my_fiches = [];
+    $.each(fiches, function( index, doc ) {
+      if(doc.owner_id === S.user._current.name){
+        my_fiches[my_fiches.length] = doc;
       }
-      $.each(result.rows, function( index, value ) {
-        if(value.doc["_id"].split("/")[0] === "_design" ){
-          return; //If it's a design doc
-        }
-
-        if(value.doc.owner_id === S.user._current.name){
-          ret.fiches[ret.fiches.length] = value.doc;
-        }
-      });
-      //console.log(ret);
-      deferred.resolve(ret);
-    }).catch(function (err) {
-      // handle err
-      console.log(err);
-      deferred.reject(err);
     });
-
-    return deferred.promise();
-
-
+    return my_fiches;
   },
   getAllWithMine : function() {
       var deferred = new $.Deferred()
-      S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
-        // handle result
-        var ret = {
-            user : S.user._current,
-            fiches: [],
-            my_fiches: []
-        }
-        $.each(result.rows, function( index, value ) {
-          if(value.doc["_id"].split("/")[0] === "_design" ){
-            return; //If it's a design doc
-          }
-          ret.fiches[ret.fiches.length] = value.doc;
-          value.doc.last_update = value.doc.events[value.doc.events.length -1].timestamp
-          value.doc.last_update_since = moment(value.doc.last_update).fromNow();
-          var d = moment(value.doc.patient.birthdate);
-          value.doc.patient.age = moment().diff(d, 'years')
-          value.doc.patient.age_formatted = d.fromNow(true)
-          if(value.doc.owner_id === S.user._current.name){
-            ret.my_fiches[ret.my_fiches.length] = value.doc;
-          }
-        });
-        ret.lang =  S.lang;
-        console.log(ret);
-        deferred.resolve(ret);
-      }).catch(function (err) {
-        // handle err
-        console.log(err);
-        deferred.reject(err);
+      S.db.fiches.getAll().then(function(result){
+        result.my_fiches = S.db.fiches.filterMine(result.fiches);
+        deferred.resolve(result);
       });
-
       return deferred.promise();
-
-
     },
   getAll : function() {
-    //TODO manage paginataion
-    //S.db.allDocs({skip:0,limit:100000});
     var deferred = new $.Deferred()
-    //deferred.reject("No network !");
-    //deferred.resolve(response.userCtx);
     S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
       // handle result
-
       var ret = {
+          user : S.user._current,
           fiches: []
       }
       $.each(result.rows, function( index, value ) {
@@ -279,19 +218,22 @@ S.db.fiches = {
           return; //If it's a design doc
         }
         ret.fiches[ret.fiches.length] = value.doc;
+        value.doc.last_update = value.doc.events[value.doc.events.length -1].timestamp
+        value.doc.last_update_since = moment(value.doc.last_update).fromNow();
+        var d = moment(value.doc.patient.birthdate);
+        value.doc.patient.age = moment().diff(d, 'years')
+        value.doc.patient.age_formatted = d.fromNow(true)
       });
+      ret.lang =  S.lang;
       deferred.resolve(ret);
     }).catch(function (err) {
       // handle err
       console.log(err);
       deferred.reject(err);
     });
-
     return deferred.promise();
-
   },
-  //TODO use startkey for get all the team fiches?
-
+  //TODO maybe use startkey for get all the team fiches?
   getMyCreationCount : function (){
     var deferred = new $.Deferred()
 
@@ -315,27 +257,4 @@ S.db.fiches = {
 
     return deferred.promise();
   },
-  /* Not in use anymore
-  getCount : function (){
-    var deferred = new $.Deferred()
-    S.db.localDB.info().then(function (result) {
-      // handle result
-      deferred.resolve(result.doc_count);
-    }).catch(function (err) {
-      console.log(err);
-      deferred.reject(err);
-    });
-    return deferred.promise();
-  },
-  getChanges : function (id){
-    //TODO not working
-    //TODO  support array of ids
-    return S.db.localDB.changes({
-      since: 0,
-      include_docs: true,
-      style: 'all_docs', limit: 100,
-      doc_ids: [id]
-    })
-  }
-  */
 }

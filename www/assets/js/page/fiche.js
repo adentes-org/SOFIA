@@ -12,7 +12,6 @@ define({
             S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
               console.log(doc);
               S.vue.router.app.$children[0].$data.options.title = doc.patient.firstname +" "+ doc.patient.lastname;
-              //doc.patient.age = moment(doc.patient.birthdate).fromNow(true)
               ret = {
                 fiche:doc,
                 user:S.user._current,
