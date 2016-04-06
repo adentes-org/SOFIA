@@ -2,6 +2,8 @@ define({
     "_current" : "en",
     "user": "user",
     "username": "username",
+    "firstname": "firstname",
+    "lastname": "lastname",
     "my-sheets": "my sheets",
     "search": "search",
     "home" : "home",
@@ -11,8 +13,17 @@ define({
     "settings": "settings",
     "fiche" : "ticket",
     "you" : "You",
-    "ask-confirm" : "Are you sure to choose",
+    "take" : "take",
+    "close" : "close",
+    "send" : "send",
+    "delete" : "delete",
+    "confirm" : "confirm",
+    "reopen": "re-open",
+    "ask-confirm" : "Are you sure",
+    "ask-confirm-choice" : "Are you sure to choose",
     "to" : "to",
+    "the" : "the",
+    "at" : "at",
     "config" : {
       "take-validation": "Ask confirmation to take a ticket",
       "give-validation": "Ask confirmation to give a ticket",
@@ -29,10 +40,18 @@ define({
     "log" : {
       "add-path" : "add the disease",
       "set-origin" : "set origin to",
-      "change-primary" : "set primary disease from"
+      "change-primary" : "set primary disease from",
+      "reopen-fiche" "re-open ticket",
+      "cancel-del": "cancel deletion of ticket",
+      "del-fiche" : "delete ticket",
+      "close-fiche" : "close ticket",
+      "take-fiche-from" : "take ticket from",
+      "give-fiche-to" : "give ticket to",
+      "old-prop" : "old owner"
     },
     "fiche" : {
       "birthdate" : "Birthdate",
+      "birthdate-error-mess" : "Please enter a valid date",
       "sex" : "Sex",
       "origin" : "Origin",
       "team" : "Team",
@@ -40,7 +59,14 @@ define({
       "diseases" : "diseases",
       "add-path" : "Add a disease",
       "add-origin" : "Add origin to ticket",
+      "update-information" : "Update informations",
+      "please-enter-informations" : "Please fill in those informations",
+      "seen-by-doctor" : "Seen by doctor",
       "cancel-del" : "cancel deletion",
+      "gender" : {
+        "female" : "female",
+        "male" : "male"
+      },
       "pathologys" : {
         "unconscious" : "Unconscious",
         "cardio-respiratory-stop" : "Cardio Respiratory Stop",

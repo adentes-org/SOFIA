@@ -2,9 +2,9 @@
   <div class="info mdl-grid mdl-grid--no-spacing {{fiche.closed ? 'close':'open'}} {{fiche.deleted ? 'del':' '}}"  v-on:click.prevent="showUpdateInformation">
     <div class="mdl-cell" style="width:60%; padding: 10px 20px;">
       <p>{{ lang.fiche.birthdate }} : {{fiche.patient.birthdate}} ({{_patient_age}})</p>
-      <p>{{ lang.fiche.sex }} : {{fiche.patient.gender}}</p>
-      <p>{{ lang.fiche.origin }} : {{ lang.fiche.origins[fiche.origin] || fiche.origin }}</p>
-      <p>{{ lang.fiche.team }} : {{fiche.owner_id}} <span v-if="fiche.owner_id == user.name">({{ lang.you }})</span></p>
+      <p>{{ lang.fiche.sex }}    : {{ lang.fiche.gender[fiche.patient.gender] || fiche.patient.gender | capitalize }}</p>
+      <p>{{ lang.fiche.origin }} : {{ lang.fiche.origins[fiche.origin] || fiche.origin | capitalize }}</p>
+      <p>{{ lang.fiche.team }}   : {{fiche.owner_id}} <span v-if="fiche.owner_id == user.name">({{ lang.you }})</span></p>
     </div>
     <div class="mdl-cell" style="width:40%;">
       <h3>{{fiche.uid}}</h3>
@@ -14,12 +14,12 @@
     <button v-on:click="undelete" class="deleting-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="user.isAdmin() == true">{{ lang.fiche['cancel-del'] | capitalize }}</button>
   </template>
   <template v-else>
-    <button v-on:click="delete" class="deleting-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="user.isAdmin() == true">Supprimer</button>
-    <button v-on:click="give" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">Envoyer</button>
-    <button v-on:click="take" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>Prendre</button>
+    <button v-on:click="delete" class="deleting-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="user.isAdmin() == true">{{ lang.delete | capitalize }}</button>
+    <button v-on:click="give" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">{{ lang.send | capitalize }}</button>
+    <button v-on:click="take" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>{{ lang.take | capitalize }}</button>
 
-    <button v-on:click="reopen" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.closed == true">Ré-Ouvrir</button>
-    <button v-on:click="close" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>Fermer</button>
+    <button v-on:click="reopen" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.closed == true">{{ lang.reopen | capitalize }}</button>
+    <button v-on:click="close" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>{{ lang.close | capitalize }}</button>
   </template>
   <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
     <div class="mdl-tabs__tab-bar">
@@ -54,58 +54,58 @@
   </div>
 
     <dialog id="update-fiche-information-dialog" class="mdl-dialog">
-          <h4 class="mdl-dialog__title">Mise à jour des informations</h4>
+          <h4 class="mdl-dialog__title">{{ lang.fiche["update-information"] }}</h4>
            <form  action="#" v-on:submit.prevent="changeInformation">
-            <div class="mdl-dialog__content">
+             <div class="mdl-dialog__content">
                 <div class="mdl-textfield mdl-js-textfield">
                   <input class="mdl-textfield__input" type="text" id="lastname" v-model="fiche.patient.lastname" maxlength="1"/>
-                  <label class="mdl-textfield__label" for="lastname">Nom</label>
+                  <label class="mdl-textfield__label" for="lastname">{{ lang.lastname | capitalize }}</label>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield">
                   <input class="mdl-textfield__input" type="text" id="firstname" v-model="fiche.patient.firstname" />
-                  <label class="mdl-textfield__label" for="firstname">Prénom</label>
+                  <label class="mdl-textfield__label" for="firstname">{{ lang.firstname | capitalize }}</label>
                 </div>
                 <div>
                   <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-                    <input type="radio" id="option-1" class="mdl-radio__button" name="gender" v-model="fiche.patient.gender" value="Homme">
-                    <span class="mdl-radio__label">Homme</span>
+                    <input type="radio" id="option-1" class="mdl-radio__button" name="gender" v-model="fiche.patient.gender" value="male">
+                    <span class="mdl-radio__label">{{ lang.fiche.gender.male | capitalize }}</span>
                   </label>
                   <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-                    <input type="radio" id="option-2" class="mdl-radio__button" name="gender" v-model="fiche.patient.gender" value="Femme">
-                    <span class="mdl-radio__label">Femme</span>
+                    <input type="radio" id="option-2" class="mdl-radio__button" name="gender" v-model="fiche.patient.gender" value="female">
+                    <span class="mdl-radio__label">{{ lang.fiche.gender.female | capitalize }}</span>
                   </label>
                 </div>
                 <div class="mdl-textfield mdl-js-textfield">
                   <input class="mdl-textfield__input" type="date" id="birthdate" v-model="fiche.patient.birthdate" />
-                  <label class="mdl-textfield__label" for="birthdate">Date de naissance</label>
-                  <span class="mdl-textfield__error">Veuillez saisir une date valide</span>
+                  <label class="mdl-textfield__label" for="birthdate">{{ lang.fiche.birthdate }}</label>
+                  <span class="mdl-textfield__error">{{ lang.fiche["birthdate-error-mess"] }}</span>
                 </div>
               <br>
-          </div>
-          <div class="mdl-dialog__actions">
+            </div>
+            <div class="mdl-dialog__actions">
               <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Valider" />
               <button v-on:click="closeUpdateInformation" type="button" class="mdl-button close">{{ lang.cancel | capitalize }}</button>
-          </div>
+            </div>
         </form>
     </dialog>
   <dialog id="close-fiche-dialog" class="mdl-dialog">
-        <h4 class="mdl-dialog__title">Merci de saisir ces informations</h4>
+        <h4 class="mdl-dialog__title">{{ lang.fiche["please-enter-informations"] }}</h4>
          <form  action="#" v-on:submit.prevent="submitClose">
           <div class="mdl-dialog__content">
             <div class="mdl-textfield mdl-js-textfield">
               <select name="output">
-                <option v-for="output in config.outputs" >{{ output }}</option>
+                <option v-for="output in config.outputs" value="{{ output }}" >{{  lang.fiche.outputs[output] || output }}</option>
               </select>
             </div>
             <br>
             <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="seen-by-doctor">
               <input type="checkbox" id="seen-by-doctor" name="seen-by-doctor" class="mdl-checkbox__input">
-              <span class="mdl-checkbox__label">Vu par médecin</span>
+              <span class="mdl-checkbox__label">{{ lang.fiche["seen-by-doctor"] }}</span>
             </label>
             <br>
         </div>
         <div class="mdl-dialog__actions">
-            <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="Valider" />
+            <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="{{ lang.confirm | capitalize }}" />
             <button v-on:click="closeCloseModal" type="button" class="mdl-button close">{{ lang.cancel | capitalize }}</button>
         </div>
       </form>

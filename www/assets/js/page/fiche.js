@@ -1,6 +1,6 @@
 define({
     options: {
-        title: "Fiche",
+        title: "",
         displayQuickAddButton : false,
         displaySearchbox: false,
         onHeaderClick : function(){S.tool.getDialog("#update-fiche-information-dialog").showModal()}
@@ -56,7 +56,7 @@ define({
           });
       },
       changeInformation: function () {
-        var ask= (!S.config.local["ask-for"]["changeInformation-validation"] || confirm("Etes-vous sûr ?"));
+        var ask= (!S.config.local["ask-for"]["changeInformation-validation"] || confirm(S.lang["ask-confirm"]+" ?"));
         if(ask){
           console.log(this._data.fiche);
           this._data.fiche.events.push({
@@ -79,7 +79,7 @@ define({
         var newPrimaryID = $(event.srcElement).val();
         var oldPrimary = S.lang.fiche.pathologys[this._data.fiche.primaryAffection] || this._data.fiche.primaryAffection;
         var newPrimary = S.lang.fiche.pathologys[newPrimaryID] || newPrimaryID;
-        var ask= (!S.config.local["ask-for"]["changePrimaryAffection-validation"] || confirm(S.lang["ask-confirm"]+""+newPrimary+" ?"));
+        var ask= (!S.config.local["ask-for"]["changePrimaryAffection-validation"] || confirm(S.lang["ask-confirm-choice"]+""+newPrimary+" ?"));
         if(ask){
             console.log(this._data.fiche);
             this._data.fiche.events.push({
@@ -97,7 +97,7 @@ define({
         var origin = $(event.srcElement).text();
         var originId = $.trim($(event.srcElement).attr("data-id"));
         S.tool.getDialog("#add-origin-dialog").close();
-        var ask= (!S.config.local["ask-for"]["addOrigin-validation"] || confirm(S.lang["ask-confirm"]+""+origin+" ?"));
+        var ask= (!S.config.local["ask-for"]["addOrigin-validation"] || confirm(S.lang["ask-confirm-choice"]+""+origin+" ?"));
         if(ask){
             console.log(this._data.fiche);
             this._data.fiche.events.push({
@@ -146,13 +146,13 @@ define({
         }
        },
       reopen: function () {
-         var ask= !S.config.local["ask-for"]["reopen-validation"] || confirm("Etes-vous sûr ?");
+         var ask= !S.config.local["ask-for"]["reopen-validation"] || confirm(S.lang["ask-confirm"]+" ?");
          if(ask){
              console.log(this._data.fiche);
              this._data.fiche.events.push({
                type : "action",
                action : "reopen",
-               message : S.user._current.name+" ré-ouvre la fiche.",
+               message : S.user._current.name+" "+S.lang["reopen-fiche"]+".",
                timestamp : Date.now(),
                user :  S.user._current.name
              })
@@ -170,7 +170,7 @@ define({
             this._data.fiche.events.push({
               type : "action",
               action : "undelete",
-              message : S.user._current.name+" annule la suppression de la fiche.",
+              message : S.user._current.name+" "+S.lang["cancel-del"]+".",
               timestamp : Date.now(),
               user :  S.user._current.name
             })
@@ -189,7 +189,7 @@ define({
             this._data.fiche.events.push({
               type : "action",
               action : "delete",
-              message : S.user._current.name+" supprime la fiche.",
+              message : S.user._current.name+" "+S.lang["del-fiche"]+".",
               timestamp : Date.now(),
               user :  S.user._current.name
             })
@@ -213,7 +213,7 @@ define({
         this._data.fiche.events.push({
           type : "action",
           action : "close",
-          message : S.user._current.name+" ferme la fiche.",
+          message : S.user._current.name+" "+S.lang["close-fiche"]+".",
           close_context : this._data.fiche.close_context,
           timestamp : Date.now(),
           user :  S.user._current.name
@@ -225,13 +225,13 @@ define({
           S.tool.getDialog("#close-fiche-dialog").showModal();
       },
       take: function () {
-         var ask= !S.config.local["ask-for"]["take-validation"] || confirm("Etes-vous sûr ?");
+         var ask= !S.config.local["ask-for"]["take-validation"] || confirm(S.lang["ask-confirm"]+" ?");
          if(ask){
              console.log(this._data.fiche);
              this._data.fiche.events.push({
                type : "action",
                action : "take",
-               message : S.user._current.name+" prend la fiche à "+this._data.fiche.owner_id,
+               message : S.user._current.name+" "+S.lang["take-fiche-from"]+" "+this._data.fiche.owner_id,
                timestamp : Date.now(),
                user :  S.user._current.name
              })
@@ -255,7 +255,7 @@ define({
                this._data.fiche.events.push({
                  type : "action",
                  action : "take",
-                 message : S.user._current.name+" donne la fiche à "+ team +"(ancien propriétaire : "+this._data.fiche.owner_id+")",
+                 message : S.user._current.name+" "+S.lang["give-fiche-to"]+" "+ team +"("+S.lang["old-prop"]+" : "+this._data.fiche.owner_id+")",
                  timestamp : Date.now(),
                  user :  S.user._current.name
                })

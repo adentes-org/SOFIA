@@ -5,6 +5,7 @@
  */
 /* global requirejs */
 var S = S || {};
+var language = localStorage["sofia-language"] || navigator.language || navigator.userLanguage || 'en';
 
 requirejs.config({
     baseUrl: 'assets',
@@ -44,7 +45,7 @@ requirejs.config({
         //Set the config for the i18n
         //module ID
         i18n: {
-            locale: localStorage["sofia-language"] || navigator.language || navigator.userLanguage || 'en'
+            locale: language
         }
     }
 });
@@ -58,7 +59,7 @@ S.init = function(cordova){
       console.log(PouchDB);
       window.Vue = Vue; //Force Vue to DOM
       window.VueRouter = VueRouter; //Force VueRouter to DOM
-      moment.locale(navigator.language);
+      moment.locale(language);
       window.moment = moment; //Force moment to DOM
       S.lang = lang; //Setup lang
       requirejs(['pouchdb-authentication', 'app/sofia.tool', 'app/sofia.template', 'app/sofia.config'], function () {

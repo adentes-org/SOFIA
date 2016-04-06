@@ -17,7 +17,7 @@ S.vue = {
         //TODO maybe declare them directly in the App contructor ?
         Vue.component('fiche', {
             // declare the props
-            props: ['f','u'],
+            props: ['f','u','l'],
             // the prop can be used inside templates, and will also
             // be set as `this.f`
             template: S.template.fiche
@@ -41,7 +41,7 @@ S.vue = {
         Vue.filter('formatTime', function (value) {
           //return new Date(value).toLocaleString();
           var d = new Date(value);
-          return "le "+d.toLocaleDateString().slice(0, -5)+" à "+d.toLocaleTimeString().slice(0, -3);
+          return S.lang['the']+" "+d.toLocaleDateString().slice(0, -5)+" "+S.lang['at']+" "+d.toLocaleTimeString().slice(0, -3);
         })
     },
     parse_template: function () {

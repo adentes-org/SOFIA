@@ -228,8 +228,6 @@ S.db.fiches = {
   },
   getAllWithMine : function() {
       var deferred = new $.Deferred()
-      //TODO don't use query too slow no local calc
-      //TODO use the loogeged id
       S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
         // handle result
         var ret = {
@@ -251,6 +249,7 @@ S.db.fiches = {
             ret.my_fiches[ret.my_fiches.length] = value.doc;
           }
         });
+        ret.lang =  S.lang;
         console.log(ret);
         deferred.resolve(ret);
       }).catch(function (err) {

@@ -2,6 +2,8 @@ define({
     "_current" : "fr",
     "user": "utilisateur",
     "username": "username",
+    "firstname": "prénom",
+    "lastname": "nom",
     "my-sheets": "mes fiches",
     "search": "recherche",
     "home" : "accueil",
@@ -11,7 +13,16 @@ define({
     "settings": "configuration",
     "fiche" : "fiche",
     "you" : "Vous",
-    "ask-confirm" : "Etes-vous sûr de selectionner",
+    "take" : "prendre",
+    "close" : "fermer",
+    "send" : "envoyer",
+    "delete" : "supprimer",
+    "confirm" : "valider",
+    "reopen": "ré-Ouvrir",
+    "the" : "le",
+    "at" : "à",
+    "ask-confirm" : "Etes-vous sûr",
+    "ask-confirm-choice" : "Etes-vous sûr de selectionner",
     "config" : {
       "take-validation": "Confirmation à la prise de ticket",
       "give-validation": "Confirmation au passage de ticket",
@@ -28,10 +39,18 @@ define({
     "log" : {
       "add-path" : "ajoute l'affection",
       "set-origin" : "définit l'origine à",
-      "change-primary" : "change l'affection principale de"
+      "change-primary" : "change l'affection principale de",
+      "reopen-fiche" "ré-ouvre la fiche",
+      "cancel-del": "annule la suppression de la fiche",
+      "del-fiche" : "supprime la fiche",
+      "close-fiche" : "ferme la fiche",
+      "take-fiche-from" : "prend la fiche à",
+      "give-fiche-to" : "donne la fiche à",
+      "old-prop" : "ancien propriétaire"
     },
     "fiche" : {
       "birthdate" : "Née le",
+      "birthdate-error-mess" : "Veuillez saisir une date valide",
       "sex" : "Sexe",
       "origin" : "Origine",
       "team" : "Équipe resp.",
@@ -39,7 +58,14 @@ define({
       "diseases" : "affections",
       "add-path" : "Ajout d'une affection",
       "add-origin" : "Ajouter l'origine de la fiche",
+      "update-information" : "Mise à jour des informations",
+      "please-enter-informations" : "Merci de saisir ces informations",
+      "seen-by-doctor" : "Vu par médecin",
       "cancel-del" : "Annuler suppression",
+      "gender" : {
+        "female" : "femme",
+        "male" : "homme"
+      },
       "pathologys" : {
         "unconscious" : "Inconscient",
         "cardio-respiratory-stop" : "Arret Cardio Respiratoire",
