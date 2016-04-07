@@ -24,7 +24,7 @@
                 })
               },
               afterPageLoad: function () {
-                  window.setTimeout(componentHandler.upgradeDom, 150); //Application de la lib material-design
+                  window.setTimeout(componentHandler.upgradeDom, 250); //Application de la lib material-design
               }
           }
       };

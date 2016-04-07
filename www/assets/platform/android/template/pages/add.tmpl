@@ -1,30 +1,30 @@
 <div class="mdl-grid">
     <form action="#" id="add_form" v-on:submit.prevent="add">
-      <div class="mdl-cell mdl-cell--8-col mdl-textfield mdl-js-textfield">
+      <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield">
         <input class="mdl-textfield__input" type="text" id="lastname" v-model="patient.lastname" maxlength="1" />
-        <label class="mdl-textfield__label" for="lastname">Nom</label>
+        <label class="mdl-textfield__label" for="lastname">{{ lang.lastname | capitalize }}</label>
       </div>
-      <div class="mdl-cell mdl-cell--8-col mdl-textfield mdl-js-textfield">
+      <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield">
         <input class="mdl-textfield__input" type="text" id="firstname" v-model="patient.firstname" />
-        <label class="mdl-textfield__label" for="firstname">Prénom</label>
+        <label class="mdl-textfield__label" for="firstname">{{ lang.firstname | capitalize }}</label>
       </div>
-      <div class="mdl-cell mdl-cell--8-col">
+      <div class="mdl-cell mdl-cell--12-col">
         <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-          <input type="radio" id="option-1" class="mdl-radio__button" name="gender" v-model="patient.gender" value="Homme">
-          <span class="mdl-radio__label">Homme</span>
+          <input type="radio" id="option-1" class="mdl-radio__button" name="gender" v-model="patient.gender" value="male">
+          <span class="mdl-radio__label">{{ lang.fiche.gender.male | capitalize }}</span>
         </label>
         <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-          <input type="radio" id="option-2" class="mdl-radio__button" name="gender" v-model="patient.gender" value="Femme">
-          <span class="mdl-radio__label">Femme</span>
+          <input type="radio" id="option-2" class="mdl-radio__button" name="gender" v-model="patient.gender" value="female">
+          <span class="mdl-radio__label">{{ lang.fiche.gender.female | capitalize }}</span>
         </label>
       </div>
-      <div class="mdl-cell mdl-cell--8-col mdl-textfield mdl-js-textfield">
+      <div class="mdl-cell mdl-cell--12-col mdl-textfield mdl-js-textfield">
         <input class="mdl-textfield__input" type="date" id="birthdate" v-model="patient.birthdate" />
-        <label class="mdl-textfield__label" for="birthdate">Date de naissance</label>
-        <span class="mdl-textfield__error">veuillez saisir une date valide</span>
+        <label class="mdl-textfield__label" for="birthdate">{{ lang.fiche.birthdate }}</label>
+        <span class="mdl-textfield__error">{{ lang.fiche["birthdate-error-mess"] }}</span>
       </div>
-      <div class="mdl-cell mdl-cell--8-col">
-        <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--colored" value="Valider" />
+      <div class="mdl-cell mdl-cell--12-col">
+        <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--colored" value="{{ lang.confirm | capitalize }}" />
       </div>
     </form>
 </div>
