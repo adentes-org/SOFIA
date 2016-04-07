@@ -34,7 +34,8 @@ define({
       "delete-validation" : "Confirmation à la suppresion de ticket",
       "resetCredConfig" : "Réinitialiser les identifiants",
       "resetServerConfig" : "Réinitialiser la configuration du serveur",
-      "choose-lang" : "Choix de la langue"
+      "choose-lang" : "Choix de la langue",
+      "clearLocalDB" : "Nettoyer la base locale"
     },
     "log" : {
       "add-path" : "ajoute l'affection",

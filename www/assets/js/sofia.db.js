@@ -23,6 +23,9 @@ S.db = {
 
     S.db.localDB = new PouchDB(S.config.db._local_url); // Use the full url in case same db on other domain could lead to corruption //TODO maybe clean it if exist ?
     S.db.remoteDB = new PouchDB(S.config.db._full_url, {skipSetup: true});
+  },
+  clearLocal : function(){
+    return S.db.localDB.destroy();
   }
 }
 

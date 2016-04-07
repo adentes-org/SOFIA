@@ -35,7 +35,8 @@ define({
       "delete-validation" : "Ask confirmation to delete a ticket",
       "resetCredConfig" : "Reset Credential",
       "resetServerConfig" : "Reset Server Config",
-      "choose-lang" : "Choose a language"
+      "choose-lang" : "Choose a language",
+      "clearLocalDB" : "Clear Local DB"
     },
     "log" : {
       "add-path" : "add the disease",

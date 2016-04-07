@@ -38,6 +38,12 @@ define({
         localStorage["sofia-language"] = $.trim($(event.srcElement).attr("data-id"));
         S.tool.getDialog("#choose-lang-dialog").close();
         window.location.reload();        //Reload app
+      },
+      clearLocalDB: function(){
+        S.db.clearLocal().then(function(){window.location.reload();}).catch(function (err) {
+          console.log(err);
+          window.location.reload(); //We also reload in case
+        });
       }
     },
 });
