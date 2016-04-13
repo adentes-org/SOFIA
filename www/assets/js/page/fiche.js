@@ -255,8 +255,8 @@ define({
       giveTicket : function(){
       var fiche = this._data.fiche;
        var ask= !S.config.local["ask-for"]["give-validation"] || confirm("Etes-vous sûr de tranferer à "+fiche.owner_id+" ?");
-       if(ask){ //We have consent or it's auto-validate by config
          S.db.fiches.getByID(this.$route.params.fiche_id).then(function (old) {
+           if(ask){ //We have consent or it's auto-validate by config
                console.log(fiche);
                fiche.events.push({
                  type : "action",
@@ -266,9 +266,11 @@ define({
                  user :  S.user._current.name
                })
                S.db.fiches.put(fiche);
-          });
-        }
-        S.tool.getDialog("#give-ticket-dialog").close();
+            }else{
+              $.extend(true,fiche, old) //Reset to what is in localDB
+            }
+            S.tool.getDialog("#give-ticket-dialog").close();
+       });
       },
       cancelGiveForm : function(){
         var data = this._data
