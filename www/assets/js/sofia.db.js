@@ -33,6 +33,15 @@ S.db.setUrl(S.config.db);
 //S.db_users = new PouchDB(S.config.db._user_url, {skipSetup: true});
 
 S.db.config = {
+  getUsers : function(){
+    var deferred = new $.Deferred();
+    S.db.localDB.get('_design/sofia-config').then(function(doc){
+      console.log(deferred.resolve(doc.users || [])) //Return empty array if not present in DB (old version) depends on adentes-org/sofia-db#dd9feee
+    }).catch(function (err) {
+      console.log(err);
+    });
+    return deferred.promise();
+  },
   getMemo : function(){
     var deferred = new $.Deferred();
     S.db.localDB.getAttachment('_design/sofia-config', 'memo.html').then(function (blob) {
@@ -56,7 +65,8 @@ S.db.users = {
       if (err) {
         console.log(err);
         if(!silent){
-          alert(err.message);
+          //alert(err.message);
+          navigator.notification.alert(err.message);
         }
         deferred.reject(err);
       }else{
@@ -65,7 +75,6 @@ S.db.users = {
           console.log("We are logged in !", response);
           S.user.set(user,pass,response);
           S.db.fiches.startSync();
-          //console.log("Resolving the deffer with", response);
           deferred.resolve(response);
         }
       }
@@ -73,28 +82,7 @@ S.db.users = {
     return deferred.promise();
   }
 }
-/*
-S.db.users = {
-  getAll : function() {
-    //TODO not working
-    var deferred = new $.Deferred()
-    S.db_users.allDocs({keys: ["name"]}).then(function (result) {
-      console.log(result);
-      var ret = [];
-      $.each(result.rows, function( index, value ) {
-        //ret[ret.length] = value.doc.name;
-      });
-      deferred.resolve(ret);
-    }).catch(function (err) {
-      // handle err
-      console.log(err);
-      deferred.reject(err);
-    });
 
-    return deferred.promise();
-  },
-};
-*/
 S.db.fiches = {
   changeToParse : 0,
   parseSync : function(info) {

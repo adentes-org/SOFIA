@@ -46,11 +46,17 @@ define({
       "cancel-del": "cancel deletion of ticket",
       "del-fiche" : "delete ticket",
       "close-fiche" : "close ticket",
+      "create-fiche" : "create ticket",
       "take-fiche-from" : "take ticket from",
       "give-fiche-to" : "give ticket to",
       "old-prop" : "old owner"
     },
+    "alert" : {
+      "scan-fail":"Scanning of QRCode failed",
+      "incorrect-format":"Incorrect QRCode format"
+    },
     "fiche" : {
+      "owner" : "owner",
       "birthdate" : "Birthdate",
       "birthdate-error-mess" : "Please enter a valid date",
       "sex" : "Sex",
@@ -59,6 +65,7 @@ define({
       "history" : "history",
       "diseases" : "diseases",
       "add-path" : "Add a disease",
+      "give-ticket" : "Define ticket owner",
       "add-origin" : "Add origin to ticket",
       "update-information" : "Update informations",
       "please-enter-informations" : "Please fill in those informations",

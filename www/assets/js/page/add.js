@@ -26,7 +26,6 @@ define({
                     deferred.resolve(ret);
                     S.vue.router.app.$children[0].$data.options.title = ret.uid;
                   });
-
                   return deferred.promise();
             }
         },
@@ -48,17 +47,14 @@ define({
                      "events": [{
                        type : "action",
                        action : "creation",
-                       message : S.user._current.name+" crée la fiche.",
+                       message : S.user._current.name+" "+S.lang.log["create-fiche"]+".",
                        timestamp : Date.now(),
                        user :  S.user._current.name
                      }]
               }
             ).then(function (response) {
-              //S.vue.router.go("/");
               S.vue.router.go("/fiche/"+response.id);
               console.log(response);
-              //TODO check for response.ok = true;
-              //response.id = 882c054fdbf6bbfcc1e429087500823c
             }).catch(function (err) {
               console.log(err);
             });

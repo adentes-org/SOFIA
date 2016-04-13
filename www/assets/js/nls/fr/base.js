@@ -37,6 +37,10 @@ define({
       "choose-lang" : "Choix de la langue",
       "clearLocalDB" : "Nettoyer la base locale"
     },
+    "alert" : {
+      "scan-fail":"L'analyse du QRCode a échoué",
+      "incorrect-format":"Format QRCode invalide"
+    },
     "log" : {
       "add-path" : "ajoute l'affection",
       "set-origin" : "définit l'origine à",
@@ -45,11 +49,13 @@ define({
       "cancel-del": "annule la suppression de la fiche",
       "del-fiche" : "supprime la fiche",
       "close-fiche" : "ferme la fiche",
+      "create-fiche" : "ouvre la fiche",
       "take-fiche-from" : "prend la fiche à",
       "give-fiche-to" : "donne la fiche à",
       "old-prop" : "ancien propriétaire"
     },
     "fiche" : {
+      "owner" : "protiétaire",
       "birthdate" : "Née le",
       "birthdate-error-mess" : "Veuillez saisir une date valide",
       "sex" : "Sexe",
@@ -58,6 +64,7 @@ define({
       "history" : "historique",
       "diseases" : "affections",
       "add-path" : "Ajout d'une affection",
+      "give-ticket" : "Définir le protiétaire de la fiche",
       "add-origin" : "Ajouter l'origine de la fiche",
       "update-information" : "Mise à jour des informations",
       "please-enter-informations" : "Merci de saisir ces informations",

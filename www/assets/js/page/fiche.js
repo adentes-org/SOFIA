@@ -9,28 +9,35 @@ define({
         data: function () {
             var ret;
             var deferred = new $.Deferred()
-            S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
-              console.log(doc);
-              S.vue.router.app.$children[0].$data.options.title = doc.patient.firstname +" "+ doc.patient.lastname;
-              ret = {
-                fiche:doc,
-                user:S.user._current,
-                history: [],
-                config : S.config.fiche,
-                lang : S.lang
-              };
-              console.log(ret);
-              deferred.resolve(ret);
-              if(!ret.fiche.origin || ret.fiche.origin === ""){ // L'ogine n'est pas saisie on force la saisie
-                  S.tool.getDialog("#add-origin-dialog").showModal();
-              }
-              console.log("Fetching change for fiche in background ... ",ret.fiche, this)
-              S.db.fiches.getChanges(ret.fiche._id).then(function (changes) {
-                console.log(changes)
-                ret.history.push("Done ("+changes.results.length+"/"+changes.last_seq+")");
+            var ficheId = this.$route.params.fiche_id;
+            S.db.config.getUsers().then(function(userlist){
+              console.log(userlist);
+            //S.db.config.getUsers().then(function(userlist){              console.log(userlist);
+              S.db.fiches.getByID(ficheId).then(function (doc) {
+                console.log(doc);
+                S.vue.router.app.$children[0].$data.options.title = doc.patient.firstname +" "+ doc.patient.lastname;
+                ret = {
+                  fiche:doc,
+                  user:S.user._current,
+                  history: [],
+                  config : S.config.fiche,
+                  lang : S.lang,
+                  users : userlist
+                };
                 console.log(ret);
-              }).catch(function (err) {
-                console.log(err);
+                deferred.resolve(ret);
+                if(!ret.fiche.origin || ret.fiche.origin === ""){ // L'ogine n'est pas saisie on force la saisie
+                    S.tool.getDialog("#add-origin-dialog").showModal();
+                }
+                console.log("Fetching change for fiche in background ... ",ret.fiche, this)
+                S.db.fiches.getChanges(ret.fiche._id).then(function (changes) {
+                  console.log(changes)
+                  ret.history.push("Done ("+changes.results.length+"/"+changes.last_seq+")");
+                  console.log(ret);
+                }).catch(function (err) {
+                  console.log(err);
+                });
+
               });
 
             })
@@ -50,12 +57,11 @@ define({
           var data = this._data
           S.tool.getDialog("#update-fiche-information-dialog").close();
           S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
-            //Reset to what is in localDB
-            $.extend(true,data.fiche, doc) //TODO maybe cache the init value ?
+            $.extend(true,data.fiche, doc) //Reset to what is in localDB
           });
       },
       changeInformation: function () {
-        var ask= (!S.config.local["ask-for"]["changeInformation-validation"] || confirm(S.lang["ask-confirm"]+" ?"));
+        var ask= (!S.config.local["ask-for"]["changeInformation-validation"] || confirm(S.lang["ask-confirm"]+" ?")); //TODO replace with navigator.notification.confirm
         if(ask){
           console.log(this._data.fiche);
           this._data.fiche.events.push({
@@ -78,7 +84,7 @@ define({
         var newPrimaryID = $(event.srcElement).val();
         var oldPrimary = S.lang.fiche.pathologys[this._data.fiche.primaryAffection] || this._data.fiche.primaryAffection;
         var newPrimary = S.lang.fiche.pathologys[newPrimaryID] || newPrimaryID;
-        var ask= (!S.config.local["ask-for"]["changePrimaryAffection-validation"] || confirm(S.lang["ask-confirm-choice"]+""+newPrimary+" ?"));
+        var ask= (!S.config.local["ask-for"]["changePrimaryAffection-validation"] || confirm(S.lang["ask-confirm-choice"]+""+newPrimary+" ?"));  //TODO replace with navigator.notification.confirm
         if(ask){
             console.log(this._data.fiche);
             this._data.fiche.events.push({
@@ -238,12 +244,25 @@ define({
              S.db.fiches.put(this._data.fiche);
          }
       },
-      give: function () {
-        /*
-        S.db.users.getAll().then(function(userlist){
-          console.log(userlist);
+      setGiveForm : function(){
+        alert($(this).find('.mdl-list__item-primary-content').text());
+        this._data.fiche.owner_id = $(this).find('.mdl-list__item-primary-content').text();
+      },
+      validGiveForm : function(){
+        //S.db.fiches.put(this._data.fiche); //TODO save in DB
+        S.tool.getDialog("#give-ticket-dialog").close();
+      },
+      cancelGiveForm : function(){
+        var data = this._data
+        S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
+          $.extend(true,data.fiche, doc) //Reset to what is in localDB
         });
-        */
+        S.tool.getDialog("#give-ticket-dialog").close()
+      },
+      showGiveModal: function () {
+        S.tool.getDialog("#give-ticket-dialog").showModal();
+
+        /*
         var team = prompt("Saisir une équipe :", "UserX");
 
         if (team != null) {
@@ -262,6 +281,7 @@ define({
                S.db.fiches.put(this._data.fiche);
            }
         }
+        */
       }
     }
 })

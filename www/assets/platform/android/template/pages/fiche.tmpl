@@ -15,7 +15,7 @@
   </template>
   <template v-else>
     <button v-on:click="delete" class="deleting-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="user.isAdmin() == true">{{ lang.delete | capitalize }}</button>
-    <button v-on:click="give" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">{{ lang.send | capitalize }}</button>
+    <button v-on:click="showGiveModal" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">{{ lang.send | capitalize }}</button>
     <button v-on:click="take" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>{{ lang.take | capitalize }}</button>
 
     <button v-on:click="reopen" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.closed == true">{{ lang.reopen | capitalize }}</button>
@@ -119,6 +119,26 @@
           </li>
         </ul>
       </div>
+  </dialog>
+  <dialog id="give-ticket-dialog" class="mdl-dialog">
+    <h4 class="mdl-dialog__title">{{ lang.fiche['give-ticket'] }}</h4>
+    <form  action="#" v-on:submit.prevent="giveTicket">
+        <div class="mdl-dialog__content">
+          <ul class="mdl-list">
+            <div class="mdl-textfield mdl-js-textfield">
+              <input class="mdl-textfield__input" type="text" id="owner" v-model="fiche.owner_id" >
+              <label class="mdl-textfield__label" for="owner">{{ lang.fiche['owner'] | capitalize }}</label>
+            </div>
+            <li v-on:click="setGiveForm" v-for="u in users"  class="mdl-list__item">
+              <span class="mdl-list__item-primary-content" >{{ u }}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="mdl-dialog__actions">
+            <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="{{ lang.confirm | capitalize }}" />
+            <button v-on:click="closeGiveModal" type="button" class="mdl-button close">{{ lang.cancel | capitalize }}</button>
+        </div>
+    </form>
   </dialog>
   <dialog id="add-path-dialog" class="mdl-dialog">
     <h4 class="mdl-dialog__title">{{ lang.fiche['add-path'] }}</h4>

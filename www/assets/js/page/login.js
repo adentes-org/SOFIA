@@ -42,7 +42,8 @@ define({
                     "Cancelled: " + result.cancelled);
               if(!result.cancelled){
                 if(result.format !== "QR_CODE"){
-                  alert("Format "+result.format+" incorrect !")
+                  //alert("Format "+result.format+" incorrect !")
+                  navigator.notification.alert(S.lang.alert["incorrect-format"]+ " : "+result.format)
                 }else{
                   var tmp = result.text.split("/");
                   if(result.text.indexOf("@")> -1){ //We have a username
@@ -60,7 +61,8 @@ define({
               }
             },
             function (error) {
-                alert("Scanning failed: " + error);
+              //alert("Scanning failed: " + error);
+              navigator.notification.alert(S.lang.alert["scan-fail"]+" : " + error)
             }
          );
       },
