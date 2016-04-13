@@ -19,10 +19,11 @@ define({
     "delete" : "supprimer",
     "confirm" : "valider",
     "reopen": "ré-Ouvrir",
-    "the" : "le",
-    "at" : "à",
     "ask-confirm" : "Etes-vous sûr",
     "ask-confirm-choice" : "Etes-vous sûr de selectionner",
+    "to" : "à",
+    "the" : "le",
+    "at" : "à",
     "config" : {
       "take-validation": "Confirmation à la prise de ticket",
       "give-validation": "Confirmation au passage de ticket",

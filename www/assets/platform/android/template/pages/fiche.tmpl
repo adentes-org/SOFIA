@@ -84,7 +84,7 @@
             </div>
             <div class="mdl-dialog__actions">
               <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="{{ lang.confirm | capitalize }}" />
-              <button v-on:click="closeUpdateInformation" type="button" class="mdl-button close">{{ lang.cancel | capitalize }}</button> confirm
+              <button v-on:click="closeUpdateInformation" type="button" class="mdl-button close">{{ lang.cancel | capitalize }}</button>
             </div>
         </form>
     </dialog>
@@ -129,14 +129,14 @@
               <input class="mdl-textfield__input" type="text" id="owner" v-model="fiche.owner_id" >
               <label class="mdl-textfield__label" for="owner">{{ lang.fiche['owner'] | capitalize }}</label>
             </div>
-            <li v-on:click="setGiveForm" v-for="u in users"  class="mdl-list__item">
+            <li v-on:click="setGiveForm" v-for="u in users | filterBy fiche.owner_id | limitBy 3"  class="mdl-list__item">
               <span class="mdl-list__item-primary-content" >{{ u }}</span>
             </li>
           </ul>
         </div>
         <div class="mdl-dialog__actions">
             <input type="submit" style="float:right" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" value="{{ lang.confirm | capitalize }}" />
-            <button v-on:click="closeGiveModal" type="button" class="mdl-button close">{{ lang.cancel | capitalize }}</button>
+            <button v-on:click="cancelGiveForm" type="button" class="mdl-button close">{{ lang.cancel | capitalize }}</button>
         </div>
     </form>
   </dialog>

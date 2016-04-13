@@ -29,6 +29,7 @@ define({
                 if(!ret.fiche.origin || ret.fiche.origin === ""){ // L'ogine n'est pas saisie on force la saisie
                     S.tool.getDialog("#add-origin-dialog").showModal();
                 }
+                /*
                 console.log("Fetching change for fiche in background ... ",ret.fiche, this)
                 S.db.fiches.getChanges(ret.fiche._id).then(function (changes) {
                   console.log(changes)
@@ -37,7 +38,7 @@ define({
                 }).catch(function (err) {
                   console.log(err);
                 });
-
+                */
               });
 
             })
@@ -102,7 +103,7 @@ define({
         var origin = $(event.srcElement).text();
         var originId = $.trim($(event.srcElement).attr("data-id"));
         S.tool.getDialog("#add-origin-dialog").close();
-        var ask= (!S.config.local["ask-for"]["addOrigin-validation"] || confirm(S.lang["ask-confirm-choice"]+""+origin+" ?"));
+        var ask= (!S.config.local["ask-for"]["addOrigin-validation"] || confirm(S.lang["ask-confirm-choice"]+" : "+origin+" ?"));
         if(ask){
             console.log(this._data.fiche);
             this._data.fiche.events.push({
@@ -124,8 +125,12 @@ define({
       },
       addPathology: function (event) {
         //TODO check if already exist and display it
-        var path = $.trim($(event.srcElement).text());
-        var pathId = $.trim($(event.srcElement).attr("data-id"));
+        var el = $(event.srcElement);
+        if(! el.is(".mdl-list__item-primary-content")){ //Find the content if it is the li that trigger
+          el = el.find(".mdl-list__item-primary-content");
+        }
+        var path = $.trim(el.text());
+        var pathId = $.trim(el.attr("data-id"));
         S.tool.getDialog("#add-path-dialog").close();
         var ask= !S.config.local["ask-for"]["addPathology-validation"] || confirm("Etes-vous sûr d'ajouter "+path+" ?");
         if(ask){
@@ -157,7 +162,7 @@ define({
              this._data.fiche.events.push({
                type : "action",
                action : "reopen",
-               message : S.user._current.name+" "+S.lang["reopen-fiche"]+".",
+               message : S.user._current.name+" "+S.lang.log["reopen-fiche"]+".",
                timestamp : Date.now(),
                user :  S.user._current.name
              })
@@ -175,7 +180,7 @@ define({
             this._data.fiche.events.push({
               type : "action",
               action : "undelete",
-              message : S.user._current.name+" "+S.lang["cancel-del"]+".",
+              message : S.user._current.name+" "+S.lang.log["cancel-del"]+".",
               timestamp : Date.now(),
               user :  S.user._current.name
             })
@@ -194,7 +199,7 @@ define({
             this._data.fiche.events.push({
               type : "action",
               action : "delete",
-              message : S.user._current.name+" "+S.lang["del-fiche"]+".",
+              message : S.user._current.name+" "+S.lang.log["del-fiche"]+".",
               timestamp : Date.now(),
               user :  S.user._current.name
             })
@@ -218,7 +223,7 @@ define({
         this._data.fiche.events.push({
           type : "action",
           action : "close",
-          message : S.user._current.name+" "+S.lang["close-fiche"]+".",
+          message : S.user._current.name+" "+S.lang.log["close-fiche"]+".",
           close_context : this._data.fiche.close_context,
           timestamp : Date.now(),
           user :  S.user._current.name
@@ -236,7 +241,7 @@ define({
              this._data.fiche.events.push({
                type : "action",
                action : "take",
-               message : S.user._current.name+" "+S.lang["take-fiche-from"]+" "+this._data.fiche.owner_id,
+               message : S.user._current.name+" "+S.lang.log["take-fiche-from"]+" "+this._data.fiche.owner_id,
                timestamp : Date.now(),
                user :  S.user._current.name
              })
@@ -244,12 +249,25 @@ define({
              S.db.fiches.put(this._data.fiche);
          }
       },
-      setGiveForm : function(){
-        alert($(this).find('.mdl-list__item-primary-content').text());
-        this._data.fiche.owner_id = $(this).find('.mdl-list__item-primary-content').text();
+      setGiveForm : function(event){
+        this._data.fiche.owner_id = $.trim($(event.srcElement).text());
       },
-      validGiveForm : function(){
-        //S.db.fiches.put(this._data.fiche); //TODO save in DB
+      giveTicket : function(){
+      var fiche = this._data.fiche;
+       var ask= !S.config.local["ask-for"]["give-validation"] || confirm("Etes-vous sûr de tranferer à "+fiche.owner_id+" ?");
+       if(ask){ //We have consent or it's auto-validate by config
+         S.db.fiches.getByID(this.$route.params.fiche_id).then(function (old) {
+               console.log(fiche);
+               fiche.events.push({
+                 type : "action",
+                 action : "take",
+                 message : S.user._current.name+" "+S.lang.log["give-fiche-to"]+" "+ fiche.owner_id +" ("+S.lang.log["old-prop"]+" : "+old.owner_id+")",
+                 timestamp : Date.now(),
+                 user :  S.user._current.name
+               })
+               S.db.fiches.put(fiche);
+          });
+        }
         S.tool.getDialog("#give-ticket-dialog").close();
       },
       cancelGiveForm : function(){
@@ -261,27 +279,6 @@ define({
       },
       showGiveModal: function () {
         S.tool.getDialog("#give-ticket-dialog").showModal();
-
-        /*
-        var team = prompt("Saisir une équipe :", "UserX");
-
-        if (team != null) {
-          //TODO check exitance of team
-           var ask= !S.config.local["ask-for"]["give-validation"] || confirm("Etes-vous sûr de tranferer à "+team+" ?");
-           if(ask){
-               console.log(this._data.fiche);
-               this._data.fiche.events.push({
-                 type : "action",
-                 action : "take",
-                 message : S.user._current.name+" "+S.lang["give-fiche-to"]+" "+ team +"("+S.lang["old-prop"]+" : "+this._data.fiche.owner_id+")",
-                 timestamp : Date.now(),
-                 user :  S.user._current.name
-               })
-               this._data.fiche.owner_id = team;
-               S.db.fiches.put(this._data.fiche);
-           }
-        }
-        */
       }
     }
 })
