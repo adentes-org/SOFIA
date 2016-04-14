@@ -44,7 +44,44 @@ body {
 form#add_form {
     width: 100%;
 }
-
+section{
+  background: #fff;
+  .mdl-card{
+    background: transparent;
+  }
+  &[data-patient-age="0"],
+  &[data-patient-age="1"],
+  &[data-patient-age="2"],
+  &[data-patient-age="3"],
+  &[data-patient-age="4"],
+  &[data-patient-age="5"],
+  &[data-patient-age="6"],
+  &[data-patient-age="7"],
+  &[data-patient-age="8"],
+  &[data-patient-age="9"],
+  &[data-patient-age="10"],
+  &[data-patient-age="11"],
+  &[data-patient-age="12"],
+  &[data-patient-age="13"],
+  &[data-patient-age="14"],
+  &[data-patient-age="15"],
+  &[data-patient-age="16"] {
+    background: coral;
+  }
+  &[data-patient-age="17"] {
+    background: bisque;
+  }
+  &.close{
+    background: #DDD;
+    min-height: 134px;
+  }
+  &.del{
+    .mdl-card>div {
+      color: #DDD;
+    }
+    background-color: #666;
+  }
+}
 .fiche.patient{
   .pathologys{
     margin: 5px 0 -5px 0;
