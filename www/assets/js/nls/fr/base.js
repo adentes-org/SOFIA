@@ -33,7 +33,7 @@ define({
       "changePrimaryAffection-validation" : "Confirmation à la modification de l'affection principale",
       "changeInformation-validation" : "Confirmation à la modification des informations",
       "delete-validation" : "Confirmation à la suppresion de ticket",
-      "resetCredConfig" : "Réinitialiser les identifiants",
+      "resetCredConfig" : "Se déconnecter",
       "resetServerConfig" : "Réinitialiser la configuration du serveur",
       "choose-lang" : "Choix de la langue",
       "clearLocalDB" : "Nettoyer la base locale"

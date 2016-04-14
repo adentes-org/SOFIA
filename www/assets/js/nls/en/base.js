@@ -33,7 +33,7 @@ define({
       "changePrimaryAffection-validation" : "Ask confirmation to change primary affection",
       "changeInformation-validation" : "Ask confirmation to change information",
       "delete-validation" : "Ask confirmation to delete a ticket",
-      "resetCredConfig" : "Reset Credential",
+      "resetCredConfig" : "Log out",
       "resetServerConfig" : "Reset Server Config",
       "choose-lang" : "Choose a language",
       "clearLocalDB" : "Clear Local DB"
