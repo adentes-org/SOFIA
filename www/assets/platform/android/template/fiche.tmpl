@@ -8,7 +8,9 @@
                 <span class="gender">{{ l.fiche.gender[f.patient.gender] || f.patient.gender | capitalize }} ({{f.patient.age_formatted}})</span>
                 <span class="birthdate">{{f.patient.birthdate}}</span>
                 <br>
-                <span>{{f.pathologys | json}}<span>
+                <span class="pathologys">
+                  <span v-for="path in f.pathologys" >{{ l.fiche.pathologys[path] || path | capitalize }}</span>
+                </span>
             </div>
             <span class="timestamp">{{ f.last_update_since }}</span>
         </div>
