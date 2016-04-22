@@ -94,9 +94,15 @@ S.tool = {
                     console.log("Incompatible type : " + id + " -> " + (typeof path)); //TODO use a Promise.reject() ?
                 }
             });
+            /*
             return Promise.all(pool).then(function(){
                 //console.log(data);
                 return Promise.resolve(data);
+            });
+            */
+            //Quick and dirty fix test
+            return $.when.apply($, pool).then(function () {
+                return this.resolve(data);
             });
         //});
     }
