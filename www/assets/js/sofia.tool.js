@@ -101,9 +101,11 @@ S.tool = {
             });
             */
             //Quick and dirty fix test
-            return $.when.apply($, pool).then(function () {
-                return this.resolve(data);
+            var dfd = jQuery.Deferred();
+            $.when.apply(this || $, pool).then(function () {
+                dfd.resolve(data);
             });
+            return dfd.promise();
         //});
     }
     /*
