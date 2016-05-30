@@ -5,7 +5,6 @@
   console.log("Init android platform");
 
   $("head").append('<link rel="stylesheet" type="text/css" href="assets/lib/material-design-lite/material.min.css">');
-  $("head").append('<link rel="stylesheet" type="text/css" href="assets/lib/dialog-polyfill/dialog-polyfill.css">');
 
   //$("head").append('<link rel="stylesheet" type="text/css" href="assets/css/platform/android.css">');
 
@@ -13,7 +12,7 @@
   //$("body").append('<script src="assets/lib/material-design-lite/material.min.js"></script>');
 
 
-  requirejs(['lib/material-design-lite/material.min','lib/dialog-polyfill/dialog-polyfill', 'promise!platform/android/template'], function () {
+  requirejs(['lib/material-design-lite/material.min', 'promise!platform/android/template'], function () {
       S.platform = {
           isLoaded: true,
           id: "android",
