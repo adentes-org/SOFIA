@@ -57,12 +57,15 @@ S.init = function(cordova){
        // Set plugin
       Vue.use(VueRouter);
       window.PouchDB = PouchDB; //Force PouchDB to DOM
-      window.dialogPolyfill = dialogPolyfill; //Force dialogPolyfill to DOM
       window.Vue = Vue; //Force Vue to DOM
       window.VueRouter = VueRouter; //Force VueRouter to DOM
       moment.locale(language);
       window.moment = moment; //Force moment to DOM
       S.lang = lang; //Setup lang
+      
+      window.dialogPolyfill = dialogPolyfill; //Force dialogPolyfill to DOM
+      $("head").append('<link rel="stylesheet" type="text/css" href="assets/lib/dialog-polyfill/dialog-polyfill.css">'); //Load style for dialog
+      
       requirejs(['pouchdb-authentication', 'app/sofia.tool', 'app/sofia.template', 'app/sofia.config'], function () {
           $("head").append('<link rel="stylesheet" type="text/css" href="assets/platform/' + cordova.platformId + '/css/style.css">');
           requirejs(['platform/' + cordova.platformId + '/init', 'app/sofia.db'], function () {
