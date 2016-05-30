@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "bower-installer": "~1.2.0",
-    "cordova": "^6.1.1",
+    "cordova": "^6.2.0",
     "del": "~2.2.0",
     "gulp": "~3.9.0",
     "gulp-cordova": "~6.0.0",
@@ -51,11 +51,19 @@
       "browser"
     ],
     [
+      "platform",
+      "update",
+      "ios",
+      "android",
+      "browser"
+    ],
+    [
       "plugin",
       "add",
       "cordova-plugin-whitelist",
       "cordova-plugin-dialogs",
-      "phonegap-plugin-barcodescanner"
+      "phonegap-plugin-barcodescanner",
+      "--save"
     ]
   ],
   "license": "MIT"
