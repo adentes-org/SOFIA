@@ -21,6 +21,7 @@ requirejs.config({
         /* "vue-i18n": 'lib/vue-i18n-plugin/vue-i18n.min', */
         /* "vue-format": "lib/vue-format/vue-format", */
         promise: 'lib/requirejs-promise/requirejs-promise',
+        "dialog-polyfill": 'lib/dialog-polyfill/dialog-polyfill',
         i18n: 'lib/requirejs-i18n/i18n',
         moment: 'lib/moment/moment.min',
         "moment-locales": 'lib/moment/locales.min'
@@ -52,11 +53,11 @@ requirejs.config({
 //var base = ;
 //base.unshift();
 S.init = function(cordova){
-  requirejs(['jquery','i18n!app/nls/base', 'vue', 'vue-router', 'pouchdb', 'moment', 'moment-locales', 'app/sofia.polyfill'], function ($,lang, Vue, VueRouter, PouchDB, moment) {
+  requirejs(['jquery','i18n!app/nls/base', 'vue', 'vue-router', 'pouchdb', "dialog-polyfill", 'moment', 'moment-locales', 'app/sofia.polyfill'], function ($,lang, Vue, VueRouter, PouchDB, dialogPolyfill, moment) {
        // Set plugin
       Vue.use(VueRouter);
       window.PouchDB = PouchDB; //Force PouchDB to DOM
-      console.log(PouchDB);
+      window.dialogPolyfill = dialogPolyfill; //Force dialogPolyfill to DOM
       window.Vue = Vue; //Force Vue to DOM
       window.VueRouter = VueRouter; //Force VueRouter to DOM
       moment.locale(language);
