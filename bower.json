@@ -21,7 +21,7 @@
     "pouchdb": "latest",
     "pouchdb-authentication": "sapk/pouchdb-authentication",
     "vue": "v1.0.16",
-    "vue-router": "latest",
+    "vue-router": "v0.7.11",
     "material-design-lite": "latest",
     "material-design-icons": "latest",
     "dialog-polyfill": "latest",
