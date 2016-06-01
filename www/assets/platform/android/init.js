@@ -4,7 +4,7 @@
   //Vue.config.silent = true
   console.log("Init android platform");
 
-  $("head").append('<link rel="stylesheet" type="text/css" href="assets/lib/material-design-lite/material.min.css">');
+  $("head").append('<link rel="stylesheet" type="text/css" href="dist/lib/material-design-lite/material.min.css">');
 
   //$("head").append('<link rel="stylesheet" type="text/css" href="assets/css/platform/android.css">');
 

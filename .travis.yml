@@ -20,12 +20,14 @@ before_script:
 - npm install
 - snyk test || echo "Some librarie(s) need fix"
 - sed -i '/android {/a lintOptions { abortOnError false } ' platforms/android/build.gradle
-- gulp clean less
+- gulp clean
+- gulp less compress
 script:
 - gulp cordova:build
-- find . -type f -name '*.less' -delete
-- find . -type f -name '*.map' -delete
-- rm -Rf www/assets/platform/browser
+- find ./www -type f -name '*.less' -delete
+- find ./www -type f -name '*.map' -delete
+- find ./www/assets -type f -name '*.js' -delete
+- rm -Rf www/assets/js www/assets/less www/assets/platform/android/less www/assets/platform/browser
 - cordova build android --release
 after_success:
 - cp platforms/android/build/outputs/apk/android-release-unsigned.apk platforms/android/build/outputs/apk/android-release-signed.apk

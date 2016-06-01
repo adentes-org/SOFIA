@@ -28,7 +28,7 @@
     "moment": "^2.12.0"
   },
   "install": {
-    "path": "www/assets/lib",
+    "path": "www/dist/lib",
     "sources": {
       "jquery": "bower_components/jquery/dist/jquery.min.js",
       "pouchdb": "bower_components/pouchdb/dist/pouchdb.min.js",

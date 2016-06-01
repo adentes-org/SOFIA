@@ -8,9 +8,10 @@ var S = S || {};
 var language = localStorage["sofia-language"] || navigator.language || navigator.userLanguage || 'en';
 
 requirejs.config({
-    baseUrl: 'assets',
+    baseUrl: 'dist',
     paths: {
         app: 'js',
+        platform: 'platform',
         lib: 'lib',
         cordova: '../cordova',
         jquery: 'lib/jquery/jquery.min',
@@ -62,12 +63,12 @@ S.init = function(cordova){
       moment.locale(language);
       window.moment = moment; //Force moment to DOM
       S.lang = lang; //Setup lang
-      
+
       window.dialogPolyfill = dialogPolyfill; //Force dialogPolyfill to DOM
-      $("head").append('<link rel="stylesheet" type="text/css" href="assets/lib/dialog-polyfill/dialog-polyfill.css">'); //Load style for dialog
-      
+      $("head").append('<link rel="stylesheet" type="text/css" href="dist/lib/dialog-polyfill/dialog-polyfill.css">'); //Load style for dialog
+
       requirejs(['pouchdb-authentication', 'app/sofia.tool', 'app/sofia.template', 'app/sofia.config'], function () {
-          $("head").append('<link rel="stylesheet" type="text/css" href="assets/platform/' + cordova.platformId + '/css/style.css">');
+          $("head").append('<link rel="stylesheet" type="text/css" href="dist/platform/' + cordova.platformId + '/css/style.css">');
           requirejs(['platform/' + cordova.platformId + '/init', 'app/sofia.db'], function () {
               requirejs(['app/sofia.vue', 'app/sofia.data', 'app/sofia.user', 'app/sofia.app'], function () {
                   window.setTimeout(S.app.initialize,250); // Add time if all not already loaded for safety

@@ -4,7 +4,7 @@
 define(['jquery'], function($) {
     var deferred = new $.Deferred(); //TODO migrate to strandard promise
     S.tool.loadStatic({
-        base : "assets/platform/android/template/",
+        base : "assets/platform/android/template/", //TODO compress template file and switch to dist
         files : {
             header : "header.tmpl",
             fiche : "fiche.tmpl",

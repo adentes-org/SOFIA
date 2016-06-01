@@ -63,3 +63,11 @@ node_modules/
 plugins/
 
 npm-debug.log
+
+
+*.css
+*.css.map
+*.min.js
+www/dist
+
+info.txt
