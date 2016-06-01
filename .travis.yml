@@ -31,6 +31,7 @@ script:
 - cordova build android --release
 after_success:
 - cp platforms/android/build/outputs/apk/android-release-unsigned.apk platforms/android/build/outputs/apk/android-release-signed.apk
+- zip -d platforms/android/build/outputs/apk/android-release-signed.apk "assets/html" "assets/html-*" "assets/images" "assets/style.css" "res/draw*/launcher_icon.png" "res/drawable-land-*" "res/drawable-port-*" "assets/www/cordova-js-src"
 - jarsigner -verbose -sigalg SHA1withRSA -storepass "$STOREPASS" -keypass "$KEYPASS" -digestalg
   SHA1 -keystore sofia-release-key.keystore platforms/android/build/outputs/apk/android-release-signed.apk
   sofia
