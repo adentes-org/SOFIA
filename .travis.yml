@@ -5,6 +5,7 @@ android:
   - build-tools
   - android-19
   - android-22
+  - android-23
 sudo: false
 cache:
   directories:
