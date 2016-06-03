@@ -53,6 +53,7 @@ define({
       "create-fiche" : "ouvre la fiche",
       "take-fiche-from" : "prend la fiche à",
       "give-fiche-to" : "donne la fiche à",
+      "add-checkin" : "a vu ce patient",
       "old-prop" : "ancien propriétaire"
     },
     "fiche" : {
