@@ -50,6 +50,7 @@ S.config = {
       "addOrigin-validation" : true,
       "changePrimaryAffection-validation" : false,
       "changeInformation-validation" : true,
+      "checkin-validation" : false,
       "delete-validation" : true
     }
   }
