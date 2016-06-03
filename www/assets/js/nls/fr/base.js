@@ -24,6 +24,7 @@ define({
     "to" : "à",
     "the" : "le",
     "at" : "à",
+    "checkin" : "vue",
     "config" : {
       "take-validation": "Confirmation à la prise de ticket",
       "give-validation": "Confirmation au passage de ticket",
