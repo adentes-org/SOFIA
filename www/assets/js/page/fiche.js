@@ -158,6 +158,21 @@ define({
 
         }
        },
+      addCheckIn: function () {
+         //TODO only allow the team responsible the checkin
+         var ask= !S.config.local["ask-for"]["checkin-validation"] || confirm(S.lang["ask-confirm"]+" ?");
+         if(ask){
+             console.log(this._data.fiche);
+             this._data.fiche.events.push({
+               type : "action",
+               action : "checkin",
+               message : S.user._current.name+" "+S.lang.log["add-checkin"]+".",
+               timestamp : Date.now(),
+               user :  S.user._current.name
+             })
+             S.db.fiches.put(this._data.fiche);
+         }
+       },
       reopen: function () {
          var ask= !S.config.local["ask-for"]["reopen-validation"] || confirm(S.lang["ask-confirm"]+" ?");
          if(ask){
