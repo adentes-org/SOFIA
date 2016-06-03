@@ -24,6 +24,7 @@ define({
     "to" : "to",
     "the" : "the",
     "at" : "at",
+    "checkin" : "check",
     "config" : {
       "take-validation": "Ask confirmation to take a ticket",
       "give-validation": "Ask confirmation to give a ticket",
