@@ -49,6 +49,7 @@ define({
       "create-fiche" : "create ticket",
       "take-fiche-from" : "take ticket from",
       "give-fiche-to" : "give ticket to",
+      "add-checkin" : "has checked this patient",
       "old-prop" : "old owner"
     },
     "alert" : {
