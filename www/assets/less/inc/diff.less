@@ -1,0 +1,84 @@
+.diff{
+  table {
+  	table-layout: fixed;
+  	border-collapse: collapse;
+  	width: 100%;
+  }
+  td {
+  	width: 33%;
+  	vertical-align: top;
+  	text-align: center;
+  }
+  pre, textarea {
+  	height: 99%;
+  	width: 99%;
+  	margin: auto;
+  	font: 1em monospace;
+  	text-align: left;
+  	white-space: pre-wrap;
+  }
+  ins, del {
+  	display: inline-block;
+  }
+  del {
+  	text-decoration: none;
+  	color: #b30000;
+  	background: #fadad7;
+  }
+  ins {
+  	background: #eaf2c2;
+  	color: #406619;
+  	text-decoration: none;
+  }
+  del.key {
+  	border: 1px solid #f8a4a4;
+  	border-bottom-width: 0;
+  }
+  ins.key {
+  	border: 1px solid #a3ce4c;
+  	border-top-width: 0;
+  }
+
+  span {
+  	color: #b2b2b2;
+  }
+  del span {
+  	color: #dfb2b2;
+  }
+  ins span {
+  	color: #c2ccb8;
+  }
+
+
+  .level {
+  	margin-left: 1.6em;
+  }
+  .footer {
+  	position: absolute;
+  	padding: .2em .5em;
+  	right: 10px;
+  	bottom: 0;
+  }
+
+  .error {
+  	color: #600;
+  }
+
+  @media screen and (-webkit-min-device-pixel-ratio:0) {
+  	/* In Firefox and Opera all these stuff disables default outline for textarea. Do it just for WebKit. */
+  	textarea {
+  		border: 1px solid #DDD;
+  	}
+  	textarea:focus {
+  		border-color: #6699cc;
+  	}
+  	.error {
+  		background-color: #fffafa;
+  		border-color: #deb1b1;
+  		outline-color: #ff7f7f;
+  	}
+  	.error:focus {
+  		border-color: #c46969;
+  	}
+  }
+}
