@@ -18,6 +18,7 @@ define({
     "send" : "send",
     "delete" : "delete",
     "confirm" : "confirm",
+    "diff" : "diff",
     "reopen": "re-open",
     "ask-confirm" : "Are you sure",
     "ask-confirm-choice" : "Are you sure to choose",
@@ -51,6 +52,7 @@ define({
       "take-fiche-from" : "take ticket from",
       "give-fiche-to" : "give ticket to",
       "add-checkin" : "has checked this patient",
+      "has-updated-information" : "has updated informations",
       "old-prop" : "old owner"
     },
     "alert" : {

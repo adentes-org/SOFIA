@@ -25,6 +25,7 @@
     "material-design-lite": "latest",
     "material-design-icons": "latest",
     "dialog-polyfill": "latest",
+    "objectdiff": "latest",
     "moment": "^2.12.0"
   },
   "install": {
@@ -46,6 +47,9 @@
       "moment": [
         "bower_components/moment/min/moment.min.js",
         "bower_components/moment/min/locales.min.js"
+      ],
+      "objectdiff": [
+        "bower_components/objectdiff/objectDiff.js"
       ]
     }
   },

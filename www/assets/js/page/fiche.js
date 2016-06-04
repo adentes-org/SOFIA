@@ -1,14 +1,15 @@
+"use strict";
 define({
     options: {
         title: "",
         displayQuickAddButton : false,
         displaySearchbox: false,
-        onHeaderClick : function(){S.tool.getDialog("#update-fiche-information-dialog").showModal()}
+        onHeaderClick : function(){S.tool.getDialog("#update-fiche-information-dialog").showModal();}
     },
     route: {
         data: function () {
             var ret;
-            var deferred = new $.Deferred()
+            var deferred = new $.Deferred();
             var ficheId = this.$route.params.fiche_id;
             S.db.config.getUsers().then(function(userlist){
               console.log(userlist);
@@ -64,24 +65,41 @@ define({
             $.extend(true,data.fiche, doc) //Reset to what is in localDB
           });
       },
+      closeDiffModal: function () {
+          S.tool.getDialog("#show-diff-dialog").close();
+      },
+      showDiffInformation: function(event){
+        var el = $(event.srcElement);
+        if(el.not("button")){
+          el = el.parent();
+        }
+        //console.log(el,el.attr("data-event"), el.data('event'));
+        console.log(el,el.attr("data-diff"), el.data('diff'));
+        $("#show-diff-dialog>.mdl-dialog__content").html(objectDiff.convertToXMLString(el.data('diff')))
+        S.tool.getDialog("#show-diff-dialog").showModal();
+      },
       changeInformation: function () {
         var ask= (!S.config.local["ask-for"]["changeInformation-validation"] || confirm(S.lang["ask-confirm"]+" ?")); //TODO replace with navigator.notification.confirm
         if(ask){
-          console.log(this._data.fiche);
-          this._data.fiche.events.push({
-            type : "action",
-            action : "changeInformation",
-            message : S.user._current.name+" a mis à jour les informations : {TODO}", //TODO make diff between in DB and in Vue object
-            timestamp : Date.now(),
-            user :  S.user._current.name
-          })
-          //Update this._data.fiche with additionnal data from data or update them
-          //$.extend(true, this._data.fiche, data); //TODO be more strict on wath can be edited
-          //DATA is already updated by vue in live
-          S.vue.router.app.$children[0].$data.options.title = this._data.fiche.patient.firstname +" "+ this._data.fiche.patient.lastname;
-          S.tool.getDialog("#update-fiche-information-dialog").close();
+          var f = this._data.fiche;
+          S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
+            console.log(f,this);
+            f.events.push({
+              type : "action",
+              action : "changeInformation",
+              message : S.user._current.name+" "+S.lang.log["has-updated-information"]+" !",
+              diff : objectDiff.diff(doc.patient, f.patient),
+              timestamp : Date.now(),
+              user :  S.user._current.name
+            });
+            //Update this._data.fiche with additionnal data from data or update them
+            //$.extend(true, this._data.fiche, data); //TODO be more strict on wath can be edited
+            //DATA is already updated by vue in live
+            S.vue.router.app.$children[0].$data.options.title = f.patient.firstname +" "+ f.patient.lastname;
+            S.tool.getDialog("#update-fiche-information-dialog").close();
 
-          S.db.fiches.put(this._data.fiche);//Saving
+            S.db.fiches.put(f);//Saving
+          });
         }
       },
       changePrimaryAffection: function (event) {

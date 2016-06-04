@@ -18,6 +18,7 @@ define({
     "send" : "envoyer",
     "delete" : "supprimer",
     "confirm" : "valider",
+    "diff" : "changements",
     "reopen": "ré-Ouvrir",
     "ask-confirm" : "Etes-vous sûr",
     "ask-confirm-choice" : "Etes-vous sûr de selectionner",
@@ -55,6 +56,7 @@ define({
       "take-fiche-from" : "prend la fiche à",
       "give-fiche-to" : "donne la fiche à",
       "add-checkin" : "a vu ce patient",
+      "has-updated-information" : "a mis à jour les informations",
       "old-prop" : "ancien propriétaire"
     },
     "fiche" : {

@@ -25,7 +25,8 @@ requirejs.config({
         "dialog-polyfill": 'lib/dialog-polyfill/dialog-polyfill',
         i18n: 'lib/requirejs-i18n/i18n',
         moment: 'lib/moment/moment.min',
-        "moment-locales": 'lib/moment/locales.min'
+        "moment-locales": 'lib/moment/locales.min',
+        objectdiff: 'lib/objectdiff/objectDiff',
                 /*
                  browser: 'platform/browser',
                  android: 'platform/android',
@@ -54,7 +55,7 @@ requirejs.config({
 //var base = ;
 //base.unshift();
 S.init = function(cordova){
-  requirejs(['jquery','i18n!app/nls/base', 'vue', 'vue-router', 'pouchdb', "dialog-polyfill", 'moment', 'moment-locales', 'app/sofia.polyfill'], function ($,lang, Vue, VueRouter, PouchDB, dialogPolyfill, moment) {
+  requirejs(['jquery','i18n!app/nls/base', 'vue', 'vue-router', 'pouchdb', "dialog-polyfill", 'moment', 'moment-locales', 'app/sofia.polyfill','objectdiff'], function ($,lang, Vue, VueRouter, PouchDB, dialogPolyfill, moment) {
        // Set plugin
       Vue.use(VueRouter);
       window.PouchDB = PouchDB; //Force PouchDB to DOM
@@ -66,6 +67,7 @@ S.init = function(cordova){
 
       window.dialogPolyfill = dialogPolyfill; //Force dialogPolyfill to DOM
       $("head").append('<link rel="stylesheet" type="text/css" href="dist/lib/dialog-polyfill/dialog-polyfill.css">'); //Load style for dialog
+      //$("head").append('<link rel="stylesheet" type="text/css" href="dist/lib/objectdiff/style.css">'); //Load style for diff
 
       requirejs(['pouchdb-authentication', 'app/sofia.tool', 'app/sofia.template', 'app/sofia.config'], function () {
           $("head").append('<link rel="stylesheet" type="text/css" href="dist/platform/' + cordova.platformId + '/css/style.css">');
