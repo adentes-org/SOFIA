@@ -71,6 +71,9 @@ S.user = {
       if(typeof doc !== "undefined"){
         $.extend(S.user._current, doc);
       }
+      if(S.user._current.name === null){
+        S.user._current.name = S.config.user.username //Default to username ( admin case )
+      }
     },
     /*
     logout : function(){
