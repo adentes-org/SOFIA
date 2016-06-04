@@ -58,9 +58,13 @@ define({
                   el.db.name = tmp.pop()
                   el.db.url = tmp.join('/')
 
-                  if(typeof S.platform.events.afterPageLoad === "function"){ //reload theme after change
-                      window.setTimeout(S.platform.events.afterPageLoad,100);
+                $('#_login .mdl-textfield__input').each(function(){
+                  if(this.value.length>0){
+                    $(this).parent().addClass('is-dirty') //Hide the the placeholder
+                  }else{
+                    $(this).parent().removeClass('is-dirty')
                   }
+                });
                 }
               }
             },
