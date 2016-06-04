@@ -58,13 +58,8 @@ define({
                   el.db.name = tmp.pop()
                   el.db.url = tmp.join('/')
 
-                $('#_login .mdl-textfield__input').each(function(){
-                  if(this.value.length>0){
-                    $(this).parent().addClass('is-dirty') //Hide the the placeholder
-                  }else{
-                    $(this).parent().removeClass('is-dirty')
-                  }
-                });
+                  //S.data.pages['_login'].methods.checkInput()
+                  window.setTimeout("S.data.pages['_login'].methods.checkInput()",500)
                 }
               }
             },
@@ -73,6 +68,17 @@ define({
               navigator.notification.alert(S.lang.alert["scan-fail"]+" : " + error)
             }
          );
+      },
+      checkInput: function () {
+            console.log("Checking input ...")
+            $('#_login .mdl-textfield__input').each(function(){
+              console.log(this.value.length,this.value,this)
+              if(this.value.length>0){
+                $(this).parent().addClass('is-dirty') //Hide the the placeholder
+              }else{
+                $(this).parent().removeClass('is-dirty')
+              }
+            });
       },
       updtConfiguration: function () {
           S.db.setUrl(this.db)

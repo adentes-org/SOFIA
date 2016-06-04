@@ -21,7 +21,7 @@ before_script:
 - snyk test || echo "Some librarie(s) need fix"
 - sed -i '/android {/a lintOptions { abortOnError false } ' platforms/android/build.gradle
 - gulp clean
-- gulp less compress
+- gulp
 script:
 - gulp cordova:build
 - find ./www -type f -name '*.less' -delete
