@@ -47,21 +47,10 @@ gulp.task('clean-js', function () {
   for (var i in folder) {
     folder[i] = folder[i].replace(folders.assets, folders.dist)
   }
-  del(folder);
+  return del(folder);
 });
 gulp.task('clean-css', function () {
-  /*
-    del([folders.css + '/*.css', folders.css + '/maps/*.css.map']);
-
-    for (var i in platformList) {
-        if(platformList.hasOwnProperty(i)){
-        	var p = platformList[i];
-        	del([folders.platform + p +'/css/*.css',folders.platform + p +'/css/maps/*.css.map'])
-    	}
-    }
-    */
-    del([folders.assets + "/**/*.css",folders.dist + "/css/*.css",folders.dist + "/platform/**/*.css"])
-    del([folders.assets + "/**/*.map",folders.dist + "/css/maps/*.map",folders.dist + "/platform/**/*.map"])
+  return del([folders.assets + "/**/*.css",folders.dist + "/css/*.css",folders.dist + "/platform/**/*.css",folders.assets + "/**/*.map",folders.dist + "/css/maps/*.map",folders.dist + "/platform/**/*.map"])
 });
 
 gulp.task('compress', ['clean-js'], function() {
@@ -110,7 +99,7 @@ gulp.task('cordova:init', function() {
     .pipe(cordova())
 })
 
-gulp.task('cordova:build', function() {
+gulp.task('cordova:build',['less','compress'], function() {
   //gulp.pipe(
     cordova(['build'])
     //)
@@ -129,7 +118,7 @@ gulp.task('watch', function() {
   //gulp.watch(dest + 'img/**/*', ['images']);
 });
 gulp.task('clean', ['clean-js','clean-css']);
-gulp.task('build', ['less','compress','cordova:build']);
+gulp.task('build', ['cordova:build']);
 gulp.task('default', ['less','compress']);
 
 
