@@ -57,7 +57,8 @@ define({
     },
     "alert" : {
       "scan-fail":"Scanning of QRCode failed",
-      "incorrect-format":"Incorrect QRCode format"
+      "incorrect-format":"Incorrect QRCode format",
+      "no-primaryAffection":"No primaryAffection choosen please select one before closing"
     },
     "fiche" : {
       "owner" : "owner",

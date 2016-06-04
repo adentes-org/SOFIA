@@ -42,7 +42,8 @@ define({
     },
     "alert" : {
       "scan-fail":"L'analyse du QRCode a échoué",
-      "incorrect-format":"Format QRCode invalide"
+      "incorrect-format":"Format QRCode invalide",
+      "no-primaryAffection":"Aucune affection principale n'a été choisie merci d'en sélectionner une avant de fermer"
     },
     "log" : {
       "add-path" : "ajoute l'affection",
