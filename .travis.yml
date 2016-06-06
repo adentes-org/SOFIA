@@ -28,7 +28,8 @@ script:
 - find ./www -type f -name '*.map' -delete
 - find ./www/assets -type f -name '*.js' -delete
 - rm -Rf www/assets/js www/assets/less www/assets/platform/android/less www/assets/platform/browser
-- cordova build android --release
+- cordova build android --release 
+- ls platforms/android/build/outputs/apk/
 after_success:
 - cp platforms/android/build/outputs/apk/android-release-unsigned.apk platforms/android/build/outputs/apk/android-release-signed.apk
 - zip -d platforms/android/build/outputs/apk/android-release-signed.apk "assets/html" "assets/html-*" "assets/images" "assets/style.css" "res/draw*/launcher_icon.png" "res/drawable-land-*" "res/drawable-port-*" "assets/www/cordova-js-src"
