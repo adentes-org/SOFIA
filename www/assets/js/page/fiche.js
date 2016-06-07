@@ -254,6 +254,7 @@ define({
         }else{
           //Else we do nothing
         }
+        S.tool.getDialog("#delete-fiche-dialog").close();
       },
 	  /*
       delete: function () {
