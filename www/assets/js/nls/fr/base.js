@@ -25,6 +25,7 @@ define({
     "to" : "à",
     "the" : "le",
     "at" : "à",
+    "reason" : "raison",
     "checkin" : "vue",
     "config" : {
       "take-validation": "Confirmation à la prise de ticket",

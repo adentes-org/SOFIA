@@ -226,6 +226,37 @@ define({
           //Else we do nothing
         }
       },
+      showDeleteModal: function () {
+        if(S.user._current.isAdmin()){
+          S.tool.getDialog("#delete-fiche-dialog").showModal();
+        }else{
+          //Else we do nothing
+        }
+      },
+      closeDeleteModal: function () {
+          S.tool.getDialog("#delete-fiche-dialog").close();
+      },
+      submitDelete: function () {
+        if(S.user._current.isAdmin()){
+          //We are admin
+          var ask= !S.config.local["ask-for"]["delete-validation"] || confirm("Etes-vous sûr de supprimer la fiche ?");
+          if(ask){
+            this._data.fiche.deleted = true;
+            this._data.fiche.events.push({
+              type : "action",
+              action : "delete",
+              message : S.user._current.name+" "+S.lang.log["del-fiche"]+" : "+$("#delete-fiche-dialog #deleteReason").val(),
+              timestamp : Date.now(),
+              user :  S.user._current.name
+            })
+            S.db.fiches.put(this._data.fiche);
+          }
+        }else{
+          //Else we do nothing
+        }
+        S.tool.getDialog("#delete-fiche-dialog").close();
+      },
+	  /*
       delete: function () {
         if(S.user._current.isAdmin()){
           //We are admin
@@ -245,6 +276,7 @@ define({
           //Else we do nothing
         }
       },
+	  */
       closeCloseModal: function () {
            S.tool.getDialog("#close-fiche-dialog").close();
       },
@@ -268,7 +300,7 @@ define({
         S.db.fiches.put(this._data.fiche);
       },
       close: function () {
-          if(this._data.fiche.pathologys.length == 0 || typeof this._data.fiche.primaryAffection === "undefined" || this._data.fiche.primaryAffection === ""){
+          if(this._data.fiche.pathologys.length == 0 || typeof this._data.fiche.primaryAffection === "undefined" || this._data.fiche.primaryAffection === ""){
             return navigator.notification.alert(S.lang.alert["no-primaryAffection"]+"!")
           }
           S.tool.getDialog("#close-fiche-dialog").showModal();
