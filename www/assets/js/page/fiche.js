@@ -123,7 +123,6 @@ define({
       addOrigin: function (event) {
         var origin = $(event.srcElement).text();
         var originId = $.trim($(event.srcElement).attr("data-id"));
-        S.tool.getDialog("#add-origin-dialog").close();
         var ask= (!S.config.local["ask-for"]["addOrigin-validation"] || confirm(S.lang["ask-confirm-choice"]+" : "+origin+" ?"));
         if(ask){
             console.log(this._data.fiche);
@@ -136,6 +135,7 @@ define({
             })
             this._data.fiche.origin = originId;
             S.db.fiches.put(this._data.fiche);
+            S.tool.getDialog("#add-origin-dialog").close();
         }
       },
       showAddPathologyModal: function () {
