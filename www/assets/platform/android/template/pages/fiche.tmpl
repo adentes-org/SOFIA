@@ -138,8 +138,8 @@
       <h4 class="mdl-dialog__title">{{ lang.fiche['add-origin'] }}</h4>
       <div class="mdl-dialog__content">
         <ul class="mdl-list">
-          <li v-for="origin in config.origins"  class="mdl-list__item">
-            <span v-on:click="addOrigin" class="mdl-list__item-primary-content" data-id="{{ origin }}">{{ lang.fiche.origins[origin] || origin }}</span>
+          <li v-on:click="addOrigin" v-for="origin in config.origins"  class="mdl-list__item">
+            <span class="mdl-list__item-primary-content" data-id="{{ origin }}">{{ lang.fiche.origins[origin] || origin }}</span>
           </li>
         </ul>
       </div>

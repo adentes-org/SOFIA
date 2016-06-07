@@ -121,8 +121,13 @@ define({
         }
       },
       addOrigin: function (event) {
-        var origin = $(event.srcElement).text();
-        var originId = $.trim($(event.srcElement).attr("data-id"));
+        var target  = $(event.srcElement)
+        if(target.is( "li" )){
+          target  = target.find("span[data-id]")
+        }
+        var origin = $.trim(target.text());
+        var originId = $.trim(target.attr("data-id"));
+
         var ask= (!S.config.local["ask-for"]["addOrigin-validation"] || confirm(S.lang["ask-confirm-choice"]+" : "+origin+" ?"));
         if(ask){
             console.log(this._data.fiche);
