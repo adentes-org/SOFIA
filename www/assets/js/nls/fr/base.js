@@ -32,7 +32,7 @@ define({
       "give-validation": "Confirmation au passage de ticket",
       "reopen-validation": "Confirmation à la réouverture de ticket",
       "addPathology-validation" : "Confirmation à l'ajout d'affection",
-      "addOrigin-validation" : "Confirmation au changement du type d'arrivé",
+      "addOrigin-validation" : "Confirmation au changement du type d'arrivée",
       "changePrimaryAffection-validation" : "Confirmation à la modification de l'affection principale",
       "changeInformation-validation" : "Confirmation à la modification des informations",
       "delete-validation" : "Confirmation à la suppresion de ticket",
@@ -62,8 +62,8 @@ define({
       "old-prop" : "ancien propriétaire"
     },
     "fiche" : {
-      "owner" : "protiétaire",
-      "birthdate" : "Née le",
+      "owner" : "propriétaire",
+      "birthdate" : "Né le",
       "birthdate-error-mess" : "Veuillez saisir une date valide",
       "sex" : "Sexe",
       "origin" : "Origine",
