@@ -30,7 +30,7 @@ S.vue = {
             },
             computed: {
               displayedTitle: function () {
-                return ( this.options.titleInSearch !== "" && this.searchbox.length>0 ) ? this.options.titleInSearch : this.options.title;
+                return ( this.options.displaySearchbox && typeof this.options.titleInSearch !== "undefined" && this.options.titleInSearch !== "" && this.searchbox.length>0 ) ? this.options.titleInSearch : this.options.title;
               }
             }
         });
