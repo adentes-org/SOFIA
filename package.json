@@ -64,7 +64,6 @@
       "cordova-plugin-whitelist",
       "cordova-plugin-dialogs",
       "phonegap-plugin-barcodescanner",
-      "cordova-plugin-crosswalk-webview",
       "--save"
     ]
   ],
