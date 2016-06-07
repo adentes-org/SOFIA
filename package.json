@@ -11,19 +11,15 @@
     }
   ],
   "scripts": {
+    "sign" : "cp \"$APK-unsigned.apk\" \"$APK-signed.apk\" && jarsigner -verbose -sigalg SHA1withRSA -storepass \"$STOREPASS\" -keypass \"$KEYPASS\" -digestalg SHA1 -keystore \"$KEYSTORE\" \"$APK-signed.apk\" sofia && jarsigner -verify -verbose -certs \"$APK-signed.apk\" ",
     "clean": "cordova clean android",
     "build": "cordova build",
     "get-bower": "bower-installer",
-    "compile-less": "npm run compile-app-less && npm run compile-platform-browser-less && npm run compile-platform-android-less",
-    "compile-app-less": "lessc --source-map --source-map-rootpath=../less --source-map-url=style.css.map --clean-css=advanced www/assets/less/style.less www/assets/css/style.css",
-    "compile-platform-android-less": "lessc --source-map --source-map-url=style.css.map --clean-css=advanced www/assets/platform/android/style.less www/assets/platform/android/style.css",
-    "compile-platform-browser-less": "lessc --source-map --source-map-url=style.css.map --clean-css=advanced www/assets/platform/browser/style.less www/assets/platform/browser/style.css",
-    "compile-platform-ios-less": "lessc --source-map --source-map-url=style.css.map --clean-css=advanced www/assets/platform/ios/style.less www/assets/platform/ios/style.css",
     "start-browser": "cordova run browser",
-    "start-android": "cordova start android",
+    "start-android": "cordova run android",
     "postinstall": "npm run get-bower && gulp cordova:init clean less",
-    "preversion": "npm run get-bower && npm run compile-less",
-    "prestart": "npm run compile-less",
+    "preversion": "gulp clean",
+    "prestart": "npm run get-bower && gulp",
     "start": "npm run start-browser",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
