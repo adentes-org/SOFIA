@@ -24,3 +24,10 @@ gulp build
 ```
 gulp & npm run start-browser
 ```
+
+#### En mode web-publié
+```
+gulp & cd www && python -m SimpleHTTPServer 8080 
+#L'application est maintenant disponible sur le port 8080 en http
+```
+NB: L'application est aussi disponible directement en web-publié dans les dernières versions de la base de donnée
