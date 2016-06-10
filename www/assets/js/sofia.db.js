@@ -232,7 +232,9 @@ S.db.fiches = {
         }
         ret.fiches[ret.fiches.length] = value.doc;
         value.doc.last_update = value.doc.events[value.doc.events.length -1].timestamp
-        value.doc.last_update_since = moment(value.doc.last_update).fromNow();
+        var m = moment(value.doc.last_update);
+        value.doc.last_update_since = m.fromNow();
+        value.doc.last_update_is_old = m.add(3, 'hours').isBefore();
         var d = moment(value.doc.patient.birthdate);
         value.doc.patient.age = moment().diff(d, 'years')
         value.doc.patient.age_formatted = d.fromNow(true)
