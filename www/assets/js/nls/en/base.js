@@ -5,6 +5,7 @@ define({
     "firstname": "firstname",
     "lastname": "lastname",
     "my-sheets": "my sheets",
+    "overview-of-sheets": "overview of sheets",
     "search": "search",
     "home" : "home",
     "add" : "add",

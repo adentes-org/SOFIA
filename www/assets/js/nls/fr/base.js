@@ -5,6 +5,7 @@ define({
     "firstname": "prénom",
     "lastname": "nom",
     "my-sheets": "mes fiches",
+    "overview-of-sheets": "Panorama des prises en charge",
     "search": "recherche",
     "home" : "accueil",
     "add" : "ajouter",
