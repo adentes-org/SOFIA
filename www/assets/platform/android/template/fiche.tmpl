@@ -5,14 +5,14 @@
                 <h4>{{ f.patient.firstname }} {{ f.patient.lastname }}</h4>
             </div>
             <div class="mdl-card__supporting-text">
-                <span class="gender">{{ l.fiche.gender[f.patient.gender] || f.patient.gender | capitalize }} ({{f.patient.age_formatted}})</span>
+                <span class="gender">{{ l.fiche.gender[f.patient.gender] || f.patient.gender | capitalize }} <template v-if="f.patient.age_formatted!='Invalid date'">({{f.patient.age_formatted}})</template></span>
                 <span class="birthdate">{{f.patient.birthdate}}</span>
                 <br>
                 <span class="pathologys">
                   <span v-for="path in f.pathologys" >{{ l.fiche.pathologys[path] || path | capitalize }}</span>
                 </span>
             </div>
-            <span class="timestamp">{{ f.last_update_since }}</span>
+            <span class="timestamp  {{f.last_update_is_old ? 'old':' '}}">{{ f.last_update_since }}</span>
         </div>
     </a>
 </section>

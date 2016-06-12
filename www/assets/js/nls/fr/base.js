@@ -63,7 +63,7 @@ define({
     },
     "fiche" : {
       "owner" : "propriétaire",
-      "birthdate" : "Né le",
+      "birthdate" : "Né(e) le",
       "birthdate-error-mess" : "Veuillez saisir une date valide",
       "sex" : "Sexe",
       "origin" : "Origine",
