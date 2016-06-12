@@ -66,9 +66,10 @@
       float: right;
       margin: -24px 0;
       z-index: 1000;
+      position: relative;
       @media screen and (max-width:610px) {
         background: #717171;
-        padding: 1px 0 2px 7px;
+        padding: 4px 0 4px 7px;
         border-radius: 5px;
         border: 0.5px solid #666;
       }
@@ -81,17 +82,16 @@
             background-color: #888 !important;
           }
           &.menu-button{
+              @media screen and (min-width:610px) {
+                display: none;
+              }
+              margin-top: -2px;
               float: right;
           }
       }
       &.collapsed {
         background: transparent;
         border: none;
-        .mdl-button {
-          &.menu-button{
-            display: none;
-          }
-        }
         @media screen and (max-width:610px) {
           .mdl-button {
             display: none;
