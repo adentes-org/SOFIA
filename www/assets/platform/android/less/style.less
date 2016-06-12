@@ -63,20 +63,45 @@
           text-transform: initial;
       }
     }
-    .mdl-button {
-        float: right;
-        z-index: 1000;
-          margin: -24px 5px 0 0;
-        &.deleting-button{
+    .fiche-menu{
+      float: right;
+      margin: -24px 0;
+      z-index: 1000;
+      @media screen and (max-width:610px) {
+        background: #717171;
+        padding: 1px 0 2px 7px;
+        border-radius: 5px;
+        border: 0.5px solid #666;
+      }
+      .mdl-button {
+          margin-right: 5px;
+          &.owning-button{
+            background-color: #009688 !important;
+          }
+          &.closing-button{
+            background-color: #888 !important;
+          }
+          &.menu-button{
+              float: right;
+          }
+      }
+      &.collapsed {
+        background: transparent;
+        border: none;
+        .mdl-button {
+          &.menu-button{
+            display: none;
+          }
         }
-        &.owning-button{
-          background-color: #009688 !important;
+        @media screen and (max-width:610px) {
+          .mdl-button {
+            display: none;
+            &.menu-button{
+              display: inherit;
+            }
+          }
         }
-        &.closing-button{
-          background-color: #888 !important;
-        }
-        &.checkin-button{
-        }
+      }
     }
     .mdl-list{
       .add-button{
