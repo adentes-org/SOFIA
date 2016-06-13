@@ -25,7 +25,7 @@ git config user.email "$COMMIT_AUTHOR_EMAIL"
 
 # Commit the "changes", i.e. the new version.
 # The delta will show diffs between new and old versions.
-git add .
+git add --all .
 git commit -m "Deploy to GitHub Pages: ${TRAVIS_COMMIT}"
 
 chmod 600 $KEYFILE
