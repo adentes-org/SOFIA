@@ -255,7 +255,7 @@ S.db.fiches = {
     S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
       var count = 0;
       $.each(result.rows, function( index, value ) {
-        if(value.doc["_id"].split("/")[0] == "_design" ){
+        if(value.doc["_id"].split("/")[0] === "_design" ){
           return; //If it's a design doc
         }
         if(value.doc.uid.split("-")[0] === S.user._current.name){
