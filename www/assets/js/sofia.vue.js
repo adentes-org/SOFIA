@@ -61,31 +61,38 @@ S.vue = {
             }
         }
     },
-    init_router: function () {
-        S.vue.el.App = Vue.extend({
-            data: function () {
-                return {
-                    searchbox: "",
-                    headerOptions: {
-                        "title": "",
-                        "display": true,
-                        "backColor"  : S.config.header.backColorOffline, /* @Start of offline */
-                        "displayLoadingBar" : false,
-                        "displaySearchbox": true,
-                        "onHeaderClick": null
-                    },
-                    quickAddButtonOptions: {
-                        "display": true
-                    },
-                    MenuOptions: {
-                        "display": true
-                    }
-                }
+    updateOptions: function (current) {
+        if (current.options) {
+            var cOptions = current.options;
+            var appData = S.vue.router.app.$data
+            var headerOptions = appData.headerOptions;
+            headerOptions.displaySearchbox = (typeof cOptions.displaySearchbox === "boolean") ? cOptions.displaySearchbox : true;
+            headerOptions.display = (typeof cOptions.displayHeader === "boolean") ? cOptions.displayHeader : true;
+            headerOptions.title = (typeof cOptions.title === "string") ? cOptions.title : "";
+            headerOptions.titleInSearch = (typeof cOptions.titleInSearch === "string") ? cOptions.titleInSearch : ""; //We show nothing by default in searchmode
+            headerOptions.onHeaderClick = (typeof cOptions.onHeaderClick === "function") ? cOptions.onHeaderClick : null;
+    
+            appData.quickAddButtonOptions.display = (typeof cOptions.displayQuickAddButton === "boolean") ? cOptions.displayQuickAddButton : true;
+    
+            appData.MenuOptions.display = (typeof cOptions.displayMenu === "boolean") ? cOptions.displayMenu : true;
+        }
+    },
+    afterEach: function (transition) {
+            console.log('Successfully navigated to: ' + transition.to.path, transition.to.path.slice(1));
+            //* Use in the header of the menu
+            var current = S.vue.map[transition.to.fullPath];
+            if (S.tool.isMenuEntry(transition.to.path)) { // On change le titre dans le menu si c'est une entrée dans le menu (qui commence pas par _)
+                S.vue.el.menu.$set('current', current.name);
+                $("head>title").text("SOFIA" + ((current.name && current.name !== "") ? " - " + current.name : ""));
             }
-        });
-        S.vue.router = new VueRouter();
-        S.vue.router.map(S.vue.map);
-        S.vue.router.beforeEach(function (transition) {
+
+            S.vue.updateHeaderOptions(current)
+
+            if(typeof S.platform.events.afterPageLoad === "function"){
+                S.platform.events.afterPageLoad();
+            }
+    },
+    beforeEach: function (transition) {
           if (transition.to.path !== '/_login' && !S.user._current.isLogged()) {
             if(S.config.user.username !== "" && S.config.user.userpass !== "") {
               //We have something to try !
@@ -114,8 +121,6 @@ S.vue = {
                 S.vue.router.go("/");
               });
             }
-            /*
-            */
             transition.redirect("/_login") //TODO backup url coming to redirect after
           } else if (transition.to.path === '/_login' && S.user._current.isLogged()) {
             //Case where we go back in history (we are already logged at the front door) so we abort
@@ -123,33 +128,33 @@ S.vue = {
           } else {
             transition.next()
           }
-        })
-        S.vue.router.afterEach(function (transition) {
-            console.log('Successfully navigated to: ' + transition.to.path, transition.to.path.slice(1));
-            //* Use in the header of the menu
-            var current = S.vue.map[transition.to.fullPath];
-            if (S.tool.isMenuEntry(transition.to.path)) { // On change le titre dans le menu si c'est une entrée dans le menu (qui commence pas par _)
-                S.vue.el.menu.$set('current', current.name);
-                $("head>title").text("SOFIA" + ((current.name && current.name !== "") ? " - " + current.name : ""));
-            }
-            //*
-            if (current.options) {
-                S.vue.router.app.$data.headerOptions.displaySearchbox = (typeof current.options.displaySearchbox === "boolean") ? current.options.displaySearchbox : true;
-                S.vue.router.app.$data.headerOptions.display = (typeof current.options.displayHeader === "boolean") ? current.options.displayHeader : true;
-                S.vue.router.app.$data.headerOptions.title = (typeof current.options.title === "string") ? current.options.title : "";
-                S.vue.router.app.$data.headerOptions.titleInSearch = (typeof current.options.titleInSearch === "string") ? current.options.titleInSearch : ""; //We show nothing by default in searchmode
-                S.vue.router.app.$data.headerOptions.onHeaderClick = (typeof current.options.onHeaderClick === "function") ? current.options.onHeaderClick : null;
-
-                S.vue.router.app.$data.quickAddButtonOptions.display = (typeof current.options.displayQuickAddButton === "boolean") ? current.options.displayQuickAddButton : true;
-
-                S.vue.router.app.$data.MenuOptions.display = (typeof current.options.displayMenu === "boolean") ? current.options.displayMenu : true;
-
-            }
-
-            if(typeof S.platform.events.afterPageLoad === "function"){
-                S.platform.events.afterPageLoad();
+    },
+    init_router: function () {
+        S.vue.el.App = Vue.extend({
+            data: function () {
+                return {
+                    searchbox: "",
+                    headerOptions: {
+                        "title": "",
+                        "display": true,
+                        "backColor"  : S.config.header.backColorOffline, /* @Start of offline */
+                        "displayLoadingBar" : false,
+                        "displaySearchbox": true,
+                        "onHeaderClick": null
+                    },
+                    quickAddButtonOptions: {
+                        "display": true
+                    },
+                    MenuOptions: {
+                        "display": true
+                    }
+                }
             }
         });
+        S.vue.router = new VueRouter();
+        S.vue.router.map(S.vue.map);
+        S.vue.router.beforeEach(S.vue.beforeEach)
+        S.vue.router.afterEach(S.vue.afterEach);
         // Redirect certain routes to other routes (by default hom and if not logged redirect to login)
         S.vue.router.redirect({
             '/': '/home',
