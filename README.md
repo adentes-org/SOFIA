@@ -25,7 +25,7 @@ gulp build
 gulp & npm run start-browser
 ```
 
-#### En mode web-publié
+#### En mode web-publié (aussi disponible sur http://www.adentes.org/SOFIA)
 ```
 gulp & cd www && python -m SimpleHTTPServer 8080 
 #L'application est maintenant disponible sur le port 8080 en http
