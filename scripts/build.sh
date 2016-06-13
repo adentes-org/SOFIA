@@ -36,6 +36,8 @@ find assets/img -type f -name '*.png' -exec  bash -c 'addFile "$0"' {} \;
 
 find dist -type f -name '*.js' -exec  bash -c 'addFile "$0"' {} \;
 find dist -type f -name '*.css' -exec bash -c 'addFile "$0"' {} \;
+find dist -type f -name '*.woff' -exec bash -c 'addFile "$0"' {} \;
+find dist -type f -name '*.woff2' -exec bash -c 'addFile "$0"' {} \;
 
 echo "Removing base repo"
 cd ../.. && rm -Rf web-app
