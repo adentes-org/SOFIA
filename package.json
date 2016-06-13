@@ -17,7 +17,7 @@
     "get-bower": "bower-installer",
     "start-browser": "cordova run browser",
     "start-android": "cordova run android",
-    "postinstall": "npm run get-bower && gulp cordova:init clean less",
+    "postinstall": "npm run get-bower && gulp cordova:init default",
     "preversion": "gulp clean",
     "prestart": "npm run get-bower && gulp",
     "start": "npm run start-browser",
