@@ -62,15 +62,17 @@ gulp.task('clean-css', function () {
 gulp.task('compress', ['clean-js'], function() {
   var folder = jsFolder();
   for (var i in folder) {
-    gulp.src([folder[i] + '/*.js', '!'+folder[i]+'/*.min.js'])
-      .pipe(minify({
-        ext:{
-            src:'.js',
-            min:'.js'
-        },
-        noSource : true
-    }))
-    .pipe(gulp.dest(folder[i].replace(folders.assets, folders.dist)))
+    if (folder.hasOwnProperty(i)) {
+        gulp.src([folder[i] + '/*.js', '!'+folder[i]+'/*.min.js'])
+          .pipe(minify({
+            ext:{
+                src:'.js',
+                min:'.js'
+            },
+            noSource : true
+        }))
+        .pipe(gulp.dest(folder[i].replace(folders.assets, folders.dist)))
+    }
   }
 });
 
