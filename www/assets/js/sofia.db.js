@@ -122,8 +122,9 @@ S.db.fiches = {
                         S.vue.router.replace(window.location.hash.slice(2)); //TODO better reload data not page
                         break;
           }
-          if(S.db.fiches.changeToParse>0)
+          if(S.db.fiches.changeToParse>0){
             S.db.fiches.changeToParse--;
+          }
   },
   watch : function(sync) {
     sync.on('change', function (change) {
@@ -146,8 +147,9 @@ S.db.fiches = {
           //We are changing the color if in the n second swe did'nt comme back here
           S.db.fiches.offlineTimeout = window.setTimeout("console.log('Setting header color to offline');S.vue.router.app.$children[0].$data.options.backColor = S.config.header.backColorOffline;",S.config.header.timeoutOffline*1000);
         }
-        if(S.db.fiches.changeToParse>0 || S.vue.router.app.$children[0].$data.options.displayLoadingBar)
+        if(S.db.fiches.changeToParse>0 || S.vue.router.app.$children[0].$data.options.displayLoadingBar){
           S.db.fiches.parseSync(info);
+        }
     }).on('active', function (info) {
       console.log("Pouchdb.sync.active event",info,Date());
       // replication was resumed
