@@ -10,7 +10,7 @@ KEYFILE="$TRAVIS_BUILD_DIR/keys/deploy_key"
 
 #Generate a key in needed that will be store in cache (and to be haded to github)
 if [ ! -f $KEYFILE ]; then
-    ssh-keygen -t rsa -b 4096 -C "$COMMIT_AUTHOR_EMAIL"  -N "" -f $KEYFILE
+    ssh-keygen -t rsa -b 4096 -C "$COMMIT_AUTHOR_EMAIL"  -N "$TMPPASS" -f $KEYFILE
 fi
 cat "$KEYFILE.pub"
 
@@ -30,7 +30,7 @@ git commit -m "Deploy to GitHub Pages: ${TRAVIS_COMMIT}"
 
 chmod 600 $KEYFILE
 eval `ssh-agent -s`
-ssh-add $KEYFILE
+echo "$TMPPASS" | ssh-add $KEYFILE
 
 # Now that we're all set up, we can push.
 git push git@github.com:adentes-org/SOFIA.git $TARGET_BRANCH
