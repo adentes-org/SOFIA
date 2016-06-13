@@ -35,17 +35,23 @@ var langList = ["en", "fr"]; //TODO generate from folder
 function jsFolder(){
   var jsFolder =  [folders.js, folders.js + '/page', folders.js + '/nls']
   for (var i in langList) {
-    jsFolder.push(folders.js + '/nls/' + langList[i])
+    if (langList.hasOwnProperty(i)) {
+        jsFolder.push(folders.js + '/nls/' + langList[i])
+    }
   }
   for (var i in platformList) {
-    jsFolder.push(folders.platform + platformList[i])
+    if (platformList.hasOwnProperty(i)) {
+        jsFolder.push(folders.platform + platformList[i])
+    }
   }
   return jsFolder;
 }
 gulp.task('clean-js', function () {
   var folder = jsFolder();
   for (var i in folder) {
-    folder[i] = folder[i].replace(folders.assets, folders.dist)
+    if (folder.hasOwnProperty(i)) {
+        folder[i] = folder[i].replace(folders.assets, folders.dist)
+    }
   }
   return del(folder);
 });
