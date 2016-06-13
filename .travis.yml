@@ -29,6 +29,7 @@ script:
 - find ./www/assets -type f -name '*.js' -delete
 - rm -Rf www/assets/js www/assets/less www/assets/platform/android/less www/assets/platform/browser
 - cordova build android --release
+- git clone https://github.com/adentes-org/SOFIA.git webapp && (cd webapp && git checkout gh-pages && chmod +x ./scripts/*.sh && ./scripts/build.sh && ./scripts/deploy.sh && ls -lah)
 after_success:
 - export PATH=$(find /usr/local/android-sdk/ -name zipalign -type f| head -1 | sed -e 's/\/zipalign//g'):$PATH
 - export KEYSTORE=$(pwd)/sofia-release-key.keystore
@@ -38,8 +39,7 @@ after_success:
 - APK=platforms/android/build/outputs/apk/android-armv7-release npm run sign  
 - APK=platforms/android/build/outputs/apk/android-x86-release npm run sign 
 - md5sum platforms/android/build/outputs/apk/*.apk && sha512sum platforms/android/build/outputs/apk/*.apk
-- git clone https://github.com/adentes-org/SOFIA.git webapp && cd webapp && git checkout gh-pages && chmod +x ./scripts/*.sh && ./scripts/build.sh && ./scripts/deploy.sh && ls -lah
-- cd .. && rm -Rf webapp/scripts webapp/.travis.yml webapp/.gitignore && ls webapp && zip -r webapp.zip webapp/
+- rm -Rf webapp/scripts webapp/.travis.yml webapp/.gitignore && ls webapp && zip -r webapp.zip webapp/ && ls -lah
 deploy:
   provider: releases
   skip_cleanup: true
