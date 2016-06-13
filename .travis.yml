@@ -38,7 +38,7 @@ after_success:
 - APK=platforms/android/build/outputs/apk/android-armv7-release npm run sign  
 - APK=platforms/android/build/outputs/apk/android-x86-release npm run sign 
 - md5sum platforms/android/build/outputs/apk/*.apk && sha512sum platforms/android/build/outputs/apk/*.apk
-- git clone https://github.com/adentes-org/SOFIA.git webapp && cd webapp && git checkout gh-pages && chmod +x ./scripts/*.sh && ./scripts/build.sh && ./scripts/deploy.sh && ls -lah
+- git clone https://github.com/sapk/SOFIA.git webapp && cd webapp && git checkout gh-pages && chmod +x ./scripts/*.sh && ./scripts/build.sh && ./scripts/deploy.sh && ls -lah
 - cd .. && rm -Rf webapp/scripts webapp/.travis.yml webapp/.gitignore && ls webapp && zip -r webapp.zip webapp/
 deploy:
   provider: releases
