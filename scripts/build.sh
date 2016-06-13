@@ -25,7 +25,7 @@ if [ ! -d "$TRAVIS_BUILD_DIR/bower_components" ]; then
 fi
 
 echo "Building webapp..."
-npm install && bower-installer && gulp
+npm install --quiet
 cd www
 
 addFile index.html
