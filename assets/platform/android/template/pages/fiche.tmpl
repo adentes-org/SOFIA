@@ -51,7 +51,7 @@
     <div class="mdl-tabs__panel" id="history-panel">
       <ul class="mdl-list">
       <li v-for="(i,e) in fiche.events | orderBy 'timestamp' -1"  class="mdl-list__item">
-        <span class="mdl-list__item-primary-content">{{{ e.message }}} <button data-diff="{{ e.diff | json}}"  v-if="e.diff" v-on:click="showDiffInformation" class="mdl-button mdl-js-button mdl-button--icon" style="margin: -9px;"><i class="material-icons">visibility</i></button></span>
+        <span class="mdl-list__item-primary-content">{{{ e.message }}} <button data-diff="{{ e.diff | json}}"  v-if="e.diff" v-on:click="showDiffInformation" class="mdl-button mdl-js-button mdl-button--icon" style="margin: -9px; float: right;"><i class="material-icons">visibility</i></button></span>
         <span class="mdl-list__item-secondary-content">
           <span class="mdl-list__item-secondary-info">{{ e.timestamp | formatTime }}</span>
         </span>
