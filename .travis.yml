@@ -9,6 +9,7 @@ android:
 sudo: false
 cache:
   directories:
+  - keys
   - node_modules
   - bower_components
 before_install:
