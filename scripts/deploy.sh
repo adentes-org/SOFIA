@@ -38,4 +38,4 @@ expect << EOF
   expect eof
 EOF
 # Now that we're all set up, we can push.
-git push git@github.com:adentes-org/SOFIA.git $TARGET_BRANCH
+git push git@github.com:adentes-org/SOFIA.git $TARGET_BRANCH  || echo "git push to gh-pages erro"
