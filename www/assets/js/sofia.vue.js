@@ -41,18 +41,22 @@ S.vue = {
           return S.lang['the']+" "+d.toLocaleDateString().slice(0, -5)+" "+S.lang['at']+" "+d.toLocaleTimeString().slice(0, -3);
         })
     },
+    generate_page: function (id) {
+        return Vue.extend(
+            $.extend({ //Base object that is merge with  S.data.pages[i]
+                    props: ['searchbox'],
+                    template: S.template.page_wrapper(id, S.template.pages[id]),
+                    data: null,
+                    computed:  null,
+                    methods: null,
+                    route: null 
+            }, S.data.pages[id])
+        );
+    },
     parse_template: function () {
         for (var i in S.template.pages) {
             if(S.template.pages.hasOwnProperty(i)){
-                S.vue.el.pages[i] = Vue.extend({
-                    props: ['searchbox'],
-                    template: S.template.page_wrapper(i, S.template.pages[i]),
-                    data: (S.data.pages[i]) ? S.data.pages[i].data || null : null, //We load data if set
-                    computed: S.data.pages[i] && S.data.pages[i].computed || null, //We load computed part if set
-                    methods: S.data.pages[i] && S.data.pages[i].methods || null, //We load methods part if set
-                    route: S.data.pages[i] && S.data.pages[i].route || null //We load route part if set
-                });
-
+                S.vue.el.pages[i] = S.vue.generate_page(i);
                 S.vue.map["/" + i] = {url: "/" + i, name: (S.lang[i] || i).capitalize(), component: S.vue.el.pages[i], options: (S.data.pages[i] && S.data.pages[i].options || {})};
             }
         }
