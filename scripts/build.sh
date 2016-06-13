@@ -3,7 +3,7 @@
 echo "Cleaning build space ..."
 
 shopt -s extglob
-rm -Rf !(scripts)
+rm -Rf !(scripts) .gitignore .travis.yml
 
 function addFile() {
     #$1:file
