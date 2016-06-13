@@ -30,7 +30,12 @@ git commit -m "Deploy to GitHub Pages: ${TRAVIS_COMMIT}"
 
 chmod 600 $KEYFILE
 eval `ssh-agent -s`
-echo "$TMPPASS" | ssh-add $KEYFILE
-
+#echo "$TMPPASS" | ssh-add -p $KEYFILE
+expect << EOF
+  spawn ssh-add $KEYFILE
+  expect "Enter passphrase"
+  send "$TMPPASS\r"
+  expect eof
+EOF
 # Now that we're all set up, we can push.
 git push git@github.com:adentes-org/SOFIA.git $TARGET_BRANCH
