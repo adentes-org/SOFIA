@@ -14,6 +14,16 @@ export -f addFile
 echo "Getting webapp..."
 git clone https://github.com/adentes-org/SOFIA.git "web-app/" && cd web-app
 
+echo "Linking acah if exist..."
+
+if [ ! -d "../../node_modules" ]; then
+  ln -s "../../node_modules" "node_modules"
+fi
+
+if [ ! -d "../../bower_components" ]; then
+  ln -s "../../bower_components" "bower_components"
+fi
+
 echo "Building webapp..."
 npm install && bower-installer && gulp 
 cd www
