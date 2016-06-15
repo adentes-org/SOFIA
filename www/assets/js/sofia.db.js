@@ -139,10 +139,10 @@ S.db.fiches = {
     //We watch for a other change event to happen
     S.db.fiches.offlineTimeout = window.setTimeout(S.db.fiches.timeout,S.config.header.timeoutOffline*1000);
   },
-  timeout : function(sync) {
+  timeout : function() {
     console.log("S.db.fiches.offlineTimeout tigged !")
     S.db.remoteDB.info().then(function (result) {
-      console.log("Reseting timeout after getting informtion from online db")
+      console.log("Reseting timeout after getting informtion from online db",result)
       S.db.fiches.resetTimeout()
     }).catch(function (err) {
       console.log(err);
