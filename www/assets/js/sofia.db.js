@@ -122,8 +122,39 @@ S.db.fiches = {
                         S.vue.router.replace(window.location.hash.slice(2)); //TODO better reload data not page
                         break;
           }
-          if(S.db.fiches.changeToParse>0)
+          if(S.db.fiches.changeToParse>0){
             S.db.fiches.changeToParse--;
+          }
+  },
+  resetTimeout : function() {
+    //Clear all timer
+    if(S.db.fiches.offlineTimeout){
+        console.log("Clearing offlineTimeout timeout")
+        window.clearTimeout(S.db.fiches.offlineTimeout)
+    }
+    if(S.db.fiches.offlineAfterTimeout){
+        console.log("Clearing offlineAfterTimeout timeout")
+        window.clearTimeout(S.db.fiches.offlineAfterTimeout)
+    }
+    //We watch for a other change event to happen
+    S.db.fiches.offlineTimeout = window.setTimeout(S.db.fiches.timeout,S.config.header.timeoutOffline*1000);
+  },
+  timeout : function(sync) {
+    console.log("S.db.fiches.offlineTimeout tigged !")
+    S.db.remoteDB.info().then(function (result) {
+      console.log("Reseting timeout after getting informtion from online db")
+      S.db.fiches.resetTimeout()
+    }).catch(function (err) {
+      console.log(err);
+    });
+    /*
+    S.db.localDB.compact().then(function (result) {
+      window.clearTimeout(S.db.fiches.offlineAfterTimeout);
+    }).catch(function (err) {
+      console.log(err);
+    });
+    */
+    S.db.fiches.offlineAfterTimeout = window.setTimeout("console.log('Setting header color to offline');S.vue.router.app.$children[0].$data.options.backColor = S.config.header.backColorOffline;",5*1000);
   },
   watch : function(sync) {
     sync.on('change', function (change) {
@@ -137,17 +168,14 @@ S.db.fiches = {
           //The header is display not as online
           console.log("Setting header color to online")
           S.vue.router.app.$children[0].$data.options.backColor = S.config.header.backColor;
-        } else {
+        } /*else {
           //The header is display as online
-          if(S.db.fiches.offlineTimeout){
-            console.log("Clearing offline timeout")
-            window.clearTimeout(S.db.fiches.offlineTimeout)
-          }
-          //We are changing the color if in the n second swe did'nt comme back here
-          S.db.fiches.offlineTimeout = window.setTimeout("console.log('Setting header color to offline');S.vue.router.app.$children[0].$data.options.backColor = S.config.header.backColorOffline;",S.config.header.timeoutOffline*1000);
-        }
-        if(S.db.fiches.changeToParse>0 || S.vue.router.app.$children[0].$data.options.displayLoadingBar)
+        }*/
+        S.db.fiches.resetTimeout()
+
+        if(S.db.fiches.changeToParse>0 || S.vue.router.app.$children[0].$data.options.displayLoadingBar){
           S.db.fiches.parseSync(info);
+        }
     }).on('active', function (info) {
       console.log("Pouchdb.sync.active event",info,Date());
       // replication was resumed

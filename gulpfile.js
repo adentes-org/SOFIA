@@ -33,18 +33,18 @@ var platformList = ["android", "browser", "ios"]; //TODO generate from folder
 var langList = ["en", "fr"]; //TODO generate from folder
 
 function jsFolder(){
-  var jsFolder =  [folders.js, folders.js + '/page', folders.js + '/nls']
-  for (var i in langList) {
-    if (langList.hasOwnProperty(i)) {
-        jsFolder.push(folders.js + '/nls/' + langList[i])
+  var f =  [folders.js, folders.js + '/page', folders.js + '/nls']
+  for (var l in langList) {
+    if (langList.hasOwnProperty(l)) {
+        f.push(folders.js + '/nls/' + langList[l])
     }
   }
-  for (var i in platformList) {
-    if (platformList.hasOwnProperty(i)) {
-        jsFolder.push(folders.platform + platformList[i])
+  for (var p in platformList) {
+    if (platformList.hasOwnProperty(p)) {
+        f.push(folders.platform + platformList[p])
     }
   }
-  return jsFolder;
+  return f;
 }
 gulp.task('clean-js', function () {
   var folder = jsFolder();
@@ -62,15 +62,17 @@ gulp.task('clean-css', function () {
 gulp.task('compress', ['clean-js'], function() {
   var folder = jsFolder();
   for (var i in folder) {
-    gulp.src([folder[i] + '/*.js', '!'+folder[i]+'/*.min.js'])
-      .pipe(minify({
-        ext:{
-            src:'.js',
-            min:'.js'
-        },
-        noSource : true
-    }))
-    .pipe(gulp.dest(folder[i].replace(folders.assets, folders.dist)))
+    if (folder.hasOwnProperty(i)) {
+        gulp.src([folder[i] + '/*.js', '!'+folder[i]+'/*.min.js'])
+          .pipe(minify({
+            ext:{
+                src:'.js',
+                min:'.js'
+            },
+            noSource : true
+        }))
+        .pipe(gulp.dest(folder[i].replace(folders.assets, folders.dist)))
+    }
   }
 });
 
