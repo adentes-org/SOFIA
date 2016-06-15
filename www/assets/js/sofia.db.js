@@ -126,6 +126,21 @@ S.db.fiches = {
             S.db.fiches.changeToParse--;
           }
   },
+  timeout : function(sync) {
+    S.db.remoteDB.info().then(function (result) {
+      window.clearTimeout(S.db.fiches.offlineAfterTimeout); // On essaie de récupérer le sinformation de la base distante et on désactive l'affihcage hors-ligne si c'est pas faisable.
+    }).catch(function (err) {
+      console.log(err);
+    });
+    /*
+    S.db.localDB.compact().then(function (result) {
+      window.clearTimeout(S.db.fiches.offlineAfterTimeout);
+    }).catch(function (err) {
+      console.log(err);
+    });
+    */
+    S.db.fiches.offlineAfterTimeout = window.setTimeout("console.log('Setting header color to offline');S.vue.router.app.$children[0].$data.options.backColor = S.config.header.backColorOffline;",5*1000);
+  },
   watch : function(sync) {
     sync.on('change', function (change) {
       S.db.fiches.changeToParse++;
@@ -138,15 +153,21 @@ S.db.fiches = {
           //The header is display not as online
           console.log("Setting header color to online")
           S.vue.router.app.$children[0].$data.options.backColor = S.config.header.backColor;
-        } else {
+        } /*else {
           //The header is display as online
-          if(S.db.fiches.offlineTimeout){
-            console.log("Clearing offline timeout")
+        }*/
+        //Clear all timer
+        if(S.db.fiches.offlineTimeout){
+            console.log("Clearing offlineTimeout timeout")
             window.clearTimeout(S.db.fiches.offlineTimeout)
-          }
-          //We are changing the color if in the n second swe did'nt comme back here
-          S.db.fiches.offlineTimeout = window.setTimeout("console.log('Setting header color to offline');S.vue.router.app.$children[0].$data.options.backColor = S.config.header.backColorOffline;",S.config.header.timeoutOffline*1000);
         }
+        if(S.db.fiches.offlineAfterTimeout){
+            console.log("Clearing offlineAfterTimeout timeout")
+            window.clearTimeout(S.db.fiches.offlineAfterTimeout)
+        }
+        //We watch for a other change event to happen
+        S.db.fiches.offlineTimeout = window.setTimeout(S.db.fiches.timeout,S.config.header.timeoutOffline*1000);
+        
         if(S.db.fiches.changeToParse>0 || S.vue.router.app.$children[0].$data.options.displayLoadingBar){
           S.db.fiches.parseSync(info);
         }
