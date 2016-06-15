@@ -49,7 +49,7 @@ S.vue = {
                     data: null,
                     computed:  null,
                     methods: null,
-                    route: null 
+                    route: null
             }, S.data.pages[id])
         );
     },
@@ -71,9 +71,9 @@ S.vue = {
             headerOptions.title = (typeof cOptions.title === "string") ? cOptions.title : "";
             headerOptions.titleInSearch = (typeof cOptions.titleInSearch === "string") ? cOptions.titleInSearch : ""; //We show nothing by default in searchmode
             headerOptions.onHeaderClick = (typeof cOptions.onHeaderClick === "function") ? cOptions.onHeaderClick : null;
-    
+
             appData.quickAddButtonOptions.display = (typeof cOptions.displayQuickAddButton === "boolean") ? cOptions.displayQuickAddButton : true;
-    
+
             appData.MenuOptions.display = (typeof cOptions.displayMenu === "boolean") ? cOptions.displayMenu : true;
         }
     },
@@ -86,7 +86,7 @@ S.vue = {
                 $("head>title").text("SOFIA" + ((current.name && current.name !== "") ? " - " + current.name : ""));
             }
 
-            S.vue.updateHeaderOptions(current)
+            S.vue.updateOptions(current)
 
             if(typeof S.platform.events.afterPageLoad === "function"){
                 S.platform.events.afterPageLoad();
