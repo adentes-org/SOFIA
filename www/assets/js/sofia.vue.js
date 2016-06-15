@@ -66,14 +66,22 @@ S.vue = {
             var cOptions = current.options;
             var appData = S.vue.router.app.$data
             var headerOptions = appData.headerOptions;
+            /*
             headerOptions.displaySearchbox = (typeof cOptions.displaySearchbox === "boolean") ? cOptions.displaySearchbox : true;
             headerOptions.display = (typeof cOptions.displayHeader === "boolean") ? cOptions.displayHeader : true;
             headerOptions.title = (typeof cOptions.title === "string") ? cOptions.title : "";
             headerOptions.titleInSearch = (typeof cOptions.titleInSearch === "string") ? cOptions.titleInSearch : ""; //We show nothing by default in searchmode
             headerOptions.onHeaderClick = (typeof cOptions.onHeaderClick === "function") ? cOptions.onHeaderClick : null;
+            */
+            $.extend(headerOptions, {
+              displaySearchbox : cOptions.displaySearchbox,
+              display : cOptions.displayHeader,
+              title : cOptions.title,
+              titleInSearch : cOptions.titleInSearch,
+              onHeaderClick : cOptions.onHeaderClick,
+            });
 
             appData.quickAddButtonOptions.display = (typeof cOptions.displayQuickAddButton === "boolean") ? cOptions.displayQuickAddButton : true;
-
             appData.MenuOptions.display = (typeof cOptions.displayMenu === "boolean") ? cOptions.displayMenu : true;
         }
     },
