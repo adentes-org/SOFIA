@@ -1,4 +1,4 @@
-/* global S */
+/* global S, $, moment, objectDiff, confirm */
 "use strict";
 define({
     options: {
@@ -32,14 +32,13 @@ define({
                     S.tool.getDialog("#add-origin-dialog").showModal();
                 }
               });
-
-            })
+            });
             return deferred.promise();
         }
     },
     computed: {
       _patient_age: function () {
-        return moment(this.fiche.patient.birthdate).fromNow(true)
+        return moment(this.fiche.patient.birthdate).fromNow(true);
       },
       _last_update: function () { //Get the timestamp of the last update and format it to be shown
         return (this.fiche.events.length>0)? moment(this.fiche.events[this.fiche.events.length-1].timestamp).fromNow():"" ;//TODO better order and get the most new timestamp other than the last el in array
@@ -112,7 +111,7 @@ define({
         }
       },
       addOrigin: function (event) {
-        var target  = $(event.srcElement)
+        var target  = $(event.srcElement);
         if(target.is( "li" )){
           target  = target.find("span[data-id]");
         }
@@ -128,7 +127,7 @@ define({
               message : S.user._current.name+" "+S.lang.log['set-origin']+" : <b>"+origin+"</b>",
               timestamp : Date.now(),
               user :  S.user._current.name
-            })
+            });
             this._data.fiche.origin = originId;
             S.db.fiches.put(this._data.fiche);
             S.tool.getDialog("#add-origin-dialog").close();
@@ -158,7 +157,7 @@ define({
               message : S.user._current.name+" "+S.lang.log["add-path"]+" : <b>"+path+"</b>",
               timestamp : Date.now(),
               user :  S.user._current.name
-            })
+            });
             if(this._data.fiche.pathologys.length === 0){
                this._data.fiche.primaryAffection = pathId; // By default we use the first added patho
             }
@@ -183,7 +182,7 @@ define({
                message : S.user._current.name+" "+S.lang.log["add-checkin"]+".",
                timestamp : Date.now(),
                user :  S.user._current.name
-             })
+             });
              S.db.fiches.put(this._data.fiche);
          }
        },
@@ -197,7 +196,7 @@ define({
                message : S.user._current.name+" "+S.lang.log["reopen-fiche"]+".",
                timestamp : Date.now(),
                user :  S.user._current.name
-             })
+             });
              this._data.fiche.closed = false;
              this._data.fiche.close_context = {};
              S.db.fiches.put(this._data.fiche);
@@ -215,7 +214,7 @@ define({
               message : S.user._current.name+" "+S.lang.log["cancel-del"]+".",
               timestamp : Date.now(),
               user :  S.user._current.name
-            })
+            });
             S.db.fiches.put(this._data.fiche);
           }
         }else{
@@ -244,7 +243,7 @@ define({
               message : S.user._current.name+" "+S.lang.log["del-fiche"]+" : "+$("#delete-fiche-dialog #deleteReason").val(),
               timestamp : Date.now(),
               user :  S.user._current.name
-            })
+            });
             S.db.fiches.put(this._data.fiche);
           }
         }else{
@@ -270,13 +269,12 @@ define({
           close_context : this._data.fiche.close_context,
           timestamp : Date.now(),
           user :  S.user._current.name
-        })
-
+        });
         S.db.fiches.put(this._data.fiche);
       },
       close: function () {
           if(this._data.fiche.pathologys.length === 0 || typeof this._data.fiche.primaryAffection === "undefined" || this._data.fiche.primaryAffection === ""){
-            return navigator.notification.alert(S.lang.alert["no-primaryAffection"]+"!")
+            return navigator.notification.alert(S.lang.alert["no-primaryAffection"]+"!");
           }
           S.tool.getDialog("#close-fiche-dialog").showModal();
       },
@@ -290,8 +288,8 @@ define({
                message : S.user._current.name+" "+S.lang.log["take-fiche-from"]+" "+this._data.fiche.owner_id,
                timestamp : Date.now(),
                user :  S.user._current.name
-             })
-             this._data.fiche.owner_id = S.user._current.name
+             });
+             this._data.fiche.owner_id = S.user._current.name;
              S.db.fiches.put(this._data.fiche);
          }
       },
@@ -310,23 +308,23 @@ define({
                  message : S.user._current.name+" "+S.lang.log["give-fiche-to"]+" "+ fiche.owner_id +" ("+S.lang.log["old-prop"]+" : "+old.owner_id+")",
                  timestamp : Date.now(),
                  user :  S.user._current.name
-               })
+               });
                S.db.fiches.put(fiche);
             }else{
-              $.extend(true,fiche, old) //Reset to what is in localDB
+              $.extend(true,fiche, old); //Reset to what is in localDB
             }
             S.tool.getDialog("#give-ticket-dialog").close();
        });
       },
       cancelGiveForm : function(){
-        var data = this._data
+        var data = this._data;
         S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
-          $.extend(true,data.fiche, doc) //Reset to what is in localDB
+          $.extend(true,data.fiche, doc); //Reset to what is in localDB
         });
-        S.tool.getDialog("#give-ticket-dialog").close()
+        S.tool.getDialog("#give-ticket-dialog").close();
       },
       showGiveModal: function () {
         S.tool.getDialog("#give-ticket-dialog").showModal();
       }
     }
-})
+});

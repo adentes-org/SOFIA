@@ -1,3 +1,5 @@
+/* global S, Vue, VueRouter, $ */
+
 'use strict';
 var S = S || {};
 
@@ -38,8 +40,8 @@ S.vue = {
     declare_filter: function () {
         Vue.filter('formatTime', function (value) {
           var d = new Date(value);
-          return S.lang['the']+" "+d.toLocaleDateString().slice(0, -5)+" "+S.lang['at']+" "+d.toLocaleTimeString().slice(0, -3);
-        })
+          return S.lang.the+" "+d.toLocaleDateString().slice(0, -5)+" "+S.lang.at+" "+d.toLocaleTimeString().slice(0, -3);
+        });
     },
     generate_page: function (id) {
         return Vue.extend(
@@ -64,7 +66,7 @@ S.vue = {
     updateOptions: function (current) {
         if (current.options) {
             var cOptions = current.options;
-            var appData = S.vue.router.app.$data
+            var appData = S.vue.router.app.$data;
             var headerOptions = appData.headerOptions;
             /*
             headerOptions.displaySearchbox = (typeof cOptions.displaySearchbox === "boolean") ? cOptions.displaySearchbox : true;
@@ -94,7 +96,7 @@ S.vue = {
                 $("head>title").text("SOFIA" + ((current.name && current.name !== "") ? " - " + current.name : ""));
             }
 
-            S.vue.updateOptions(current)
+            S.vue.updateOptions(current);
 
             if(typeof S.platform.events.afterPageLoad === "function"){
                 S.platform.events.afterPageLoad();
@@ -105,23 +107,23 @@ S.vue = {
             if(S.config.user.username !== "" && S.config.user.userpass !== "") {
               //We have something to try !
               S.user.login(S.config.user.username, S.config.user.userpass, true).fail(function(err){
-                console.log(err)
+                console.log(err);
                 switch (err.status) {
                   case 401: //Wrong cred
                     S.user.reset(); //We clear cache if their are bad
-                    transition.redirect("/_login")
+                    transition.redirect("/_login");
                     break;
                   case 500: //Database didn't respond maybe we are offline we can go on it should be fine
                     if(S.user._current.wasLoggedIn()){
                       //Doing like we are logged in
-                      S.user._current.restoreSession()
+                      S.user._current.restoreSession();
                       S.db.fiches.startSync();
                       S.vue.router.go("/");
                     }
                     break;
                   default:
                     //We redirect to login page
-                    transition.redirect("/_login")
+                    transition.redirect("/_login");
                 }
               }).then(function(user){
                 //We are logged
@@ -129,12 +131,12 @@ S.vue = {
                 S.vue.router.go("/");
               });
             }
-            transition.redirect("/_login") //TODO backup url coming to redirect after
+            transition.redirect("/_login"); //TODO backup url coming to redirect after
           } else if (transition.to.path === '/_login' && S.user._current.isLogged()) {
             //Case where we go back in history (we are already logged at the front door) so we abort
-            transition.abort()
+            transition.abort();
           } else {
-            transition.next()
+            transition.next();
           }
     },
     init_router: function () {
@@ -156,18 +158,18 @@ S.vue = {
                     MenuOptions: {
                         "display": true
                     }
-                }
+                };
             }
         });
         S.vue.router = new VueRouter();
         S.vue.router.map(S.vue.map);
-        S.vue.router.beforeEach(S.vue.beforeEach)
+        S.vue.router.beforeEach(S.vue.beforeEach);
         S.vue.router.afterEach(S.vue.afterEach);
         // Redirect certain routes to other routes (by default hom and if not logged redirect to login)
         S.vue.router.redirect({
             '/': '/home',
             '*': '/home'// redirect any not-found route to home
-        })
+        });
 
         S.vue.router.start(S.vue.el.App, '.app');
 
