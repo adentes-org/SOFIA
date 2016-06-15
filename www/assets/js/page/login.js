@@ -1,3 +1,4 @@
+/* global S */
 define({
     options : {
         displayQuickAddButton : false,

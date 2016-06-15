@@ -1,4 +1,4 @@
-/* global PouchDB */
+/* global PouchDB, $, moment */
 'use strict';
 var S = S || {};
 
@@ -27,7 +27,7 @@ S.db = {
   clearLocal : function(){
     return S.db.localDB.destroy();
   }
-}
+};
 
 S.db.setUrl(S.config.db);
 //S.db_users = new PouchDB(S.config.db._user_url, {skipSetup: true});
@@ -36,7 +36,7 @@ S.db.config = {
   getUsers : function(){
     var deferred = new $.Deferred();
     S.db.localDB.get('_design/sofia-config').then(function(doc){
-      console.log(deferred.resolve(doc.users || [])) //Return empty array if not present in DB (old version) depends on adentes-org/sofia-db#dd9feee
+      console.log(deferred.resolve(doc.users || [])); //Return empty array if not present in DB (old version) depends on adentes-org/sofia-db#dd9feee
     }).catch(function (err) {
       console.log(err);
     });
@@ -56,7 +56,7 @@ S.db.config = {
     });
     return deferred.promise();
   }
-}
+};
 S.db.users = {
   login : function(user,pass,silent){
     //TODO don't use jquery promise
@@ -81,7 +81,7 @@ S.db.users = {
     });
     return deferred.promise();
   }
-}
+};
 
 S.db.fiches = {
   changeToParse : 0,
@@ -97,18 +97,18 @@ S.db.fiches = {
               case "memo" :
                         S.db.config.getMemo().then(function(data){
                           S.vue.router.app.$children[1].$data.memo = data.memo;
-                          console.log("Updating memo data : ",data)
-                        })
+                          console.log("Updating memo data : ",data);
+                        });
                         break;
               case "home" :
                         S.db.fiches.getAllWithMine().then(function(data){
                           S.vue.router.app.$children[1].$data.fiches = data.fiches;
                           S.vue.router.app.$children[1].$data.my_fiches = data.my_fiches;
-                          console.log("Updating home data : ",data)
-                        })
+                          console.log("Updating home data : ",data);
+                        });
                         break;
               case "fiche" :
-                        var ficheid= window.location.hash.slice(3).split("/")[1]
+                        var ficheid= window.location.hash.slice(3).split("/")[1];
                         S.db.fiches.getByID(ficheid).then(function (doc) {
                           //S.vue.router.app.$children[1].$data.history
                           //S.vue.router.app.$children[1].$data.fiche
@@ -129,21 +129,21 @@ S.db.fiches = {
   resetTimeout : function() {
     //Clear all timer
     if(S.db.fiches.offlineTimeout){
-        console.log("Clearing offlineTimeout timeout")
-        window.clearTimeout(S.db.fiches.offlineTimeout)
+        console.log("Clearing offlineTimeout timeout");
+        window.clearTimeout(S.db.fiches.offlineTimeout);
     }
     if(S.db.fiches.offlineAfterTimeout){
-        console.log("Clearing offlineAfterTimeout timeout")
-        window.clearTimeout(S.db.fiches.offlineAfterTimeout)
+        console.log("Clearing offlineAfterTimeout timeout");
+        window.clearTimeout(S.db.fiches.offlineAfterTimeout);
     }
     //We watch for a other change event to happen
     S.db.fiches.offlineTimeout = window.setTimeout(S.db.fiches.timeout,S.config.header.timeoutOffline*1000);
   },
   timeout : function() {
-    console.log("S.db.fiches.offlineTimeout tigged !")
+    console.log("S.db.fiches.offlineTimeout tigged !");
     S.db.remoteDB.info().then(function (result) {
-      console.log("Reseting timeout after getting informtion from online db",result)
-      S.db.fiches.resetTimeout()
+      console.log("Reseting timeout after getting informtion from online db",result);
+      S.db.fiches.resetTimeout();
     }).catch(function (err) {
       console.log(err);
     });
@@ -166,12 +166,12 @@ S.db.fiches = {
       //We jsut receive data from server so wa are online
         if(S.vue.router.app.$children[0].$data.options.backColor !== S.config.header.backColor){
           //The header is display not as online
-          console.log("Setting header color to online")
+          console.log("Setting header color to online");
           S.vue.router.app.$children[0].$data.options.backColor = S.config.header.backColor;
         } /*else {
           //The header is display as online
         }*/
-        S.db.fiches.resetTimeout()
+        S.db.fiches.resetTimeout();
 
         if(S.db.fiches.changeToParse>0 || S.vue.router.app.$children[0].$data.options.displayLoadingBar){
           S.db.fiches.parseSync(info);
@@ -216,7 +216,7 @@ S.db.fiches = {
         });
   },
   getByID : function(id) {
-    var deferred = new $.Deferred()
+    var deferred = new $.Deferred();
     S.db.localDB.get(id).then(function (doc) {
       console.log(doc);
       deferred.resolve(doc);
@@ -239,7 +239,7 @@ S.db.fiches = {
     return my_fiches;
   },
   getAllWithMine : function() {
-      var deferred = new $.Deferred()
+      var deferred = new $.Deferred();
       S.db.fiches.getAll().then(function(result){
         result.my_fiches = S.db.fiches.filterMine(result.fiches);
         deferred.resolve(result);
@@ -247,25 +247,25 @@ S.db.fiches = {
       return deferred.promise();
     },
   getAll : function() {
-    var deferred = new $.Deferred()
+    var deferred = new $.Deferred();
     S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
       // handle result
       var ret = {
           user : S.user._current,
           fiches: []
-      }
+      };
       $.each(result.rows, function( index, value ) {
-        if(value.doc["_id"].split("/")[0] === "_design" ){
+        if(value.doc._id.split("/")[0] === "_design" ){
           return; //If it's a design doc
         }
         ret.fiches[ret.fiches.length] = value.doc;
-        value.doc.last_update = value.doc.events[value.doc.events.length -1].timestamp
+        value.doc.last_update = value.doc.events[value.doc.events.length -1].timestamp;
         var m = moment(value.doc.last_update);
         value.doc.last_update_since = m.fromNow();
         value.doc.last_update_is_old = m.add(3, 'hours').isBefore();
         var d = moment(value.doc.patient.birthdate);
-        value.doc.patient.age = moment().diff(d, 'years')
-        value.doc.patient.age_formatted = d.fromNow(true)
+        value.doc.patient.age = moment().diff(d, 'years');
+        value.doc.patient.age_formatted = d.fromNow(true);
       });
       ret.lang =  S.lang;
       deferred.resolve(ret);
@@ -276,14 +276,13 @@ S.db.fiches = {
     });
     return deferred.promise();
   },
-  //TODO maybe use startkey for get all the team fiches?
   getMyCreationCount : function (){
-    var deferred = new $.Deferred()
+    var deferred = new $.Deferred();
 
     S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
       var count = 0;
       $.each(result.rows, function( index, value ) {
-        if(value.doc["_id"].split("/")[0] === "_design" ){
+        if(value.doc._id.split("/")[0] === "_design" ){
           return; //If it's a design doc
         }
         if(value.doc.uid.split("-")[0] === S.user._current.name){
@@ -297,7 +296,6 @@ S.db.fiches = {
         console.log(err);
         deferred.reject(err);
     });
-
     return deferred.promise();
   },
-}
+};

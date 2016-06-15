@@ -1,3 +1,4 @@
+/* global S */
 define({
     options : {
         title: S.lang["memo"].capitalize(),

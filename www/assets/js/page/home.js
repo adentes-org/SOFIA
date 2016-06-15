@@ -1,3 +1,4 @@
+/* global S */
 define({
     options : {
         title:  S.lang["my-sheets"].capitalize(),

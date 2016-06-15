@@ -1,3 +1,4 @@
+/* global S */
 "use strict";
 define({
     options: {
@@ -13,7 +14,7 @@ define({
             var ficheId = this.$route.params.fiche_id;
             S.db.config.getUsers().then(function(userlist){
               console.log(userlist);
-            //S.db.config.getUsers().then(function(userlist){              console.log(userlist);
+              //S.db.config.getUsers().then(function(userlist){              console.log(userlist);
               S.db.fiches.getByID(ficheId).then(function (doc) {
                 console.log(doc);
                 S.vue.router.app.$children[0].$data.options.title = doc.patient.firstname +" "+ doc.patient.lastname;
@@ -30,16 +31,6 @@ define({
                 if(!ret.fiche.origin || ret.fiche.origin === ""){ // L'ogine n'est pas saisie on force la saisie
                     S.tool.getDialog("#add-origin-dialog").showModal();
                 }
-                /*
-                console.log("Fetching change for fiche in background ... ",ret.fiche, this)
-                S.db.fiches.getChanges(ret.fiche._id).then(function (changes) {
-                  console.log(changes)
-                  ret.history.push("Done ("+changes.results.length+"/"+changes.last_seq+")");
-                  console.log(ret);
-                }).catch(function (err) {
-                  console.log(err);
-                });
-                */
               });
 
             })
@@ -59,10 +50,10 @@ define({
           S.tool.getDialog("#update-fiche-information-dialog").showModal();
       },
       closeUpdateInformation: function () {
-          var data = this._data
+          var data = this._data;
           S.tool.getDialog("#update-fiche-information-dialog").close();
           S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
-            $.extend(true,data.fiche, doc) //Reset to what is in localDB
+            $.extend(true,data.fiche, doc); //Reset to what is in localDB
           });
       },
       closeDiffModal: function () {
@@ -75,11 +66,11 @@ define({
         }
         //console.log(el,el.attr("data-event"), el.data('event'));
         console.log(el,el.attr("data-diff"), el.data('diff'));
-        $("#show-diff-dialog>.mdl-dialog__content").html(objectDiff.convertToXMLString(el.data('diff')))
+        $("#show-diff-dialog>.mdl-dialog__content").html(objectDiff.convertToXMLString(el.data('diff')));
         S.tool.getDialog("#show-diff-dialog").showModal();
       },
       changeInformation: function () {
-        var ask= (!S.config.local["ask-for"]["changeInformation-validation"] || confirm(S.lang["ask-confirm"]+" ?")); //TODO replace with navigator.notification.confirm
+        var ask= (!S.config.local["ask-for"]["changeInformation-validation"] || confirm(S.lang["ask-confirm"]+" ?"));
         if(ask){
           var f = this._data.fiche;
           S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
@@ -106,16 +97,16 @@ define({
         var newPrimaryID = $(event.srcElement).val();
         var oldPrimary = S.lang.fiche.pathologys[this._data.fiche.primaryAffection] || this._data.fiche.primaryAffection;
         var newPrimary = S.lang.fiche.pathologys[newPrimaryID] || newPrimaryID;
-        var ask= (!S.config.local["ask-for"]["changePrimaryAffection-validation"] || confirm(S.lang["ask-confirm-choice"]+""+newPrimary+" ?"));  //TODO replace with navigator.notification.confirm
+        var ask= (!S.config.local["ask-for"]["changePrimaryAffection-validation"] || confirm(S.lang["ask-confirm-choice"]+""+newPrimary+" ?"));
         if(ask){
             console.log(this._data.fiche);
             this._data.fiche.events.push({
               type : "action",
               action : "changePrimaryAffection",
-              message : S.user._current.name+" "+S.lang.log["change-primary"]+" <b>"+oldPrimary+"</b> "+S.lang["to"]+" <b>"+newPrimary+"</b>",
+              message : S.user._current.name+" "+S.lang.log["change-primary"]+" <b>"+oldPrimary+"</b> "+S.lang.to+" <b>"+newPrimary+"</b>",
               timestamp : Date.now(),
               user :  S.user._current.name
-            })
+            });
             this._data.fiche.primaryAffection = newPrimaryID;
             S.db.fiches.put(this._data.fiche);
         }
@@ -123,7 +114,7 @@ define({
       addOrigin: function (event) {
         var target  = $(event.srcElement)
         if(target.is( "li" )){
-          target  = target.find("span[data-id]")
+          target  = target.find("span[data-id]");
         }
         var origin = $.trim(target.text());
         var originId = $.trim(target.attr("data-id"));
@@ -261,27 +252,6 @@ define({
         }
         S.tool.getDialog("#delete-fiche-dialog").close();
       },
-	  /*
-      delete: function () {
-        if(S.user._current.isAdmin()){
-          //We are admin
-          var ask= !S.config.local["ask-for"]["delete-validation"] || confirm("Etes-vous sûr de supprimer la fiche ?");
-          if(ask){
-            this._data.fiche.deleted = true;
-            this._data.fiche.events.push({
-              type : "action",
-              action : "delete",
-              message : S.user._current.name+" "+S.lang.log["del-fiche"]+".",
-              timestamp : Date.now(),
-              user :  S.user._current.name
-            })
-            S.db.fiches.put(this._data.fiche);
-          }
-        }else{
-          //Else we do nothing
-        }
-      },
-	  */
       closeCloseModal: function () {
            S.tool.getDialog("#close-fiche-dialog").close();
       },
