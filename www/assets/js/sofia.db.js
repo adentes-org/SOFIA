@@ -126,9 +126,24 @@ S.db.fiches = {
             S.db.fiches.changeToParse--;
           }
   },
+  resetTimeout : function() {
+    //Clear all timer
+    if(S.db.fiches.offlineTimeout){
+        console.log("Clearing offlineTimeout timeout")
+        window.clearTimeout(S.db.fiches.offlineTimeout)
+    }
+    if(S.db.fiches.offlineAfterTimeout){
+        console.log("Clearing offlineAfterTimeout timeout")
+        window.clearTimeout(S.db.fiches.offlineAfterTimeout)
+    }
+    //We watch for a other change event to happen
+    S.db.fiches.offlineTimeout = window.setTimeout(S.db.fiches.timeout,S.config.header.timeoutOffline*1000);
+  },
   timeout : function(sync) {
+    console.log("S.db.fiches.offlineTimeout tigged !")
     S.db.remoteDB.info().then(function (result) {
-      window.clearTimeout(S.db.fiches.offlineAfterTimeout); // On essaie de récupérer le sinformation de la base distante et on désactive l'affihcage hors-ligne si c'est pas faisable.
+      console.log("Reseting timeout after getting informtion from online db")
+      S.db.fiches.resetTimeout()
     }).catch(function (err) {
       console.log(err);
     });
@@ -156,18 +171,8 @@ S.db.fiches = {
         } /*else {
           //The header is display as online
         }*/
-        //Clear all timer
-        if(S.db.fiches.offlineTimeout){
-            console.log("Clearing offlineTimeout timeout")
-            window.clearTimeout(S.db.fiches.offlineTimeout)
-        }
-        if(S.db.fiches.offlineAfterTimeout){
-            console.log("Clearing offlineAfterTimeout timeout")
-            window.clearTimeout(S.db.fiches.offlineAfterTimeout)
-        }
-        //We watch for a other change event to happen
-        S.db.fiches.offlineTimeout = window.setTimeout(S.db.fiches.timeout,S.config.header.timeoutOffline*1000);
-        
+        S.db.fiches.resetTimeout()
+
         if(S.db.fiches.changeToParse>0 || S.vue.router.app.$children[0].$data.options.displayLoadingBar){
           S.db.fiches.parseSync(info);
         }
