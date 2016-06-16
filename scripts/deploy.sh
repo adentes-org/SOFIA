@@ -26,7 +26,7 @@ git config user.email "$COMMIT_AUTHOR_EMAIL"
 # Commit the "changes", i.e. the new version.
 # The delta will show diffs between new and old versions.
 git add --all .
-git commit -m "Deploy to GitHub Pages: ${TRAVIS_COMMIT}"
+git commit -m "Deploy to GitHub Pages: ${TRAVIS_COMMIT}" || echo "nothing to commit"
 
 chmod 600 $KEYFILE
 eval `ssh-agent -s`
@@ -38,4 +38,4 @@ expect << EOF
   expect eof
 EOF
 # Now that we're all set up, we can push.
-git push git@github.com:adentes-org/SOFIA.git $TARGET_BRANCH  || echo "git push to gh-pages erro"
+git push git@github.com:adentes-org/SOFIA.git $TARGET_BRANCH  || echo "git push to gh-pages error"
