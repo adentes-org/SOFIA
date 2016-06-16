@@ -1,4 +1,4 @@
-/* global S, Vue, VueRouter, $ */
+/* global Vue, VueRouter, $ */
 
 'use strict';
 var S = S || {};
