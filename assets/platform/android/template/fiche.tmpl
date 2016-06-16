@@ -12,6 +12,7 @@
                   <span v-for="path in f.pathologys" >{{ l.fiche.pathologys[path] || path | capitalize }}</span>
                 </span>
             </div>
+            <span class="owner" v-if="u.isAdmin()">{{f.owner_id}}</span>
             <span class="timestamp  {{f.last_update_is_old ? 'old':' '}}">{{ f.last_update_since }}</span>
         </div>
     </a>
