@@ -12,7 +12,6 @@ define({
     "cancel" : "cancel",
     "memo" : "memo",
     "settings": "settings",
-    "fiche" : "ticket",
     "you" : "You",
     "take" : "take",
     "close" : "close",

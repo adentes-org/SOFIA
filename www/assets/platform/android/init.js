@@ -1,4 +1,4 @@
-/* global componentHandler, S */
+/* global componentHandler, S, $, requirejs */
 'use strict';
 (function () {
   //Vue.config.silent = true
@@ -20,7 +20,7 @@
               afterDeviceReady: function () {
                 $("#menu .mdl-navigation .mdl-navigation__link").on("click",function(){
                   $(".mdl-layout__obfuscator.is-visible").click();
-                })
+                });
               },
               afterPageLoad: function () {
                   window.setTimeout(componentHandler.upgradeDom, 250); //Application de la lib material-design

@@ -1,10 +1,11 @@
+/* global $ */
 'use strict';
 var S = S || {};
 
 S.user = {
     _current : {
         restoreSession : function()  {
-          var last = JSON.parse(localStorage["sofia-last-login"])
+          var last = JSON.parse(localStorage["sofia-last-login"]);
           console.log("Restoring previous session:"+last);
 
           $.extend(S.user._current, last.doc);
@@ -15,7 +16,7 @@ S.user = {
             return false; //No trace of login
           }
 
-          var last = JSON.parse(localStorage["sofia-last-login"])
+          var last = JSON.parse(localStorage["sofia-last-login"]);
 
           if(last.db !== S.db.remoteDB._db_name){
             return false; //Not same remote DB
@@ -72,7 +73,7 @@ S.user = {
         $.extend(S.user._current, doc);
       }
       if(S.user._current.name === null){
-        S.user._current.name = S.config.user.username //Default to username ( admin case )
+        S.user._current.name = S.config.user.username; //Default to username ( admin case )
       }
     },
     /*

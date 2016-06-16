@@ -12,7 +12,6 @@ define({
     "cancel" : "annuler",
     "memo" : "mémo",
     "settings": "configuration",
-    "fiche" : "fiche",
     "you" : "Vous",
     "take" : "prendre",
     "close" : "fermer",

@@ -33,15 +33,15 @@ var platformList = ["android", "browser", "ios"]; //TODO generate from folder
 var langList = ["en", "fr"]; //TODO generate from folder
 
 function jsFolder(){
-  var f =  [folders.js, folders.js + '/page', folders.js + '/nls']
+  var f =  [folders.js, folders.js + '/page', folders.js + '/nls'];
   for (var l in langList) {
     if (langList.hasOwnProperty(l)) {
-        f.push(folders.js + '/nls/' + langList[l])
+        f.push(folders.js + '/nls/' + langList[l]);
     }
   }
   for (var p in platformList) {
     if (platformList.hasOwnProperty(p)) {
-        f.push(folders.platform + platformList[p])
+        f.push(folders.platform + platformList[p]);
     }
   }
   return f;
@@ -50,13 +50,13 @@ gulp.task('clean-js', function () {
   var folder = jsFolder();
   for (var i in folder) {
     if (folder.hasOwnProperty(i)) {
-        folder[i] = folder[i].replace(folders.assets, folders.dist)
+        folder[i] = folder[i].replace(folders.assets, folders.dist);
     }
   }
   return del(folder);
 });
 gulp.task('clean-css', function () {
-  return del([folders.assets + "/**/*.css",folders.dist + "/css/*.css",folders.dist + "/platform/**/*.css",folders.assets + "/**/*.map",folders.dist + "/css/maps/*.map",folders.dist + "/platform/**/*.map"])
+  return del([folders.assets + "/**/*.css",folders.dist + "/css/*.css",folders.dist + "/platform/**/*.css",folders.assets + "/**/*.map",folders.dist + "/css/maps/*.map",folders.dist + "/platform/**/*.map"]);
 });
 
 gulp.task('compress', ['clean-js'], function() {
@@ -71,7 +71,7 @@ gulp.task('compress', ['clean-js'], function() {
             },
             noSource : true
         }))
-        .pipe(gulp.dest(folder[i].replace(folders.assets, folders.dist)))
+        .pipe(gulp.dest(folder[i].replace(folders.assets, folders.dist)));
     }
   }
 });
@@ -104,15 +104,15 @@ gulp.task('less', ['clean-css'], function () {
 
 gulp.task('cordova:init', function() {
   gulp.src('./package.json')
-    .pipe(cordova())
-})
+    .pipe(cordova());
+});
 
 gulp.task('cordova:build',['less','compress'], function() {
   //gulp.pipe(
-    cordova(['build'])
+    cordova(['build']);
     //)
   //TODO add specific platform build
-})
+});
 // Watch for changes in files
 gulp.task('watch', function() {
   // Watch .js files
