@@ -274,7 +274,7 @@ define({
       },
       close: function () {
           if(this._data.fiche.pathologys.length === 0 || typeof this._data.fiche.primaryAffection === "undefined" || this._data.fiche.primaryAffection === ""){
-            return navigator.notification.alert(S.lang.alert["no-primaryAffection"]+"!");
+            return alert(S.lang.alert["no-primaryAffection"]+"!");
           }
           S.tool.getDialog("#close-fiche-dialog").showModal();
       },
