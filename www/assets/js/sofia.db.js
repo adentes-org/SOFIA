@@ -63,8 +63,7 @@ S.db.users = {
       if (err) {
         console.log(err);
         if(!silent){
-          //alert(err.message);
-          navigator.notification.alert(err.message);
+          alert(err.message);
         }
         deferred.reject(err);
       }else{
