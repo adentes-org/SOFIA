@@ -1,4 +1,4 @@
-/* global PouchDB, $, moment */
+/* global PouchDB, $, moment, objectDiff */
 'use strict';
 var S = S || {};
 
@@ -6,7 +6,7 @@ var S = S || {};
 var req_limit = 1000000;
 
 /**** DEBUG ****/
-//TODO disable for live
+//Disabled for live
 //PouchDB.debug.enable('*');
 PouchDB.debug.disable();
 /**** ***** ****/
@@ -30,8 +30,6 @@ S.db = {
 };
 
 S.db.setUrl(S.config.db);
-//S.db_users = new PouchDB(S.config.db._user_url, {skipSetup: true});
-
 S.db.config = {
   getUsers : function(){
     var deferred = new $.Deferred();
@@ -65,8 +63,7 @@ S.db.users = {
       if (err) {
         console.log(err);
         if(!silent){
-          //alert(err.message);
-          navigator.notification.alert(err.message);
+          alert(err.message);
         }
         deferred.reject(err);
       }else{
@@ -203,13 +200,53 @@ S.db.fiches = {
   post : function(obj) { //Create
     return S.db.localDB.post(obj);
   },
+  mergeConflict : function(o,n) { // o : obj in db, n: obj to commit
+  //TODO test intensively
+    /* This will merge and keep a maximum of information (things deleted previously could be added) */
+    var ret = $.extend({},o,{
+      close_context : n.close_context,
+      deleted : n.deleted,
+      closed : n.closed,
+      patient : n.patient,
+      origin : n.origin,
+      owner_id : n.owner_id,
+      primaryAffection : n.primaryAffection,
+      uid : n.uid
+    }); //Close and overwrite some parts that can be directly
+    $.each(n.pathologys, function(id,val){
+      if ($.inArray(val,ret.pathologys) === -1) { //Not found
+        ret.pathologys.push(val);
+      }
+    });
+    $.each(n.events, function(id,val){
+      if ($.inArray(val,ret.events) === -1) { //Not found
+        ret.events.push(val);
+      }
+    });
+    ret.events.sort(function(x, y){ //Order
+      return x.timestamp - y.timestamp; 
+    });
+    /* */
+    ret._rev=o._rev;
+    ret.events.push({
+              type : "action",
+              action : "autoMergeConflict",
+              message : "Conflict detected locally and merged !",
+              diff : objectDiff.diff(o, ret),
+              timestamp : Date.now(),
+              user :  S.user._current.name
+    });
+    return ret;
+  },
   put : function(obj) { //Update or Create
-    //TODO check-up
     obj.pathologys = S.tool.uniq(obj.pathologys); // Remove any duplicate
     return S.db.localDB.put(obj).catch(function (err) {
             console.log(err);
-            if (err.status === 409) {
-              // conflict! //TODO handle
+            if (err.status === 409 || err.name === 'conflict') {
+              // conflict!
+              S.db.fiches.getByID(obj._id).then(function (doc) {
+                S.db.fiches.put(S.db.fiches.mergeConflict(doc,obj));//Saving merge conflict
+              });//TODO detection loop
             } else {
               // some other error
             }

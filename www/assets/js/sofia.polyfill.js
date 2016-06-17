@@ -18,3 +18,10 @@ if ( !String.prototype.capitalize ) {
         return this.charAt(0).toUpperCase() + this.slice(1);
     }
 }
+
+//Use cordova-plugin-dialogs for more native looks
+if (navigator.notification && typeof navigator.notification.alert === "function" ) {
+  window.alert = navigator.notification.alert;
+}
+
+//TODO Do the opposite mockup if we use navigator.notification.alert somewhere in the code 

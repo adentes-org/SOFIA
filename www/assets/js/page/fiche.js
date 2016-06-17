@@ -52,7 +52,7 @@ define({
           var data = this._data;
           S.tool.getDialog("#update-fiche-information-dialog").close();
           S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
-            $.extend(true,data.fiche, doc); //Reset to what is in localDB
+            $.extend(true,data.fiche, doc); //Reset to what is in localDB //TODO check if should really be recursive
           });
       },
       closeDiffModal: function () {
@@ -274,7 +274,7 @@ define({
       },
       close: function () {
           if(this._data.fiche.pathologys.length === 0 || typeof this._data.fiche.primaryAffection === "undefined" || this._data.fiche.primaryAffection === ""){
-            return navigator.notification.alert(S.lang.alert["no-primaryAffection"]+"!");
+            return alert(S.lang.alert["no-primaryAffection"]+"!");
           }
           S.tool.getDialog("#close-fiche-dialog").showModal();
       },
