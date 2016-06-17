@@ -1,4 +1,4 @@
-/* global PouchDB, $, moment */
+/* global PouchDB, $, moment, objectDiff */
 'use strict';
 var S = S || {};
 
@@ -226,9 +226,9 @@ S.db.fiches = {
     });
     ret.events.sort(function(x, y){ //Order
       return x.timestamp - y.timestamp; 
-    })
+    });
     /* */
-    ret._rev=o._rev
+    ret._rev=o._rev;
     ret.events.push({
               type : "action",
               action : "autoMergeConflict",
@@ -238,7 +238,7 @@ S.db.fiches = {
               user :  S.user._current.name
     });
     return ret;
-  }
+  },
   put : function(obj) { //Update or Create
     obj.pathologys = S.tool.uniq(obj.pathologys); // Remove any duplicate
     return S.db.localDB.put(obj).catch(function (err) {
