@@ -52,7 +52,7 @@ define({
           var data = this._data;
           S.tool.getDialog("#update-fiche-information-dialog").close();
           S.db.fiches.getByID(this.$route.params.fiche_id).then(function (doc) {
-            $.extend(true,data.fiche, doc); //Reset to what is in localDB
+            $.extend(true,data.fiche, doc); //Reset to what is in localDB //TODO check if should really be recursive
           });
       },
       closeDiffModal: function () {
