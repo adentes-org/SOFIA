@@ -201,7 +201,7 @@ S.db.fiches = {
     return S.db.localDB.post(obj);
   },
   mergeConflict : function(o,n) { // o : obj in db, n: obj to commit
-  //TODO test intensively
+    //This is never call normally because the vue and obj of the vue is instantly update when in localDB
     /* This will merge and keep a maximum of information (things deleted previously could be added) */
     var ret = $.extend({},o,{
       close_context : n.close_context,
