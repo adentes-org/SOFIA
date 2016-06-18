@@ -219,12 +219,24 @@ S.db.fiches = {
       }
     });
     $.each(n.events, function(id,val){
+      /*
       if ($.inArray(val,ret.events) === -1) { //Not found
         ret.events.push(val);
       }
+      */
+        var found = false;
+        var searching = JSON.stringify(val);
+        $.each(ret.events, function(i,v){
+          if(!found && JSON.stringify(v) === searching ){
+            found = true;
+          }
+        });
+        if(!found){
+          ret.events.push(val);
+        }
     });
     ret.events.sort(function(x, y){ //Order
-      return x.timestamp - y.timestamp; 
+      return x.timestamp - y.timestamp;
     });
     /* */
     ret._rev=o._rev;
