@@ -244,7 +244,8 @@ S.db.fiches = {
               type : "action",
               action : "autoMergeConflict",
               message : "Conflict detected locally and merged !",
-              diff : objectDiff.diff(o, ret),
+              /*  diff : objectDiff.diff(o, ret), */ //Take too much space
+              diff : objectDiff.diff(o.patient, ret.patient), //Let inclusive but show if important information has been changed
               timestamp : Date.now(),
               user :  S.user._current.name
     });
