@@ -1,6 +1,8 @@
 /* global S */
 define({
     options : {
+        displaySearchbox: true,
+        displayQuickAddButton : true,
         title:  S.lang["my-sheets"].capitalize(),
         titleInSearch: S.lang["search"].capitalize()
     },
