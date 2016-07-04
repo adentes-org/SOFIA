@@ -201,7 +201,8 @@ S.db.fiches = {
     return S.db.localDB.post(obj);
   },
   getDiffConflict : function(o,n) {
-    return objectDiff.diff(o.patient, n.patient)
+    //return objectDiff.diff(o.patient, n.patient)
+    return objectDiff.diff($.extend({}, o, {events : []}), $.extend({}, n, {events : []})) //Create a shallow clone and overwrite events parts to not be big in term of data 
   },
   mergeConflict : function(o,n) { // o : obj in db, n: obj to commit
     //This is never call normally because the vue and obj of the vue is instantly update when in localDB
