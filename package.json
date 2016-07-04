@@ -1,7 +1,7 @@
 {
   "name": "sofia",
   "description": "Suivi Opérationnel des Fiches d'Intervention par Applicatif",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "private": true,
   "authors": [
     {
