@@ -59,7 +59,8 @@ define({
       "give-fiche-to" : "donne la fiche à",
       "add-checkin" : "a vu ce patient",
       "has-updated-information" : "a mis à jour les informations",
-      "old-prop" : "ancien propriétaire"
+      "old-prop" : "ancien propriétaire",
+      "auto-merge" : "Conflit détecté avec la base locale (et corrigé) !"
     },
     "fiche" : {
       "owner" : "propriétaire",
