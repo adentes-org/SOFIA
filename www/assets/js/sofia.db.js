@@ -247,7 +247,7 @@ S.db.fiches = {
     ret.events.push({
               type : "action",
               action : "autoMergeConflict",
-              message : "Conflict detected locally and merged !",
+              message : S.lang.log["auto-merge"],
               /*  diff : objectDiff.diff(o, ret), */ //Take too much space
               diff : S.db.fiches.getDiffConflict(o,ret),
               timestamp : Date.now(),
