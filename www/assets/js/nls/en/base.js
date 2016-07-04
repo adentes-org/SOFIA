@@ -54,7 +54,8 @@ define({
       "give-fiche-to" : "give ticket to",
       "add-checkin" : "has checked this patient",
       "has-updated-information" : "has updated informations",
-      "old-prop" : "old owner"
+      "old-prop" : "old owner",
+      "auto-merge" : "Conflict detected locally and merged !"
     },
     "alert" : {
       "scan-fail":"Scanning of QRCode failed",
