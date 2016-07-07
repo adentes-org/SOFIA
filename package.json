@@ -1,7 +1,7 @@
 {
   "name": "sofia",
   "description": "Suivi Opérationnel des Fiches d'Intervention par Applicatif",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "private": true,
   "authors": [
     {
@@ -11,7 +11,7 @@
     }
   ],
   "scripts": {
-    "sign" : "cp \"$APK-unsigned.apk\" \"$APK-signed.apk\" && zip -d \"$APK-signed.apk\" \"assets/html\" \"assets/html-*\" \"assets/images\" \"assets/style.css\" \"res/draw*/launcher_icon.png\" \"res/drawable-land-*\" \"res/drawable-port-*\" \"assets/www/cordova-js-src\" && jarsigner -verbose -sigalg SHA1withRSA -storepass \"$STOREPASS\" -keypass \"$KEYPASS\" -digestalg SHA1 -keystore \"$KEYSTORE\" \"$APK-signed.apk\" sofia && jarsigner -verify -verbose -certs \"$APK-signed.apk\" ",
+    "sign" : "cp \"$APK-unsigned.apk\" \"$APK-signed.apk\" && zip -d \"$APK-signed.apk\" \"assets/html\" \"assets/html-*\" \"assets/images\" \"assets/style.css\" \"res/draw*/launcher_icon.png\" \"res/drawable-land-*\" \"res/drawable-port-*\" \"assets/www/cordova-js-src\" && jarsigner -verbose -sigalg SHA1withRSA -storepass \"$STOREPASS\" -keypass \"$KEYPASS\" -digestalg SHA1 -keystore \"$KEYSTORE\" \"$APK-signed.apk\" sofia && zipalign -v 4 \"$APK-signed.apk\" \"$APK-signed-aligned.apk\" && jarsigner -verify -verbose -certs \"$APK-signed-aligned.apk\" ",
     "clean": "cordova clean android",
     "build": "cordova build",
     "get-bower": "bower-installer",

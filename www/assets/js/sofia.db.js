@@ -200,6 +200,10 @@ S.db.fiches = {
   post : function(obj) { //Create
     return S.db.localDB.post(obj);
   },
+  getDiffConflict : function(o,n) {
+    //return objectDiff.diff(o.patient, n.patient)
+    return objectDiff.diff($.extend({}, o, {events : []}), $.extend({}, n, {events : []})) //Create a shallow clone and overwrite events parts to not be big in term of data 
+  },
   mergeConflict : function(o,n) { // o : obj in db, n: obj to commit
     //This is never call normally because the vue and obj of the vue is instantly update when in localDB
     /* This will merge and keep a maximum of information (things deleted previously could be added) */
@@ -243,9 +247,9 @@ S.db.fiches = {
     ret.events.push({
               type : "action",
               action : "autoMergeConflict",
-              message : "Conflict detected locally and merged !",
+              message : S.lang.log["auto-merge"],
               /*  diff : objectDiff.diff(o, ret), */ //Take too much space
-              diff : objectDiff.diff(o.patient, ret.patient), //Let inclusive but show if important information has been changed
+              diff : S.db.fiches.getDiffConflict(o,ret),
               timestamp : Date.now(),
               user :  S.user._current.name
     });
