@@ -26,7 +26,7 @@
     "material-design-icons": "latest",
     "dialog-polyfill": "latest",
     "objectdiff": "latest",
-    "moment": "v2.14.1"
+    "moment": "v2.13.0"
   },
   "install": {
     "path": "www/dist/lib",
