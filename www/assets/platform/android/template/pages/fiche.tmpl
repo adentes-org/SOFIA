@@ -19,13 +19,17 @@
     <template v-else>
       <button v-on:click="showDeleteModal" class="deleting-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="user.isAdmin() == true">{{ lang.delete | capitalize }}</button>
 
-      <button v-on:click="reopen" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.closed == true">{{ lang.reopen | capitalize }}</button>
-      <button v-on:click="close" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>{{ lang.close | capitalize }}</button>
-
-      <button v-on:click="showGiveModal" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">{{ lang.send | capitalize }}</button>
-      <button v-on:click="take" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>{{ lang.take | capitalize }}</button>
-
-      <button v-on:click="addCheckIn" class="checkin-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">{{ lang.checkin | capitalize }}</button>
+      <template v-if="fiche.owner_id == user.name || user.isAdmin() == true">
+        <button v-on:click="reopen" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.closed == true">{{ lang.reopen | capitalize }}</button>
+        <button v-on:click="close" class="closing-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-else>{{ lang.close | capitalize }}</button>
+      
+        <button v-on:click="showGiveModal" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">{{ lang.send | capitalize }}</button>
+      
+        <button v-on:click="addCheckIn" class="checkin-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" v-if="fiche.owner_id == user.name">{{ lang.checkin | capitalize }}</button>
+      </template>
+      <template v-else>
+        <button v-on:click="take" class="owning-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">{{ lang.take | capitalize }}</button>
+      </template>
     </template>
   </div>
   <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
