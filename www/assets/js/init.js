@@ -3,9 +3,6 @@
 /*
  * Init the app dependency with requirejs
  */
-var S = S || {};
-var language = localStorage["sofia-language"] || navigator.language || navigator.userLanguage || 'en';
-
 requirejs.config({
     baseUrl: 'dist',
     paths: {
@@ -45,7 +42,10 @@ requirejs.config({
         vue: {
             exports: 'Vue'
         },
-        "vue-router":["vue"],
+        "vue-router":{
+            exports: 'VueRouter',
+            deps:['vue']
+        },
         pouchdb: {
             exports: 'PouchDB'
         },
@@ -68,36 +68,12 @@ requirejs.config({
         }
     }
 });
-//var base = ;
-//base.unshift();
-S.init = function(cordova){
-  requirejs(['jquery','i18n!app/nls/base', 'vue', 'vue-router', 'pouchdb', "dialog-polyfill", 'moment', 'moment-locales', 'app/sofia.polyfill','objectdiff'], function ($,lang, Vue, VueRouter, PouchDB, dialogPolyfill, moment) {
-       // Set plugin
-      Vue.use(VueRouter);
-      window.PouchDB = PouchDB; //Force PouchDB to DOM
-      window.Vue = Vue; //Force Vue to DOM
-      window.VueRouter = VueRouter; //Force VueRouter to DOM
-      moment.locale(language);
-      window.moment = moment; //Force moment to DOM
-      S.lang = lang; //Setup lang
-
-      window.dialogPolyfill = dialogPolyfill; //Force dialogPolyfill to DOM
-      $("head").append('<link rel="stylesheet" type="text/css" href="dist/lib/dialog-polyfill/dialog-polyfill.css">'); //Load style for dialog
-      //$("head").append('<link rel="stylesheet" type="text/css" href="dist/lib/objectdiff/style.css">'); //Load style for diff
-
-      requirejs(['pouchdb-authentication', 'app/sofia.tool', 'app/sofia.template', 'app/sofia.config'], function () {
-          $("head").append('<link rel="stylesheet" type="text/css" href="dist/platform/' + cordova.platformId + '/css/style.css">');
-          requirejs(['platform/' + cordova.platformId + '/init', 'app/sofia.db'], function () {
-              requirejs(['app/sofia.vue', 'app/sofia.data', 'app/sofia.user', 'app/sofia.app'], function () {
-                  window.setTimeout(S.app.initialize,250); // Add time if all not already loaded for safety
-              });
-          });
-      });
-  });
-};
 
 
-requirejs(['cordova'], S.init , function (err) {
+requirejs(['cordova'], function(cordova){
+    // Load the main app module to start the app (in cordova)
+    requirejs(["main"]);
+} , function (err) {
   //Handle error for example if cordova isn't here
   console.log(err.requireModules, err.requireType);
   if(err && err.requireModules.length === 1 && err.requireModules[0] === "cordova" && err.requireType === "scripterror"){ //Cordova fail to load
@@ -106,7 +82,8 @@ requirejs(['cordova'], S.init , function (err) {
       is_mock: true,
       platformId : "browser"
     }
-    S.init(window.cordova);
+    // Load the main app module to start the app (in web version)
+    requirejs(["main"]);
   } else {
     throw err;
   }
