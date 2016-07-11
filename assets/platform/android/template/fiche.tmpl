@@ -13,6 +13,7 @@
                 </span>
             </div>
             <span class="owner" v-if="u.isAdmin()">{{f.owner_id}}</span>
+            <span class="creation">{{ f.creation_date }}</span>
             <span class="timestamp  {{f.last_update_is_old ? 'old':' '}}">{{ f.last_update_since }}</span>
         </div>
     </a>
