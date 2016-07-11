@@ -1,9 +1,5 @@
-/* global S */
-//var S = S || {}; //Keep it that way to throw a error if loaded to soon;
-/* */
-define(['jquery'], function($) {
-    var deferred = new $.Deferred(); //TODO migrate to strandard promise
-    S.tool.loadStatic({
+define(['jquery','app/sofia.tool','app/sofia.template'], function($,tool,templateBase) {
+    return tool.loadStatic({
         base : "assets/platform/android/template/", //TODO compress template file and switch to dist
         files : {
             header : "header.tmpl",
@@ -23,11 +19,11 @@ define(['jquery'], function($) {
             }
         }
     }).then(function(data){
-        S.template = $.extend(true, S.template, data);
-        S.template.page_wrapper = function (id, page) {
+        var template = $.extend(true, templateBase, data);
+        template.page_wrapper = function (id, page) {
             return '<div class="page-content" id="' + id + '">' + ((typeof page === "function")?page():page)   + '</div>';
         };
-        S.template.base = function () {
+        template.base = function () {
             return '<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">' +
                     "\n"  + '<app-header v-bind:options="headerOptions" v-bind:searchbox.sync="searchbox"></app-header>' +
                     "\n" + S.template.menu +
@@ -36,12 +32,7 @@ define(['jquery'], function($) {
                     "\n" + S.template.toast +
                     '</div>';
         };
-        //console.log(S.template);
-        //TODO return requirejs
-    }).then(function(){
-        S.template._isLoaded = true;
-        deferred.resolve(S.template);
-    });
-    //TODO reject case;
-    return deferred.promise();
+        template._isLoaded = true;
+        return template;
+    })//TODO reject case;
 });
