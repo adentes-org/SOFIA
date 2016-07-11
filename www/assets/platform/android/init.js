@@ -11,6 +11,7 @@ define(["jquery",'lib/material-design-lite/material.min', 'promise!platform/andr
   var platform = {
           isLoaded: true,
           id: "android",
+          template: template,
           events: {
               afterDeviceReady: function () {
                 $("#menu .mdl-navigation .mdl-navigation__link").on("click",function(){
