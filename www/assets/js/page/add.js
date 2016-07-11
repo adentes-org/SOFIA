@@ -1,8 +1,8 @@
 /* global S */
-
-define({
+define(['i18n!app/nls/base'],function(lang) {
+   return {
         options: {
-            title: S.lang["add"].capitalize(),
+            title: lang["add"].capitalize(),
             displayQuickAddButton : false,
             displaySearchbox: false
         },
@@ -62,4 +62,5 @@ define({
             });
           }
         }
+    };
 });

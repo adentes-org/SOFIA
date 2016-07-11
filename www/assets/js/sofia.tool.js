@@ -55,14 +55,7 @@ define(["jquery", "dialog-polyfill"], function($,dialogPolyfill) {
                         })); //TODO manage reject.
                     } else if(typeof path === "object"){
                         // Chain load static
-                        // TODO use a  more recursive structure and use a local path.base
-                        /*
-                        console.log("chain("+JSON.stringify({
-                            base : paths.base,
-                            files : path
-                        })+")");
-                        */
-                        pool.push(S.tool.loadStatic({
+                        pool.push(tool.loadStatic({
                             base : paths.base,
                             files : path
                         }).then(function(d){
@@ -88,6 +81,6 @@ define(["jquery", "dialog-polyfill"], function($,dialogPolyfill) {
                 return dfd.promise();
             //});
         }
-    }; 
-    return tool
+    };
+    return tool;
 });

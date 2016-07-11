@@ -1,7 +1,9 @@
 /* global S */
-define({
+
+define(['i18n!app/nls/base'],function(lang) {
+  return {
     options : {
-        title: S.lang["memo"].capitalize(),
+        title: lang["memo"].capitalize(),
         displayQuickAddButton : false,
         displaySearchbox: false
     },
@@ -10,4 +12,5 @@ define({
           return S.db.config.getMemo()
       }
     },
+  }
 })

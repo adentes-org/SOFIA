@@ -1,5 +1,5 @@
 /* global requirejs */
-'use strict';
+"use strict";
 /*
  * Init the app dependency with requirejs
  */
@@ -37,7 +37,7 @@ requirejs.config({
         },
         pouchdb: {
             exports: 'PouchDB'
-        },       
+        },
         "pouchdb-authentication": ['pouchdb'],
         vue: {
             exports: 'Vue'
@@ -45,9 +45,6 @@ requirejs.config({
         "vue-router":{
             exports: 'VueRouter',
             deps:['vue']
-        },
-        pouchdb: {
-            exports: 'PouchDB'
         },
         moment: {
             exports: 'moment'
@@ -64,11 +61,13 @@ requirejs.config({
         //Set the config for the i18n
         //module ID
         i18n: {
-            locale: language
+            locale: localStorage["sofia-language"] || navigator.language || navigator.userLanguage || 'en',
         }
     }
 });
 
+
+window.S = {}; //TODO remove this hack
 
 requirejs(['cordova'], function(cordova){
     // Load the main app module to start the app (in cordova)
@@ -81,7 +80,7 @@ requirejs(['cordova'], function(cordova){
     window.cordova = {
       is_mock: true,
       platformId : "browser"
-    }
+    };
     // Load the main app module to start the app (in web version)
     requirejs(["main"]);
   } else {

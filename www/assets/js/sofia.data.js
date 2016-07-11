@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 define(['app/page/home','app/page/login','app/page/fiche','app/page/add','app/page/memo','app/page/settings'], function (pHome,pLogin,pFiche,pAdd,pMemo,pSettings) {
   var data = {
       pages: {

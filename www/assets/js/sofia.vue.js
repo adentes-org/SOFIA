@@ -1,5 +1,5 @@
 'use strict';
-define(["jquery", "vue", 'vue-router','app/sofia.tool'], function($,Vue,VueRouter,too) {
+define(["jquery", "vue", 'vue-router','app/sofia.tool'], function($,Vue,VueRouter,tool) {
     var vue = {
         el: {
             pages: {}
@@ -79,7 +79,7 @@ define(["jquery", "vue", 'vue-router','app/sofia.tool'], function($,Vue,VueRoute
                   titleInSearch : cOptions.titleInSearch,
                   onHeaderClick : cOptions.onHeaderClick,
                 });
-    
+
                 appData.quickAddButtonOptions.display = (typeof cOptions.displayQuickAddButton === "boolean") ? cOptions.displayQuickAddButton : true;
                 appData.MenuOptions.display = (typeof cOptions.displayMenu === "boolean") ? cOptions.displayMenu : true;
             }
@@ -92,9 +92,9 @@ define(["jquery", "vue", 'vue-router','app/sofia.tool'], function($,Vue,VueRoute
                     vue.el.menu.$set('current', current.name);
                     $("head>title").text("SOFIA" + ((current.name && current.name !== "") ? " - " + current.name : ""));
                 }
-    
+
                 vue.updateOptions(current);
-    
+
                 if(typeof S.platform.events.afterPageLoad === "function"){
                     S.platform.events.afterPageLoad();
                 }
@@ -167,9 +167,9 @@ define(["jquery", "vue", 'vue-router','app/sofia.tool'], function($,Vue,VueRoute
                 '/': '/home',
                 '*': '/home'// redirect any not-found route to home
             });
-    
+
             vue.router.start(vue.el.App, '.app');
-    
+
             //TODO fix why the menu vue clear the v-link
             $("#menu a.mdl-navigation__link").each(function (id, el) {
                 $(el).attr('v-link', $(el).attr('link'));
@@ -184,7 +184,6 @@ define(["jquery", "vue", 'vue-router','app/sofia.tool'], function($,Vue,VueRoute
                 }
             });
         }
-    }
+    };
     return vue;
-})
-
+});

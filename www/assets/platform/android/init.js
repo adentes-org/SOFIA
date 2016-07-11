@@ -7,7 +7,7 @@ define(["jquery",'lib/material-design-lite/material.min', 'promise!platform/andr
   $("head").append('<link rel="stylesheet" type="text/css" href="dist/lib/material-design-lite/material.min.css">');
   $("head").append('<link rel="stylesheet" type="text/css" href="dist/lib/dialog-polyfill/dialog-polyfill.css">'); //Load style for dialog
   $("head").append('<link rel="stylesheet" type="text/css" href="dist/platform/android/css/style.css">');
-  
+
   var platform = {
           isLoaded: true,
           id: "android",
@@ -23,4 +23,5 @@ define(["jquery",'lib/material-design-lite/material.min', 'promise!platform/andr
               }
           }
       };
+  return platform;
 });

@@ -1,5 +1,5 @@
 'use strict';
-define([], function() {
+define(["jquery"], function($) {
   var config = {
     user : {
       username : "",
@@ -55,11 +55,11 @@ define([], function() {
       }
     }
   };
-  
+
   $.extend(true, config.user, (typeof localStorage["sofia-user-config"] === "string") ? JSON.parse(localStorage["sofia-user-config"]) : null);
   $.extend(true, config.db, (typeof localStorage["sofia-server-config"] === "string") ? JSON.parse(localStorage["sofia-server-config"]) : null);
   $.extend(true, config.local, (typeof localStorage["sofia-local-config"] === "string") ? JSON.parse(localStorage["sofia-local-config"]) : null);
   //TODO check if all config is ok
-  
+
   return config;
 });

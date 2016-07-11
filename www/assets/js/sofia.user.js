@@ -5,7 +5,7 @@ define(["jquery"], function($) {
             restoreSession : function()  {
               var last = JSON.parse(localStorage["sofia-last-login"]);
               console.log("Restoring previous session:"+last);
-    
+
               $.extend(S.user._current, last.doc);
             },
             wasLoggedIn : function(){
@@ -13,25 +13,25 @@ define(["jquery"], function($) {
               if(typeof localStorage["sofia-last-login"] !== "string"){
                 return false; //No trace of login
               }
-    
+
               var last = JSON.parse(localStorage["sofia-last-login"]);
-    
+
               if(last.db !== S.db.remoteDB._db_name){
                 return false; //Not same remote DB
               }
-    
+
               if(last.user.name !== S.config.user.username || last.user.pass !== S.config.user.userpass){
                 return false; //Not same cred
               }
-    
+
               var ThreeHourSooner = new Date();
               ThreeHourSooner.setHours(ThreeHourSooner.getHours() - 3);
               if(last.at < ThreeHourSooner){
                 return false; //Not logged in since 3 Hours
               }
-    
+
               return true; //All good
-    
+
             },
             isLogged : function(){
                 return (typeof S.user._current.name !== "undefined" && (S.user._current.name !== null || S.user._current.roles[0] === "_admin" ) ) ;
@@ -86,5 +86,5 @@ define(["jquery"], function($) {
           delete localStorage['sofia-user-config'];
         }
     };
-    return user
+    return user;
 });

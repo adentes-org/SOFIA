@@ -1,10 +1,9 @@
-
 'use strict';
 define([], function() {
     var app = {
         // Application Constructor
         initialize: function () {
-            S.app.bindEvents();
+            app.bindEvents();
         },
         // Bind Event Listeners
         //
@@ -13,7 +12,7 @@ define([], function() {
         bindEvents: function () {
             //We use requirejs so everything is ready whenwe are here
             //document.addEventListener('deviceready', this.onDeviceReady, false);
-            window.setTimeout(S.app.onDeviceReady, 1000); //TODO when everything is rework test to remove this timing
+            window.setTimeout(app.onDeviceReady, 1000); //TODO when everything is rework test to remove this timing
         },
         removeLoader: function () {
             $('body>.app-loading').remove();
@@ -25,7 +24,7 @@ define([], function() {
                 S.platform.events.afterDeviceReady();
             }
             $("body").removeClass("loading");
-            window.setTimeout(S.app.removeLoader, 1000);
+            window.setTimeout(app.removeLoader, 1000);
         }
     };
     return app;

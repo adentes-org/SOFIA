@@ -1,26 +1,33 @@
-  define(['jquery','i18n!app/nls/base', 'vue', 'vue-router', 'moment', 'moment-locales','app/sofia.tool','app/sofia.config','app/sofia.user','app/sofia.db', 'app/sofia.data','platform/' + cordova.platformId + '/init','app/sofia.app','app/sofia.polyfill',], function ($,lang, Vue, VueRouter, moment,tool,config,user,db,data,platform,app) {
-      //Define primary object 
-      var S = {
-        lang : lang
-        language : localStorage["sofia-language"] || navigator.language || navigator.userLanguage || 'en',
+"use strict";
+define(['jquery','i18n!app/nls/base', 'vue', 'vue-router', 'moment',
+          'app/sofia.tool','app/sofia.config','app/sofia.user','app/sofia.db', 'app/sofia.data',
+            'platform/' + cordova.platformId + '/init','app/sofia.vue','app/sofia.app','app/sofia.polyfill','moment-locales'],
+            function ($,lang, Vue, VueRouter, moment,
+                tool,config,user,db,data,platform,vue,app) {
+      //Define primary object
+      S = {
+        lang : lang,
+        language : localStorage["sofia-language"] || navigator.language || navigator.userLanguage || 'en', //TODO use language allready pass to requirejs
+
         config : config,
         tool:tool,
-        template:platform.template,
         user:user,
         db:db,
         data: data, //TODO rename data to page or at least expose or regroup in data
-        platform:platform
+        platform:platform,
+        template:platform.template,
+        vue:vue,
         app:app
       };
-      
+      console.log(S,'platform/' + cordova.platformId + '/init');
+
       // Setup plugins
       Vue.use(VueRouter);
       moment.locale(S.language);
-      
+
       //Setup DB
       db.setUrl(config.db); //TODO check usefullnes of that
-      
-      //window.S = S; //TODO check if usefull
+
       window.setTimeout(S.app.initialize,250); // Add time if all not already loaded for safety //TODO everythings is now ready
 
       //Apply theming
@@ -30,9 +37,9 @@
 
       return S;
       //TODO HERE
-      
+
       /*
-              requirejs(['app/sofia.vue', ], function () {
+              requirejs([, ], function () {
                   window.setTimeout(S.app.initialize,250); // Add time if all not already loaded for safety
               });
       */
