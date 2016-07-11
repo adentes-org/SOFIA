@@ -27,7 +27,6 @@ define(["jquery","pouchdb","moment","objectdiff","pouchdb-authentication","momen
     }
   };
   
-  var db.setUrl(S.config.db);
   var db.config = {
     getUsers : function(){
       var deferred = new $.Deferred();
