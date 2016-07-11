@@ -8,7 +8,7 @@
         template:platform.template,
         user:user,
         db:db,
-        data: data, //TODO rename data to page
+        data: data, //TODO rename data to page or at least expose or regroup in data
         platform:platform
         app:app
       };
