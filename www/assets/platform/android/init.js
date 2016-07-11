@@ -1,4 +1,3 @@
-/* global componentHandler, S, $, requirejs */
 'use strict';
 
 define(["jquery",'lib/material-design-lite/material.min', 'promise!platform/android/template'], function($,componentHandler,template) {
