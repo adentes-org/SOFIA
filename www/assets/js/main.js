@@ -1,4 +1,4 @@
-  define(['jquery','i18n!app/nls/base', 'vue', 'vue-router', 'moment', 'moment-locales','app/sofia.tool','app/sofia.config','app/sofia.template','app/sofia.user','app/sofia.app','app/sofia.polyfill'], function ($,lang, Vue, VueRouter, moment,tool,config,template,user,app) {
+  define(['jquery','i18n!app/nls/base', 'vue', 'vue-router', 'moment', 'moment-locales','app/sofia.tool','app/sofia.config','app/sofia.template','app/sofia.user','app/sofia.db','app/sofia.app','app/sofia.polyfill'], function ($,lang, Vue, VueRouter, moment,tool,config,template,user,db,app) {
       //Define primary object 
       var S = {
         lang : lang
@@ -7,6 +7,7 @@
         tool:tool,
         template:template,
         user:user,
+        db:db,
         app:app
       };
       
@@ -28,7 +29,7 @@
       /*
 
       requirejs(['pouchdb-authentication', ], function () {
-          requirejs(['platform/' + cordova.platformId + '/init', 'app/sofia.db'], function () {
+          requirejs(['platform/' + cordova.platformId + '/init', ], function () {
               requirejs(['app/sofia.vue', 'app/sofia.data', ], function () {
                   window.setTimeout(S.app.initialize,250); // Add time if all not already loaded for safety
               });
