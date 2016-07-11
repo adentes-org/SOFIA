@@ -132,15 +132,29 @@
           .birthdate{
               float: right;
           }
-          .timestamp{
+          .creation{
             float: right;
             position: absolute;
             top: 0px;
             right: 0px;
-            color: #FFF;
+            color: #444;
             background: #CCC;
             padding: 0 4px;
             border-bottom-left-radius: 6px;
+            font-size: 60%;
+            &.old{
+              color: red;
+            }
+          }
+          .timestamp{
+            float: left;
+            position: absolute;
+            bottom: 0px;
+            right: 0px;
+            color: #FFF;
+            background: #CCC;
+            padding: 0 4px;
+            border-top-left-radius: 6px;
             font-size: 60%;
             &.old{
               color: red;

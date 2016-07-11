@@ -202,7 +202,7 @@ S.db.fiches = {
   },
   getDiffConflict : function(o,n) {
     //return objectDiff.diff(o.patient, n.patient)
-    return objectDiff.diff($.extend({}, o, {events : []}), $.extend({}, n, {events : []})) //Create a shallow clone and overwrite events parts to not be big in term of data 
+    return objectDiff.diff($.extend({}, o, {events : []}), $.extend({}, n, {events : []})) //Create a shallow clone and overwrite events parts to not be big in term of data
   },
   mergeConflict : function(o,n) { // o : obj in db, n: obj to commit
     //This is never call normally because the vue and obj of the vue is instantly update when in localDB
@@ -313,6 +313,8 @@ S.db.fiches = {
           return; //If it's a design doc
         }
         ret.fiches[ret.fiches.length] = value.doc;
+
+        value.doc.creation_date = moment(value.doc.events[0].timestamp).format("ddd, H:mm");
         value.doc.last_update = value.doc.events[value.doc.events.length -1].timestamp;
         var m = moment(value.doc.last_update);
         value.doc.last_update_since = m.fromNow();
