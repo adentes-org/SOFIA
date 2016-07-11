@@ -286,6 +286,16 @@ define(["jquery","pouchdb","moment","objectdiff","pouchdb-authentication","momen
         if(doc.owner_id === S.user._current.name){
           my_fiches[my_fiches.length] = doc;
         }
+        ret.fiches[ret.fiches.length] = value.doc;
+
+        value.doc.creation_date = moment(value.doc.events[0].timestamp).format("ddd, H:mm");
+        value.doc.last_update = value.doc.events[value.doc.events.length -1].timestamp;
+        var m = moment(value.doc.last_update);
+        value.doc.last_update_since = m.fromNow();
+        value.doc.last_update_is_old = m.add(S.config.fiche.update_timeout, 'minutes').isBefore();
+        var d = moment(value.doc.patient.birthdate);
+        value.doc.patient.age = moment().diff(d, 'years');
+        value.doc.patient.age_formatted = d.fromNow(true);
       });
       return my_fiches;
     },

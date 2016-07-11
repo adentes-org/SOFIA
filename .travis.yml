@@ -31,6 +31,7 @@ script:
 after_success:
 - export PATH=$(find /usr/local/android-sdk/ -name zipalign -type f| head -1 | sed -e 's/\/zipalign//g'):$PATH
 - export KEYSTORE=$(pwd)/sofia-release-key.keystore
+- sed -i.bak s/01\"/02\"/g config.xml #Fix last digit of android build for specfic hardware
 - cordova plugin add cordova-plugin-crosswalk-webview && cordova build android --release
 - ls platforms/android/build/outputs/apk/
 - APK=platforms/android/build/outputs/apk/android-release npm run sign

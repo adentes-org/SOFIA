@@ -15,6 +15,7 @@ define([], function() {
       timeoutOffline : "45" /* Number of seconds without info to be consider offline*/
     },
     fiche : {
+      update_timeout : 30, //In minutes (Ex: 30 minutes)
       pathologys : [
         "unconscious",
         "cardio-respiratory-stop",
