@@ -1,13 +1,14 @@
-  define(['jquery','i18n!app/nls/base', 'vue', 'vue-router', 'moment', 'moment-locales','app/sofia.tool','app/sofia.config','app/sofia.template','app/sofia.user','app/sofia.db','platform/' + cordova.platformId + '/init','app/sofia.app','app/sofia.polyfill',], function ($,lang, Vue, VueRouter, moment,tool,config,template,user,db,platform,app) {
+  define(['jquery','i18n!app/nls/base', 'vue', 'vue-router', 'moment', 'moment-locales','app/sofia.tool','app/sofia.config','app/sofia.user','app/sofia.db', 'app/sofia.data','platform/' + cordova.platformId + '/init','app/sofia.app','app/sofia.polyfill',], function ($,lang, Vue, VueRouter, moment,tool,config,user,db,data,platform,app) {
       //Define primary object 
       var S = {
         lang : lang
         language : localStorage["sofia-language"] || navigator.language || navigator.userLanguage || 'en',
         config : config,
         tool:tool,
-        template:template,
+        template:platform.template,
         user:user,
         db:db,
+        data: data, //TODO rename data to page
         platform:platform
         app:app
       };
@@ -31,7 +32,7 @@
       //TODO HERE
       
       /*
-              requirejs(['app/sofia.vue', 'app/sofia.data', ], function () {
+              requirejs(['app/sofia.vue', ], function () {
                   window.setTimeout(S.app.initialize,250); // Add time if all not already loaded for safety
               });
       */
