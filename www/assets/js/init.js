@@ -3,7 +3,6 @@
 /*
  * Init the app dependency with requirejs
  */
-/* global requirejs */
 var S = S || {};
 var language = localStorage["sofia-language"] || navigator.language || navigator.userLanguage || 'en';
 
@@ -11,6 +10,7 @@ requirejs.config({
     baseUrl: 'dist',
     paths: {
         app: 'js',
+        main: "js/main",
         platform: 'platform',
         lib: 'lib',
         cordova: '../cordova',
@@ -27,13 +27,11 @@ requirejs.config({
         moment: 'lib/moment/moment.min',
         "moment-locales": 'lib/moment/locales.min',
         objectdiff: 'lib/objectdiff/objectDiff',
-                /*
-                 browser: 'platform/browser',
-                 android: 'platform/android',
-                 ios: 'platform/ios'
-                 */
     },
     shim: {
+        "main": {
+            exports: 'S'
+        },
         cordova: {
             exports: 'cordova'
         },
@@ -42,7 +40,25 @@ requirejs.config({
         },
         pouchdb: {
             exports: 'PouchDB'
-        }
+        },       
+        "pouchdb-authentication": ['pouchdb'],
+        vue: {
+            exports: 'Vue'
+        },
+        "vue-router":["vue"],
+        pouchdb: {
+            exports: 'PouchDB'
+        },
+        moment: {
+            exports: 'moment'
+        },
+        "dialog-polyfill" :{
+            exports: 'dialogPolyfill'
+        },
+        objectdiff: {
+            exports: 'objectDiff'
+        },
+        "moment-locales": ['moment'],
     },
     config: {
         //Set the config for the i18n
