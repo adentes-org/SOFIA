@@ -1,7 +1,6 @@
 'use strict';
-var S = S || {};
-requirejs(['app/page/home','app/page/login','app/page/fiche','app/page/add','app/page/memo','app/page/settings'], function (pHome,pLogin,pFiche,pAdd,pMemo,pSettings) {
-  S.data = {
+define(['app/page/home','app/page/login','app/page/fiche','app/page/add','app/page/memo','app/page/settings'], function (pHome,pLogin,pFiche,pAdd,pMemo,pSettings) {
+  var data = {
       pages: {
           "fiche/:fiche_id": pFiche,
           add : pAdd,
@@ -11,4 +10,5 @@ requirejs(['app/page/home','app/page/login','app/page/fiche','app/page/add','app
           home: pHome
       }
   };
+  return data;
 });
