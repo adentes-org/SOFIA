@@ -15,6 +15,9 @@
       Vue.use(VueRouter);
       moment.locale(S.language);
       
+      //Setup DB
+      db.setUrl(config.db); //TODO check usefullnes of that
+      
       //window.S = S; //TODO check if usefull
       window.setTimeout(S.app.initialize,250); // Add time if all not already loaded for safety //TODO everythings is now ready
 
@@ -28,12 +31,10 @@
       
       /*
 
-      requirejs(['pouchdb-authentication', ], function () {
           requirejs(['platform/' + cordova.platformId + '/init', ], function () {
               requirejs(['app/sofia.vue', 'app/sofia.data', ], function () {
                   window.setTimeout(S.app.initialize,250); // Add time if all not already loaded for safety
               });
           });
-      });
       */
   });
