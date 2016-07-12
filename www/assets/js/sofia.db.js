@@ -196,10 +196,10 @@ S.db.fiches = {
               //Check if DB as change
               S.db.remoteDB.get("_design/sofia-config").then(function(remote){
                 return S.db.localDB.get('_design/sofia-config').then(function(local){
-                  if(remote.token == local.token){
+                  if(remote.token === local.token){
                     S.db.fiches.sync(); //Same Db base everything is ok
                   }else{
-                    S.db.clearLocal().then(function (response) { //Clear local DB
+                    S.db.clearLocal().then(function () { //Clear local DB
                       S.db.localDB = new PouchDB(S.config.db._local_url); //Restart local DB
                       S.db.fiches.sync();  //Same Db base everything is ok
                     }).catch(function (err) {
@@ -210,7 +210,7 @@ S.db.fiches = {
               }).catch(function (err) {
                 console.log("Error detected in string sycn maybe Db are diff");
               	console.log(err); //in case of error we reset local DB
-                return S.db.clearLocal().then(function (response) { //Clear local DB
+                return S.db.clearLocal().then(function () { //Clear local DB
                     S.db.localDB = new PouchDB(S.config.db._local_url); //Restart local DB
                     S.db.fiches.sync();  //Same Db base everything is ok
                   }).catch(function (err) {
