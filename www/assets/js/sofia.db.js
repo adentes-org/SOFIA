@@ -191,11 +191,30 @@ S.db.fiches = {
   },
   startSync : function() {
               console.log("Starting sync ...");
-              S.db.fiches.watch(S.db.localDB.sync(S.db.remoteDB, {
-                live: true,
-                retry: true
-              }));
-              console.log("Sync in place !");
+              var sync = function(){
+                  S.db.fiches.watch(S.db.localDB.sync(S.db.remoteDB, {
+                    live: true,
+                    retry: true
+                  }));
+                  console.log("Sync in place !");
+              }
+              //Check if DB as change
+              S.db.remoteDB.get("_design/sofia-config").then(function(remote){
+                return S.db.localDB.get('_design/sofia-config').then(function(local){
+                  if(remote.token == local.token){
+                    sync(); //Same Db base everything is ok
+                  }else{
+                    S.db.clearLocal(); //Clear local DB
+                    S.db.localDB = new PouchDB(S.config.db._local_url); //Restart local DB
+                    sync(); //Same Db base everything is ok
+                  }
+                });
+              }).catch(function (err) {
+              	console.log(err); //in case of error we reset local DB
+                S.db.clearLocal(); //Clear local DB
+                S.db.localDB = new PouchDB(S.config.db._local_url); //Restart local DB
+                sync(); //Same Db base everything is ok
+              });
   },
   post : function(obj) { //Create
     return S.db.localDB.post(obj);
