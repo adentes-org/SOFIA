@@ -104,11 +104,15 @@ S.vue = {
     },
     beforeEach: function (transition) {
           if (transition.to.path !== '/_login' && !S.user._current.isLogged()) {
-            if(S.config.user.username !== "" && S.config.user.userpass !== "") {
+            if(S.config.user.username !== "" && S.config.user.userpass !== "" && S.config.db.url !== "" && S.config.db.name !== "") {
               //We have something to try !
               S.user.login(S.config.user.username, S.config.user.userpass, true).catch(function(err){
-                console.log(err);
+                console.log(err.status,err);
                 switch (err.status) {
+                  case 400: //this plugin only works for the http/https adapter (url malformeted on undefined)
+                    delete localStorage['sofia-server-config'];
+                    transition.redirect("/_login");
+                    break;
                   case 401: //Wrong cred
                     S.user.reset(); //We clear cache if their are bad
                     transition.redirect("/_login");
@@ -128,10 +132,15 @@ S.vue = {
               }).then(function(user){
                 //We are logged
                 console.log("Receiving the user : ",user);
-                S.vue.router.go("/");
+                if(typeof user != "undefined"){
+                  S.vue.router.go("/");
+                }else{
+                  transition.redirect("/_login"); //TODO backup url coming to redirect after
+                }
               });
+            }else{
+              transition.redirect("/_login"); //TODO backup url coming to redirect after
             }
-            transition.redirect("/_login"); //TODO backup url coming to redirect after
           } else if (transition.to.path === '/_login' && S.user._current.isLogged()) {
             //Case where we go back in history (we are already logged at the front door) so we abort
             transition.abort();

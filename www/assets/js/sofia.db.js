@@ -25,6 +25,7 @@ S.db = {
     S.db.remoteDB = new PouchDB(S.config.db._full_url, {skipSetup: true});
   },
   clearLocal : function(){
+    console.log("Reset localDB !");
     return S.db.localDB.destroy();
   }
 };
@@ -59,11 +60,11 @@ S.db.users = {
   login : function(user,pass,silent){
     return S.db.remoteDB.login(user, pass, function (err, response) {
       if (err) {
-        console.log(err);
+        console.log(!silent,err.status,err.message,err);
         if(!silent){
           alert(err.message);
         }
-        return Promise.reject(err);
+        return err;
       }else{
         if(response.ok) {
           //We are logged in
@@ -73,7 +74,7 @@ S.db.users = {
             return response;
           });
         }else{
-          return Promise.reject(response);
+          return err;
         }
       }
     });
@@ -199,8 +200,10 @@ S.db.fiches = {
               return S.db.remoteDB.get("_design/sofia-config").then(function(remote){
                 return S.db.localDB.get('_design/sofia-config').then(function(local){
                   if(remote.token === local.token){
+                    console.log("Same DB Token detected !",remote, local);
                     S.db.fiches.sync(); //Same Db base everything is ok
                   }else{
+                    console.log("Diff DB Token detected !",remote, local);
                     S.db.clearLocal().then(function () { //Clear local DB
                       S.db.localDB = new PouchDB(S.config.db._local_url); //Restart local DB
                       S.db.fiches.sync();  //Same Db base everything is ok
