@@ -57,26 +57,24 @@ S.db.config = {
 };
 S.db.users = {
   login : function(user,pass,silent){
-    //TODO don't use jquery promise
-    var deferred = new $.Deferred();
-    S.db.remoteDB.login(user, pass, function (err, response) {
+    return S.db.remoteDB.login(user, pass, function (err, response) {
       if (err) {
         console.log(err);
         if(!silent){
           alert(err.message);
         }
-        deferred.reject(err);
+        return Promise.reject(err);
       }else{
         if(response.ok) {
           //We are logged in
           console.log("We are logged in !", response);
           S.user.set(user,pass,response);
-          S.db.fiches.startSync();
-          deferred.resolve(response);
+          return S.db.fiches.startSync();
+        }else{
+          return Promise.reject("NOK");
         }
       }
     });
-    return deferred.promise();
   }
 };
 
@@ -192,28 +190,29 @@ S.db.fiches = {
   startSync : function() {
               console.log("Starting sync ...");
               var sync = function(){
-                  S.db.fiches.watch(S.db.localDB.sync(S.db.remoteDB, {
+                  console.log("Sync in place !");
+                  return S.db.fiches.watch(S.db.localDB.sync(S.db.remoteDB, {
                     live: true,
                     retry: true
                   }));
-                  console.log("Sync in place !");
               }
               //Check if DB as change
               S.db.remoteDB.get("_design/sofia-config").then(function(remote){
                 return S.db.localDB.get('_design/sofia-config').then(function(local){
                   if(remote.token == local.token){
-                    sync(); //Same Db base everything is ok
+                    return sync(); //Same Db base everything is ok
                   }else{
                     S.db.clearLocal(); //Clear local DB
                     S.db.localDB = new PouchDB(S.config.db._local_url); //Restart local DB
-                    sync(); //Same Db base everything is ok
+                    return sync(); //Same Db base everything is ok
                   }
                 });
               }).catch(function (err) {
+                console.log("Error detected in string sycn maybe Db are diff");
               	console.log(err); //in case of error we reset local DB
                 S.db.clearLocal(); //Clear local DB
                 S.db.localDB = new PouchDB(S.config.db._local_url); //Restart local DB
-                sync(); //Same Db base everything is ok
+                return sync(); //Same Db base everything is ok
               });
   },
   post : function(obj) { //Create
