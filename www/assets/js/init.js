@@ -71,8 +71,8 @@ S.init = function(cordova){
 
       requirejs(['pouchdb-authentication', 'app/sofia.tool', 'app/sofia.template', 'app/sofia.config'], function () {
           $("head").append('<link rel="stylesheet" type="text/css" href="dist/platform/' + cordova.platformId + '/css/style.css">');
-          requirejs(['platform/' + cordova.platformId + '/init', 'app/sofia.db'], function () {
-              requirejs(['app/sofia.vue', 'app/sofia.data', 'app/sofia.user', 'app/sofia.app'], function () {
+          requirejs(['platform/' + cordova.platformId + '/init', 'app/sofia.db', 'app/sofia.user'], function () {
+              requirejs(['app/sofia.vue', 'app/sofia.data', 'app/sofia.app'], function () {
                   window.setTimeout(S.app.initialize,250); // Add time if all not already loaded for safety
               });
           });
