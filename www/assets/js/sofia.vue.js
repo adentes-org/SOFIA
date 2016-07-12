@@ -106,7 +106,7 @@ S.vue = {
           if (transition.to.path !== '/_login' && !S.user._current.isLogged()) {
             if(S.config.user.username !== "" && S.config.user.userpass !== "") {
               //We have something to try !
-              S.user.login(S.config.user.username, S.config.user.userpass, true).fail(function(err){
+              S.user.login(S.config.user.username, S.config.user.userpass, true).catch(function(err){
                 console.log(err);
                 switch (err.status) {
                   case 401: //Wrong cred
