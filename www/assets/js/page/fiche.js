@@ -38,7 +38,8 @@ define({
     },
     computed: {
       _patient_age: function () {
-        return moment(this.fiche.patient.birthdate).fromNow(true);
+        //return moment(this.fiche.patient.birthdate).fromNow(true);
+        return S.tool.calAge(moment(this.fiche.patient.birthdate));
       },
       _last_update: function () { //Get the timestamp of the last update and format it to be shown
         return (this.fiche.events.length>0)? moment(this.fiche.events[this.fiche.events.length-1].timestamp).fromNow():"" ;//TODO better order and get the most new timestamp other than the last el in array

@@ -1,4 +1,4 @@
-/* global $, dialogPolyfill */
+/* global $, dialogPolyfill, moment */
 'use strict';
 
 var S = S || {};
@@ -17,6 +17,27 @@ S.tool = {
     },
     capitalizeFirstLetter: function (string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
+    },
+    calAge: function (d) {
+      var now = moment();
+      var local = moment.localeData();
+
+      var years = now.diff(d, 'years');
+      if(years === 0){
+            var months = now.diff(d, 'month') //Getting month
+          if(months === 0){
+            var days = now.diff(d, 'day') //Getting day
+            return days+local["_relativeTime"].dd.substr(2);
+          }else if(months === 1){
+            return local["_relativeTime"].M; //1month
+          }else{
+            return months+local["_relativeTime"].MM.substr(2);
+          }
+      }else if(years === 1){
+          return local["_relativeTime"].y;
+      }else{
+          return years+local["_relativeTime"].yy.substr(2);
+      }
     },
     isMenuEntry: function (path) {
         //console.log(path, typeof path);
