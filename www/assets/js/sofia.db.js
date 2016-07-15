@@ -74,7 +74,7 @@ S.db.users = {
             return response;
           });
         }else{
-          return err;
+          return response;
         }
       }
     });
@@ -204,7 +204,7 @@ S.db.fiches = {
                     S.db.fiches.sync(); //Same Db base everything is ok
                   }else{
                     console.log("Diff DB Token detected !",remote, local);
-                    S.db.clearLocal().then(function () { //Clear local DB
+                    return S.db.clearLocal().then(function () { //Clear local DB
                       S.db.localDB = new PouchDB(S.config.db._local_url); //Restart local DB
                       S.db.fiches.sync();  //Same Db base everything is ok
                     }).catch(function (err) {
