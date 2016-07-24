@@ -319,7 +319,7 @@ define(["jquery","pouchdb","moment","objectdiff","pouchdb-authentication","momen
             value.doc.last_update_is_old = m.add(S.config.fiche.update_timeout, 'minutes').isBefore();
             var d = moment(value.doc.patient.birthdate);
             value.doc.patient.age = moment().diff(d, 'years');
-            value.doc.patient.age_formatted = d.fromNow(true);
+            value.doc.patient.age_formatted = S.tool.calAge(d);
           });
           ret.lang =  S.lang;
           deferred.resolve(ret);
@@ -332,7 +332,6 @@ define(["jquery","pouchdb","moment","objectdiff","pouchdb-authentication","momen
     },
     getMyCreationCount : function (){
         var deferred = new $.Deferred();
-
         S.db.localDB.allDocs({include_docs: true,skip:0,limit:req_limit}).then(function (result) {
           var count = 0;
           $.each(result.rows, function( index, value ) {
