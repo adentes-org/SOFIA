@@ -1,10 +1,10 @@
 define({
-    "root": {
-      "_list" : {
-          "en" : "English",
-          "fr" : "Francais"
-      }
+    root: {
+        _list: {
+            en: "English",
+            fr: "Francais"
+        }
     },
-    "en": true,
-    "fr": true
+    en: !0,
+    fr: !0
 });
