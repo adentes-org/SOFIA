@@ -59,6 +59,28 @@ gulp.task('clean-css', function () {
   return del([folders.assets + "/**/*.css",folders.dist + "/css/*.css",folders.dist + "/platform/**/*.css",folders.assets + "/**/*.map",folders.dist + "/css/maps/*.map",folders.dist + "/platform/**/*.map"]);
 });
 
+gulp.task('beautify', [], function() {
+  var folder = jsFolder();
+  for (var i in folder) {
+    if (folder.hasOwnProperty(i)) {
+        gulp.src([folder[i] + '/*.js', '!'+folder[i]+'/*.min.js'])
+          .pipe(minify({
+            ext:{
+                src:'.js',
+                min:'.js'
+            },
+            output : {
+                bracketize: true,
+                beautify: true,
+                comments: true
+            },
+            noSource : true
+        }))
+        .pipe(gulp.dest(folder[i]));
+    }
+  }
+});
+
 gulp.task('compress', ['clean-js'], function() {
   var folder = jsFolder();
   for (var i in folder) {
