@@ -1,39 +1,30 @@
-"use strict";
-
-var S = S || {};
-
-S.app = {
-    // Application Constructor
-    initialize: function() {
-        S.app.bindEvents();
-    },
-    // Bind Event Listeners
-    //
-    // Bind any events that are required on startup. Common events are:
-    // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
-        //We use requirejs so everything is ready whenwe are here
-        //document.addEventListener('deviceready', this.onDeviceReady, false);
-        window.setTimeout(S.app.onDeviceReady, 1e3);
-    },
-    removeLoader: function() {
-        $("body>.app-loading").remove();
-    },
-    onDeviceReady: function() {
-        $("body>.app").append(S.template.base()), S.vue.init(), //Vue = require('vue');
-        /*
-        new Vue({
-            el: '#indox',
-            data: {
-                fiches: [
-                    {id: 1},
-                    {id: 2},
-                    {id: 3},
-                ]
+/* globals window */
+define(["jquery"], function($) {
+    'use strict';
+    var app = {
+        // Application Constructor
+        initialize: function () {
+            app.bindEvents();
+        },
+        // Bind Event Listeners
+        //
+        // Bind any events that are required on startup. Common events are:
+        // 'load', 'deviceready', 'offline', and 'online'.
+        bindEvents: function () {
+            window.setTimeout(app.onDeviceReady, 100); //TODO when everything is rework test to remove this timing
+        },
+        removeLoader: function () {
+            $('body>.app-loading').remove();
+        },
+        onDeviceReady: function () {
+            $("body>.app").append(S.template.base());
+            S.vue.init();
+            if(typeof S.platform.events.afterDeviceReady === "function"){
+                S.platform.events.afterDeviceReady();
             }
-        });
-        */
-        "function" == typeof S.platform.events.afterDeviceReady && S.platform.events.afterDeviceReady(), 
-        $("body").removeClass("loading"), window.setTimeout(S.app.removeLoader, 1e3);
-    }
-};
+            $("body").removeClass("loading");
+            window.setTimeout(app.removeLoader, 1000);
+        }
+    };
+    return app;
+});

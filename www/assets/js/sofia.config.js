@@ -1,8 +1,7 @@
-"use strict";
 
-var S = S || {};
-
-S.config = {
+define(["jquery"], function($) {
+  "use strict";
+  var config = {
     user: {
         username: "",
         userpass: ""
@@ -37,6 +36,9 @@ S.config = {
             "delete-validation": !0
         }
     }
-}, $.extend(!0, S.config.user, "string" == typeof localStorage["sofia-user-config"] ? JSON.parse(localStorage["sofia-user-config"]) : null), 
-$.extend(!0, S.config.db, "string" == typeof localStorage["sofia-server-config"] ? JSON.parse(localStorage["sofia-server-config"]) : null), 
-$.extend(!0, S.config.local, "string" == typeof localStorage["sofia-local-config"] ? JSON.parse(localStorage["sofia-local-config"]) : null);
+  };
+  $.extend(!0, config.user, "string" == typeof localStorage["sofia-user-config"] ? JSON.parse(localStorage["sofia-user-config"]) : null),
+  $.extend(!0, config.db, "string" == typeof localStorage["sofia-server-config"] ? JSON.parse(localStorage["sofia-server-config"]) : null),
+  $.extend(!0, config.local, "string" == typeof localStorage["sofia-local-config"] ? JSON.parse(localStorage["sofia-local-config"]) : null);
+  return config;
+});
