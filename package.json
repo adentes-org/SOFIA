@@ -33,7 +33,7 @@
     "del": "~2.2.0",
     "gulp": "~3.9.0",
     "gulp-cordova": "~6.0.0",
-    "gulp-less": "~3.0.5",
+    "gulp-less": "~3.1.0",
     "gulp-sourcemaps": "~1.6.0",
     "gulp-minify": "~0.0.11",
     "less-plugin-autoprefix": "~1.5.1",
