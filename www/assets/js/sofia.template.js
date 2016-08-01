@@ -1,8 +1,9 @@
-'use strict';
+"use strict";
+
 var S = S || {};
 
 S.template = {
-    base: function () {
+    base: function() {
         return "Platform not supported !";
     },
     buttons: {
@@ -10,12 +11,12 @@ S.template = {
     },
     pages: {
         home: "",
-        add : "",
+        add: "",
         _login: "",
         memo: "{{{ memo }}}",
-        "fiche/:fiche_id":  "{{ fiche | json }}",
-        settings : "{{ S.config | json }}"
+        "fiche/:fiche_id": "{{ fiche | json }}",
+        settings: "{{ S.config | json }}"
     },
-    header: function () {},
-    menu: function () {}
+    header: function() {},
+    menu: function() {}
 };

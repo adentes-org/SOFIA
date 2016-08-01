@@ -1,50 +1,51 @@
 /* global S */
 define({
-    options : {
-        title: S.lang["settings"].capitalize(),
-        displayQuickAddButton : false,
-        displaySearchbox: false
+    options: {
+        title: S.lang.settings.capitalize(),
+        displayQuickAddButton: !1,
+        displaySearchbox: !1
     },
     route: {
-      data: function () {
-          var ret = {
-            user : S.user._current,
-            lang : S.lang,
-            askFor : []
-          }
-          $.each(S.config.local["ask-for"],function(id,value){
-            ret.askFor.push({"id":id,"value":value,"lang":S.lang.config[id] || id});
-          });
-          return ret;
-      }
+        data: function() {
+            var o = {
+                user: S.user._current,
+                lang: S.lang,
+                askFor: []
+            };
+            return $.each(S.config.local["ask-for"], function(a, e) {
+                o.askFor.push({
+                    id: a,
+                    value: e,
+                    lang: S.lang.config[a] || a
+                });
+            }), o;
+        }
     },
     methods: {
-      update: function (event) {
-        console.log(this,event,$(event.srcElement).attr("name"),$(event.srcElement).is(':checked'))
-        S.config.local["ask-for"][$(event.srcElement).attr("name")] = $(event.srcElement).is(':checked');
-        localStorage["sofia-local-config"] = JSON.stringify(S.config.local)
-      },
-      resetCredConfig: function(){
-        S.user.reset();
-        window.location.reload();
-      },
-      resetServerConfig: function(){
-        delete localStorage['sofia-server-config'];
-        window.location.reload();
-      },
-      showLangModal : function() {
-        S.tool.getDialog("#choose-lang-dialog").showModal();
-      },
-      changeLanguage: function (event) {
-        localStorage["sofia-language"] = $.trim($(event.srcElement).attr("data-id"));
-        S.tool.getDialog("#choose-lang-dialog").close();
-        window.location.reload();        //Reload app
-      },
-      clearLocalDB: function(){
-        S.db.clearLocal().then(function(){window.location.reload();}).catch(function (err) {
-          console.log(err);
-          window.location.reload(); //We also reload in case
-        });
-      }
-    },
+        update: function(o) {
+            console.log(this, o, $(o.srcElement).attr("name"), $(o.srcElement).is(":checked")), 
+            S.config.local["ask-for"][$(o.srcElement).attr("name")] = $(o.srcElement).is(":checked"), 
+            localStorage["sofia-local-config"] = JSON.stringify(S.config.local);
+        },
+        resetCredConfig: function() {
+            S.user.reset(), window.location.reload();
+        },
+        resetServerConfig: function() {
+            delete localStorage["sofia-server-config"], window.location.reload();
+        },
+        showLangModal: function() {
+            S.tool.getDialog("#choose-lang-dialog").showModal();
+        },
+        changeLanguage: function(o) {
+            localStorage["sofia-language"] = $.trim($(o.srcElement).attr("data-id")), S.tool.getDialog("#choose-lang-dialog").close(), 
+            window.location.reload();
+        },
+        clearLocalDB: function() {
+            S.db.clearLocal().then(function() {
+                window.location.reload();
+            }).catch(function(o) {
+                console.log(o), window.location.reload();
+            });
+        }
+    }
 });
