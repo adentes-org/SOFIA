@@ -1,11 +1,10 @@
 /* global S */
-//var S = S || {}; //Keep it that way to throw a error if loaded to soon;
-/* */
-define([ "jquery" ], function(e) {
-    var t = new e.Deferred();
+
+
+define([ "jquery", 'app/sofia.tool','app/sofia.template'], function($,tool,templateBase) {
     //TODO reject case;
     //TODO migrate to strandard promise
-    return S.tool.loadStatic({
+    return tool.loadStatic({
         base: "assets/platform/android/template/",
         //TODO compress template file and switch to dist
         files: {
@@ -25,13 +24,24 @@ define([ "jquery" ], function(e) {
                 quickAdd: "buttons/quickAdd.tmpl"
             }
         }
-    }).then(function(t) {
-        S.template = e.extend(!0, S.template, t), S.template.page_wrapper = function(e, t) {
-            return '<div class="page-content" id="' + e + '">' + ("function" == typeof t ? t() : t) + "</div>";
-        }, S.template.base = function() {
-            return '<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">\n<app-header v-bind:options="headerOptions" v-bind:searchbox.sync="searchbox"></app-header>\n' + S.template.menu + '\n<main class="mdl-layout__content"><router-view  v-bind:searchbox="searchbox"></router-view></main>\n' + S.template.buttons.quickAdd + "\n" + S.template.toast + "</div>";
+    }).then(function(template) {
+        var template = $.extend(true, templateBase, template);
+
+        template.page_wrapper = function(id, page) {
+            return '<div class="page-content" id="' + id + '">' + ((typeof page === "function")?page():page)   + '</div>';
         };
-    }).then(function() {
-        S.template._isLoaded = !0, t.resolve(S.template);
-    }), t.promise();
+        template.base = function () {
+            return '<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">' +
+                    "\n"  + '<app-header v-bind:options="headerOptions" v-bind:searchbox.sync="searchbox"></app-header>' +
+                    "\n" + template.menu +
+                    "\n" + '<main class="mdl-layout__content">' + '<router-view  v-bind:searchbox="searchbox"></router-view>' + '</main>' +
+                    "\n" + template.buttons.quickAdd +
+                    "\n" + template.toast +
+                    '</div>';
+        };
+        return template;
+    }).then(function(template) {
+        template._isLoaded = true;
+        return template;
+    });
 });

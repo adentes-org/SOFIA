@@ -29,11 +29,17 @@ requirejs.config({
         "main": {
             exports: 'S'
         },
-        "js/sofia.vue": {
+        "app/sofia.vue": {
             exports: 'S.vue'
         },
-        "js/sofia.tool": {
+        "app/sofia.tool": {
             exports: 'S.tool'
+        },
+        "app/sofia.config": {
+            exports: 'S.config'
+        },
+        "app/sofia.user": {
+            exports: 'S.user'
         },
         cordova: {
             exports: 'cordova'

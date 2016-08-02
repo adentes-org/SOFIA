@@ -25,20 +25,20 @@ define(["jquery"], function($) {
     local: {
         /* default */
         "ask-for": {
-            "take-validation": !0,
-            "give-validation": !0,
-            "reopen-validation": !0,
-            "addPathology-validation": !0,
-            "addOrigin-validation": !0,
-            "changePrimaryAffection-validation": !1,
-            "changeInformation-validation": !0,
-            "checkin-validation": !1,
-            "delete-validation": !0
+            "take-validation": true,
+            "give-validation": true,
+            "reopen-validation": true,
+            "addPathology-validation": true,
+            "addOrigin-validation": true,
+            "changePrimaryAffection-validation": false,
+            "changeInformation-validation": true,
+            "checkin-validation": false,
+            "delete-validation": true
         }
     }
   };
-  $.extend(!0, config.user, "string" == typeof localStorage["sofia-user-config"] ? JSON.parse(localStorage["sofia-user-config"]) : null),
-  $.extend(!0, config.db, "string" == typeof localStorage["sofia-server-config"] ? JSON.parse(localStorage["sofia-server-config"]) : null),
-  $.extend(!0, config.local, "string" == typeof localStorage["sofia-local-config"] ? JSON.parse(localStorage["sofia-local-config"]) : null);
+  $.extend(true, config.user, "string" == typeof localStorage["sofia-user-config"] ? JSON.parse(localStorage["sofia-user-config"]) : null),
+  $.extend(true, config.db, "string" == typeof localStorage["sofia-server-config"] ? JSON.parse(localStorage["sofia-server-config"]) : null),
+  $.extend(true, config.local, "string" == typeof localStorage["sofia-local-config"] ? JSON.parse(localStorage["sofia-local-config"]) : null);
   return config;
 });

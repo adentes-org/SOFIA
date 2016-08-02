@@ -102,6 +102,8 @@ gulp.task('compress', ['clean-js'], function() {
         gulp.src([folder[i] + '/*.js', '!'+folder[i]+'/*.min.js'])
           .pipe(minify({
             ext:{
+//              mangle : false,
+//              compress: false,
                 src:'.js',
                 min:'.js'
             },

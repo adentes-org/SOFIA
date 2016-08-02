@@ -1,92 +1,113 @@
-/* global $, dialogPolyfill, moment */
-"use strict";
-
-var S = S || {};
-
-S.tool = {
-    uniq: function(e) {
-        return $.grep(e, function(t, r) {
-            return $.inArray(t, e) === r;
-        });
-    },
-    getDialog: function(e) {
-        var t = document.querySelector(e);
-        return t.showModal && t.close || dialogPolyfill.registerDialog(t), t;
-    },
-    capitalizeFirstLetter: function(e) {
-        return e.charAt(0).toUpperCase() + e.slice(1);
-    },
-    calAge: function(e) {
-        var t = moment(), r = moment.localeData(), n = t.diff(e, "years");
-        if (0 === n) {
-            var i = t.diff(e, "month");
-            //Getting month
-            if (0 === i) {
-                var o = t.diff(e, "day");
-                //Getting day
-                return o + r._relativeTime.dd.substr(2);
-            }
-            return 1 === i ? r._relativeTime.M : i + r._relativeTime.MM.substr(2);
+define(["jquery"], function($) {
+  "use strict";
+  var tool = {
+      uniq: function(list) {
+          return $.grep(list, function(el, index) {
+              return $.inArray(el, list) === index;
+          });
+      },
+      getDialog: function(id) {
+        var dialog = document.querySelector(id);
+        if (!dialog.showModal || !dialog.close) {
+              dialogPolyfill.registerDialog(dialog);
         }
-        return 1 === n ? r._relativeTime.y : n + r._relativeTime.yy.substr(2);
-    },
-    isMenuEntry: function(e) {
-        //console.log(path, S.vue.map["/" + path], !path.startsWith("_"));
-        //console.log(path, typeof path);
-        //console.log(path);
-        return "object" == typeof e && (e = e.$key ? e.$key : e.url), e.startsWith("/") && (e = e.slice(1)), 
-        S.vue.map["/" + e] && !e.startsWith("_") && !e.includes(":");
-    },
-    debounce: function(e, t) {
-        var r = null;
-        return function() {
-            var n = this, i = arguments;
-            clearTimeout(r), r = setTimeout(function() {
-                e.apply(n, i);
-            }, t);
-        };
-    },
-    loadStatic: function(e) {
-        //return new Promise(function (fulfill, reject){
-        e.base = e.base || "";
-        // Use a empty string if not existing
-        var t = {}, r = [];
-        $.each(e.files, function(n, i) {
-            "string" == typeof i ? // Load static
-            //console.log("get("+paths.base+path+")");
-            r.push($.get(e.base + i).then(function(e) {
-                //Not working on Android
-                //pool.push(S.tool.get(paths.base+path).then(function(content){
-                t[n] = e;
-            }, function(e) {
-                console.log("Error getting : " + JSON.stringify(e));
-            })) : "object" == typeof i ? // Chain load static
-            // TODO use a  more recursive structure and use a local path.base
-            /*
+        return dialog;
+      },
+      capitalizeFirstLetter: function(str) {
+          return str.charAt(0).toUpperCase() + str.slice(1);
+      },
+      calAge: function(d) {
+              var now = moment();
+               var local = moment.localeData();
+
+               var years = now.diff(d, 'years');
+               if(years === 0){
+                     var months = now.diff(d, 'month') //Getting month
+                   if(months === 0){
+                     var days = now.diff(d, 'day') //Getting day
+                     return days+local["_relativeTime"].dd.substr(2);
+                   }else if(months === 1){
+                     return local["_relativeTime"].M; //1month
+                   }else{
+                     return months+local["_relativeTime"].MM.substr(2);
+                   }
+               }else if(years === 1){
+                   return local["_relativeTime"].y;
+               }else{
+                   return years+local["_relativeTime"].yy.substr(2);
+               }
+      },
+      isMenuEntry: function(path) {
+              //console.log(path, typeof path);
+               if (typeof path === "object") {
+                   path = (path.$key) ? path.$key : path.url;
+               }
+               //console.log(path);
+               if (path.startsWith("/")) {
+                   path = path.slice(1);
+               }
+               //console.log(path, S.vue.map["/" + path], !path.startsWith("_"));
+               return S.vue.map["/" + path] && !path.startsWith("_") && !path.includes(":");
+      },
+      debounce: function(fn, delay) {
+          var timer = null;
+           return function () {
+             var context = this, args = arguments;
+             clearTimeout(timer);
+             timer = setTimeout(function () {
+               fn.apply(context, args);
+             }, delay);
+           };
+      },
+      loadStatic: function(paths) {
+            //return new Promise(function (fulfill, reject){
+            paths.base = paths.base || ""; // Use a empty string if not existing
+            var data = {}; //TODO determine if let is sufficient
+            var pool = [];
+            $.each(paths.files, function(id,path){
+                if(typeof path === "string"){
+                    // Load static
+                    //console.log("get("+paths.base+path+")");
+                    pool.push($.get(paths.base+path).then(function(content){
+                        data[id] = content;
+                    }, function(error){
+                        console.log("Error getting : "+ JSON.stringify(error));
+                    })); //TODO manage reject.
+                } else if(typeof path === "object"){
+                    // Chain load static
+                    // TODO use a  more recursive structure and use a local path.base
+                    /*
                     console.log("chain("+JSON.stringify({
                         base : paths.base,
                         files : path
                     })+")");
                     */
-            r.push(S.tool.loadStatic({
-                base: e.base,
-                files: i
-            }).then(function(e) {
-                t[n] = e;
-            }, function(e) {
-                console.log("Error chaining : " + JSON.stringify(e));
-            })) : console.log("Incompatible type : " + n + " -> " + typeof i);
-        });
-        /*
+                    pool.push(tool.loadStatic({
+                        base : paths.base,
+                        files : path
+                    }).then(function(d){
+                        data[id] = d; //TODO check if not better to use extend
+                    }, function(error){
+                        console.log("Error chaining : "+ JSON.stringify(error));
+                    })); //TODO manage reject
+                } else {
+                    console.log("Incompatible type : " + id + "> " + (typeof path)); //TODO use a Promise.reject() ?
+                }
+            });
+            /*
             return Promise.all(pool).then(function(){
                 //console.log(data);
                 return Promise.resolve(data);
             });
             */
-        //Quick and dirty fix test
-        var n = $.Deferred();
-        return $.when.apply(this || $, r).then(function() {
-            n.resolve(t);
-        }), n.promise();
-    }
-};
+            //Quick and dirty fix test
+            var dfd = $.Deferred();
+            $.when.apply(this || $, pool).then(function () {
+                dfd.resolve(data);
+            });
+            return dfd.promise();
+        //});
+      }
+  };
+  return tool;
+});

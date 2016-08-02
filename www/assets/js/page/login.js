@@ -1,5 +1,5 @@
 /* global S */
-define(['i18n!app/nls/base',"app/sofia.tool"],function(lang,tool) {
+define(['i18n!app/nls/base',"app/sofia.config","app/sofia.tool"],function(lang,config,tool) {
   return {
       options: {
           displayQuickAddButton: !1,
@@ -9,8 +9,8 @@ define(['i18n!app/nls/base',"app/sofia.tool"],function(lang,tool) {
       route: {
           data: function() {
               return {
-                  u: S.config.user,
-                  db: S.config.db
+                  u: config.user,
+                  db: config.db
               };
           }
       },
@@ -18,7 +18,7 @@ define(['i18n!app/nls/base',"app/sofia.tool"],function(lang,tool) {
           login: function() {
               //TODO check format of user and pass
               //TODO determine if not use lazy attribute to use less ressouces
-              S.user.login(this.u.username, this.u.userpass, !1).then(function(o) {
+              S.user.login(this.u.username, this.u.userpass, false).then(function(o) {
                   console.log("Receiving the user : ", o), S.vue.router.go("/");
               });
           },
@@ -26,7 +26,7 @@ define(['i18n!app/nls/base',"app/sofia.tool"],function(lang,tool) {
               tool.getDialog("#show-config-dialog").showModal();
           },
           closeConfigurationModal: function() {
-              this.db = S.config.db, //Reset
+              this.db = config.db, //Reset
               tool.getDialog("#show-config-dialog").close();
           },
           scanQRCode: function() {

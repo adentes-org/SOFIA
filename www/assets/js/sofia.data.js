@@ -1,13 +1,13 @@
-define([ "app/page/home", "app/page/login", "app/page/fiche", "app/page/add", "app/page/memo", "app/page/settings" ], function(e, p, a, g, i, s) {
+define([ "app/page/home", "app/page/login", "app/page/fiche", "app/page/add", "app/page/memo", "app/page/settings" ], function(home, login, fiche, add, memo, settings) {
     "use strict";
     var data = {
         pages: {
-            "fiche/:fiche_id": a,
-            add: g,
-            _login: p,
-            settings: s,
-            memo: i,
-            home: e
+            _login: login,
+            "fiche/:fiche_id": fiche,
+            add: add,
+            settings: settings,
+            memo: memo,
+            home: home
         }
     };
     return data;
