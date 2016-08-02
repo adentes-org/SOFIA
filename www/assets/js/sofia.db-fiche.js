@@ -1,5 +1,5 @@
 
-define(["jquery", "moment", "objectdiff", "app/sofia.config", "moment-locales"], function ($, moment, config, objectDiff) {
+define(["jquery", "moment", "objectdiff", "app/sofia.config", "moment-locales"], function ($, moment, objectDiff, config) {
     'use strict';
     var req_limit = 1000000; //TODO paginataion
     var dbFiche = {

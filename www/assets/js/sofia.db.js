@@ -3,8 +3,8 @@ define(["jquery","pouchdb","pouchdb-authentication", "app/sofia.config", "app/so
   "use strict";
   /**** DEBUG ****/
   //Disabled for live
-  PouchDB.debug.enable('*');
-  //PouchDB.debug.disable();
+  //PouchDB.debug.enable('*');
+  PouchDB.debug.disable();
   PouchDB.plugin(PouchDBAuth);
 
   var db = {
